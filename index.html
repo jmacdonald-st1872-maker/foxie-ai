@@ -2,21 +2,13 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Foxie AI</title>
 
 <style>
-
-/* ==========================================
-   GLOBAL
-========================================== */
 
 * {
     box-sizing: border-box;
@@ -24,28 +16,17 @@
 
 html,
 body {
-
     margin: 0;
     padding: 0;
-
     width: 100%;
     min-height: 100%;
-
     background: #020403;
-
     color: #d8ffe8;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
-
     overflow-x: hidden;
-
 }
 
 
@@ -54,32 +35,22 @@ body {
 ========================================== */
 
 .background {
-
     position: fixed;
-
     inset: 0;
-
     overflow: hidden;
-
     pointer-events: none;
-
     z-index: 0;
-
 }
 
 .grid {
-
     position: absolute;
-
     inset: 0;
 
     background-image:
-
         linear-gradient(
             rgba(0,255,100,0.035) 1px,
             transparent 1px
         ),
-
         linear-gradient(
             90deg,
             rgba(0,255,100,0.035) 1px,
@@ -87,7 +58,6 @@ body {
         );
 
     background-size: 40px 40px;
-
 }
 
 
@@ -96,9 +66,7 @@ body {
 ========================================== */
 
 .particle {
-
     position: absolute;
-
     bottom: -20px;
 
     width: 3px;
@@ -112,47 +80,36 @@ body {
         0 0 6px #00ff66,
         0 0 12px #00ff66;
 
-    animation:
-        rise linear infinite;
+    animation: rise linear infinite;
 
     opacity: 0.7;
-
 }
 
 @keyframes rise {
 
     0% {
-
         transform:
             translateY(0)
             translateX(0);
 
         opacity: 0;
-
     }
 
     15% {
-
         opacity: 0.8;
-
     }
 
     85% {
-
         opacity: 0.7;
-
     }
 
     100% {
-
         transform:
             translateY(-110vh)
             translateX(40px);
 
         opacity: 0;
-
     }
-
 }
 
 
@@ -161,17 +118,13 @@ body {
 ========================================== */
 
 .app {
-
     position: relative;
-
     z-index: 2;
 
     min-height: 100vh;
 
     display: flex;
-
     flex-direction: column;
-
 }
 
 
@@ -180,13 +133,10 @@ body {
 ========================================== */
 
 header {
-
     padding: 22px 28px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
 
     border-bottom:
@@ -197,11 +147,9 @@ header {
         rgba(0,0,0,0.45);
 
     backdrop-filter: blur(10px);
-
 }
 
 .logo {
-
     font-size: 27px;
 
     font-weight: 900;
@@ -215,7 +163,6 @@ header {
         0 0 18px rgba(0,255,100,0.5);
 
     animation: glitch 3s infinite;
-
 }
 
 @keyframes glitch {
@@ -223,39 +170,26 @@ header {
     0%,
     90%,
     100% {
-
         transform: translate(0);
-
     }
 
     91% {
-
         transform: translate(-2px, 1px);
-
     }
 
     92% {
-
         transform: translate(2px, -1px);
-
     }
 
     93% {
-
         transform: translate(0);
-
     }
-
 }
 
 .creator-credit {
-
     color: #8cae99;
-
     font-size: 12px;
-
     text-align: right;
-
 }
 
 
@@ -264,7 +198,6 @@ header {
 ========================================== */
 
 main {
-
     width: min(
         1100px,
         calc(100% - 30px)
@@ -273,7 +206,6 @@ main {
     margin: 30px auto;
 
     flex: 1;
-
 }
 
 
@@ -282,7 +214,6 @@ main {
 ========================================== */
 
 .tabs {
-
     display: flex;
 
     gap: 8px;
@@ -290,12 +221,11 @@ main {
     margin-bottom: 15px;
 
     flex-wrap: wrap;
-
 }
 
 .tab {
-
-    border: 1px solid
+    border:
+        1px solid
         rgba(0,255,100,0.22);
 
     background:
@@ -310,26 +240,20 @@ main {
     cursor: pointer;
 
     font-weight: 700;
-
 }
 
 .tab:hover {
-
     border-color: #39ff7a;
-
     color: #6aff9a;
-
 }
 
 .tab.active {
-
     background:
         rgba(0,255,100,0.1);
 
     border-color: #35ff75;
 
     color: #58ff8c;
-
 }
 
 
@@ -338,15 +262,11 @@ main {
 ========================================== */
 
 .panel {
-
     display: none;
-
 }
 
 .panel.active {
-
     display: block;
-
 }
 
 
@@ -355,7 +275,6 @@ main {
 ========================================== */
 
 .chat-container {
-
     height: 570px;
 
     border:
@@ -376,40 +295,32 @@ main {
     flex-direction: column;
 
     overflow: hidden;
-
 }
 
 .messages {
-
     flex: 1;
 
     overflow-y: auto;
 
     padding: 20px;
-
 }
 
 
 /* ==========================================
-   MESSAGE
+   MESSAGES
 ========================================== */
 
 .message {
-
     margin-bottom: 16px;
 
     display: flex;
-
 }
 
 .message.user {
-
     justify-content: flex-end;
-
 }
 
 .bubble {
-
     max-width: 80%;
 
     padding: 13px 16px;
@@ -419,11 +330,9 @@ main {
     line-height: 1.5;
 
     white-space: pre-wrap;
-
 }
 
 .message.foxie .bubble {
-
     background:
         rgba(0,255,100,0.06);
 
@@ -432,11 +341,9 @@ main {
         rgba(0,255,100,0.12);
 
     color: #d8ffe3;
-
 }
 
 .message.user .bubble {
-
     background:
         rgba(0,255,100,0.13);
 
@@ -445,7 +352,6 @@ main {
         rgba(0,255,100,0.2);
 
     color: #baffce;
-
 }
 
 
@@ -454,7 +360,6 @@ main {
 ========================================== */
 
 .chat-input {
-
     display: flex;
 
     gap: 10px;
@@ -464,11 +369,9 @@ main {
     border-top:
         1px solid
         rgba(0,255,100,0.12);
-
 }
 
 .chat-input input {
-
     flex: 1;
 
     min-width: 0;
@@ -489,29 +392,22 @@ main {
     outline: none;
 
     font-size: 15px;
-
 }
 
 .chat-input input:focus {
-
     border-color: #36ff79;
 
     box-shadow:
         0 0 12px
         rgba(0,255,100,0.12);
-
 }
 
 button {
-
     border: none;
-
     cursor: pointer;
-
 }
 
 .send {
-
     padding: 0 20px;
 
     border-radius: 12px;
@@ -521,13 +417,10 @@ button {
     color: #001a08;
 
     font-weight: 900;
-
 }
 
 .send:hover {
-
     background: #54ff8c;
-
 }
 
 
@@ -536,17 +429,14 @@ button {
 ========================================== */
 
 .search-box {
-
     display: flex;
 
     gap: 10px;
 
     margin-bottom: 18px;
-
 }
 
 .search-box input {
-
     flex: 1;
 
     padding: 14px;
@@ -564,11 +454,9 @@ button {
     font-size: 15px;
 
     outline: none;
-
 }
 
 .search-button {
-
     padding: 0 20px;
 
     border-radius: 12px;
@@ -578,7 +466,6 @@ button {
     color: #001a08;
 
     font-weight: 900;
-
 }
 
 
@@ -587,7 +474,6 @@ button {
 ========================================== */
 
 .search-result {
-
     padding: 16px;
 
     margin-bottom: 10px;
@@ -600,33 +486,26 @@ button {
         rgba(0,20,8,0.55);
 
     border-radius: 12px;
-
 }
 
 .search-result h3 {
-
     margin: 0 0 7px;
 
     color: #54ff8c;
-
 }
 
 .search-result p {
-
     margin: 0 0 8px;
 
     color: #b7c9bc;
 
     line-height: 1.5;
-
 }
 
 .search-result a {
-
     color: #42ff83;
 
     word-break: break-all;
-
 }
 
 
@@ -635,7 +514,6 @@ button {
 ========================================== */
 
 .image-grid {
-
     display: grid;
 
     grid-template-columns:
@@ -645,11 +523,9 @@ button {
         );
 
     gap: 14px;
-
 }
 
 .image-card {
-
     overflow: hidden;
 
     border:
@@ -664,19 +540,15 @@ button {
     transition:
         transform 0.2s,
         border-color 0.2s;
-
 }
 
 .image-card:hover {
-
     transform: translateY(-3px);
 
     border-color: #3dff7e;
-
 }
 
 .image-card img {
-
     display: block;
 
     width: 100%;
@@ -686,17 +558,13 @@ button {
     object-fit: cover;
 
     background: #020403;
-
 }
 
 .image-info {
-
     padding: 10px;
-
 }
 
 .image-title {
-
     color: #caffd7;
 
     font-size: 13px;
@@ -704,17 +572,14 @@ button {
     line-height: 1.35;
 
     margin-bottom: 8px;
-
 }
 
 .image-link {
-
     color: #49ff87;
 
     font-size: 12px;
 
     text-decoration: none;
-
 }
 
 
@@ -723,7 +588,6 @@ button {
 ========================================== */
 
 .control-grid {
-
     display: grid;
 
     grid-template-columns:
@@ -733,11 +597,9 @@ button {
         );
 
     gap: 15px;
-
 }
 
 .control-card {
-
     border:
         1px solid
         rgba(0,255,100,0.15);
@@ -748,31 +610,24 @@ button {
 
     background:
         rgba(0,15,6,0.65);
-
 }
 
 .control-card h3 {
-
     margin-top: 0;
 
     color: #50ff89;
-
 }
 
 .control-card p {
-
     color: #a6b8ab;
 
     line-height: 1.5;
-
 }
 
 .control-card code {
-
     color: #63ff97;
 
     word-break: break-word;
-
 }
 
 
@@ -781,7 +636,6 @@ button {
 ========================================== */
 
 .modal {
-
     position: fixed;
 
     inset: 0;
@@ -798,17 +652,13 @@ button {
     justify-content: center;
 
     padding: 20px;
-
 }
 
 .modal.show {
-
     display: flex;
-
 }
 
 .modal-box {
-
     width: min(
         420px,
         100%
@@ -827,27 +677,21 @@ button {
     box-shadow:
         0 0 40px
         rgba(0,255,100,0.1);
-
 }
 
 .modal-box h2 {
-
     color: #50ff89;
 
     margin-top: 0;
-
 }
 
 .password-row {
-
     display: flex;
 
     gap: 8px;
-
 }
 
 .password-row input {
-
     flex: 1;
 
     padding: 13px;
@@ -863,11 +707,9 @@ button {
     color: white;
 
     outline: none;
-
 }
 
 .eye {
-
     width: 48px;
 
     border-radius: 10px;
@@ -880,21 +722,17 @@ button {
     border:
         1px solid
         rgba(0,255,100,0.2);
-
 }
 
 .modal-buttons {
-
     display: flex;
 
     gap: 10px;
 
     margin-top: 15px;
-
 }
 
 .modal-buttons button {
-
     flex: 1;
 
     padding: 12px;
@@ -902,24 +740,19 @@ button {
     border-radius: 10px;
 
     font-weight: 800;
-
 }
 
 .login-button {
-
     background: #2af06f;
 
     color: #001a08;
-
 }
 
 .close-button {
-
     background:
         rgba(255,255,255,0.06);
 
     color: #b5c0b8;
-
 }
 
 
@@ -928,19 +761,14 @@ button {
 ========================================== */
 
 .creator-mode {
-
     display: none;
-
 }
 
 .creator-mode.show {
-
     display: block;
-
 }
 
 .creator-banner {
-
     padding: 15px 18px;
 
     border:
@@ -965,11 +793,9 @@ button {
     align-items: center;
 
     gap: 10px;
-
 }
 
 .creator-banner button {
-
     padding: 8px 12px;
 
     border-radius: 8px;
@@ -978,7 +804,6 @@ button {
         rgba(255,255,255,0.07);
 
     color: #c7d2ca;
-
 }
 
 
@@ -987,7 +812,6 @@ button {
 ========================================== */
 
 .status {
-
     min-height: 20px;
 
     padding: 8px 2px;
@@ -995,7 +819,6 @@ button {
     color: #82998a;
 
     font-size: 13px;
-
 }
 
 
@@ -1006,7 +829,6 @@ button {
 @media (max-width: 650px) {
 
     header {
-
         padding: 18px;
 
         align-items: flex-start;
@@ -1014,76 +836,54 @@ button {
         gap: 12px;
 
         flex-direction: column;
-
     }
 
     .creator-credit {
-
         text-align: left;
-
     }
 
     main {
-
         width:
             calc(100% - 18px);
 
         margin:
             18px auto;
-
     }
 
     .chat-container {
-
         height: 65vh;
-
     }
 
     .bubble {
-
         max-width: 90%;
-
     }
 
     .chat-input {
-
         padding: 10px;
-
     }
 
     .send {
-
         padding: 0 15px;
-
     }
 
     .image-grid {
-
         grid-template-columns:
             repeat(2, 1fr);
 
         gap: 9px;
-
     }
 
     .image-card img {
-
         height: 120px;
-
     }
 
     .search-box {
-
         flex-direction: column;
-
     }
 
     .search-button {
-
         padding: 13px;
-
     }
-
 }
 
 
@@ -1092,23 +892,17 @@ button {
 ========================================== */
 
 ::-webkit-scrollbar {
-
     width: 7px;
-
 }
 
 ::-webkit-scrollbar-track {
-
     background: #020403;
-
 }
 
 ::-webkit-scrollbar-thumb {
-
     background: #164b28;
 
     border-radius: 10px;
-
 }
 
 </style>
@@ -1221,8 +1015,14 @@ button {
 
                     <br><br>
 
-                    Ask me anything! I can chat,
-                    search the web, and find images.
+                    I'm a general-purpose AI assistant.
+
+                    <br><br>
+
+                    Chat with me, ask questions,
+                    search the web, find images,
+                    code, brainstorm ideas,
+                    or just talk.
 
                 </div>
 
@@ -1353,7 +1153,9 @@ button {
             <h3>🦊 Foxie</h3>
 
             <p>
-                Foxie is your personal AI assistant.
+                Foxie is a general-purpose AI
+                assistant built for a wide range
+                of users.
             </p>
 
             <p>
@@ -1765,9 +1567,7 @@ async function sendMessage() {
 
 
     if (!message) {
-
         return;
-
     }
 
 
@@ -1847,7 +1647,7 @@ async function sendMessage() {
 
 
 /* ==========================================
-   ADD CHAT MESSAGE
+   ADD MESSAGE
 ========================================== */
 
 function addMessage(
@@ -1916,9 +1716,7 @@ async function searchWeb() {
 
 
     if (!query) {
-
         return;
-
     }
 
 
@@ -2015,22 +1813,13 @@ async function searchWeb() {
                     result.href;
 
 
-                card.appendChild(
-                    title
-                );
+                card.appendChild(title);
 
-                card.appendChild(
-                    body
-                );
+                card.appendChild(body);
 
-                card.appendChild(
-                    link
-                );
+                card.appendChild(link);
 
-
-                results.appendChild(
-                    card
-                );
+                results.appendChild(card);
 
             }
         );
@@ -2081,9 +1870,7 @@ async function searchImages() {
 
 
     if (!query) {
-
         return;
-
     }
 
 
@@ -2219,27 +2006,15 @@ async function searchImages() {
                     "Open image/source ↗";
 
 
-                info.appendChild(
-                    title
-                );
+                info.appendChild(title);
 
-                info.appendChild(
-                    link
-                );
+                info.appendChild(link);
 
+                card.appendChild(image);
 
-                card.appendChild(
-                    image
-                );
+                card.appendChild(info);
 
-                card.appendChild(
-                    info
-                );
-
-
-                results.appendChild(
-                    card
-                );
+                results.appendChild(card);
 
             }
         );
@@ -2509,9 +2284,7 @@ async function sendCreatorMessage() {
 
 
     if (!message) {
-
         return;
-
     }
 
 
@@ -2661,7 +2434,7 @@ document
 
 
 /* ==========================================
-   CREATOR MODAL CLICK OUTSIDE
+   CLICK OUTSIDE LOGIN
 ========================================== */
 
 document
