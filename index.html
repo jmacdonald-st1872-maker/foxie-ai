@@ -6,802 +6,1108 @@
 <meta charset="UTF-8">
 
 <meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
 >
 
-<title>FOXIE AI 🦊</title>
-
+<title>Foxie AI</title>
 
 <style>
 
+/* ==========================================
+   GLOBAL
+========================================== */
+
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 html,
 body {
 
-  margin: 0;
+    margin: 0;
+    padding: 0;
 
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    min-height: 100%;
+
+    background: #020403;
+
+    color: #d8ffe8;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
 }
 
 body {
 
-  background: #000;
+    overflow-x: hidden;
 
-  color: #39ff14;
-
-  font-family:
-    "Courier New",
-    monospace;
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  overflow: hidden;
 }
 
 
-/* BACKGROUND */
+/* ==========================================
+   BACKGROUND
+========================================== */
 
-body::before {
+.background {
 
-  content: "";
+    position: fixed;
 
-  position: fixed;
+    inset: 0;
 
-  inset: 0;
+    overflow: hidden;
 
-  background:
+    pointer-events: none;
 
-    linear-gradient(
-      rgba(57,255,20,0.025) 1px,
-      transparent 1px
-    ),
+    z-index: 0;
 
-    linear-gradient(
-      90deg,
-      rgba(57,255,20,0.025) 1px,
-      transparent 1px
-    );
+}
 
-  background-size: 35px 35px;
+.grid {
 
-  pointer-events: none;
+    position: absolute;
+
+    inset: 0;
+
+    background-image:
+
+        linear-gradient(
+            rgba(0,255,100,0.035) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(0,255,100,0.035) 1px,
+            transparent 1px
+        );
+
+    background-size: 40px 40px;
+
 }
 
 
-/* PARTICLES */
-
-.particles {
-
-  position: fixed;
-
-  inset: 0;
-
-  overflow: hidden;
-
-  pointer-events: none;
-}
+/* ==========================================
+   PARTICLES
+========================================== */
 
 .particle {
 
-  position: absolute;
+    position: absolute;
 
-  bottom: -10px;
+    bottom: -20px;
 
-  width: 3px;
-  height: 3px;
+    width: 3px;
+    height: 3px;
 
-  background: #39ff14;
+    border-radius: 50%;
 
-  border-radius: 50%;
+    background: #3cff88;
 
-  box-shadow:
-    0 0 8px #39ff14;
+    box-shadow:
+        0 0 6px #00ff66,
+        0 0 12px #00ff66;
 
-  animation:
-    floatUp 8s linear infinite;
+    animation:
+        rise linear infinite;
+
+    opacity: 0.7;
+
 }
 
-@keyframes floatUp {
+@keyframes rise {
 
-  from {
+    0% {
 
-    transform:
-      translateY(0);
+        transform:
+            translateY(0)
+            translateX(0);
 
-    opacity: 0;
-  }
+        opacity: 0;
 
-  20% {
+    }
 
-    opacity: 1;
-  }
+    15% {
 
-  to {
+        opacity: 0.8;
 
-    transform:
-      translateY(-110vh);
+    }
 
-    opacity: 0;
-  }
-}
+    85% {
 
+        opacity: 0.7;
 
-/* CREATOR CREDIT */
+    }
 
-.creator {
+    100% {
 
-  position: fixed;
+        transform:
+            translateY(-110vh)
+            translateX(40px);
 
-  top: 12px;
-  right: 16px;
+        opacity: 0;
 
-  color: #39ff14;
+    }
 
-  font-size: 11px;
-
-  opacity: 0.65;
-
-  z-index: 20;
-
-  text-shadow:
-    0 0 7px #39ff14;
 }
 
 
-/* MAIN */
+/* ==========================================
+   APP
+========================================== */
 
-.container {
+.app {
 
-  width: 90%;
+    position: relative;
 
-  max-width: 900px;
+    z-index: 2;
 
-  height: 90vh;
+    min-height: 100vh;
 
-  max-height: 720px;
+    display: flex;
 
-  border:
-    1px solid #39ff14;
+    flex-direction: column;
 
-  background:
-    rgba(0,8,2,0.96);
-
-  box-shadow:
-
-    0 0 20px
-    rgba(57,255,20,0.25),
-
-    0 0 70px
-    rgba(57,255,20,0.08);
-
-  padding: 25px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  position: relative;
-
-  z-index: 5;
 }
 
 
-/* TITLE */
+/* ==========================================
+   HEADER
+========================================== */
 
-.glitch {
+header {
 
-  text-align: center;
+    padding: 22px 28px;
 
-  margin: 0;
+    display: flex;
 
-  font-size: 42px;
+    align-items: center;
 
-  letter-spacing: 3px;
+    justify-content: space-between;
 
-  text-shadow:
+    border-bottom:
+        1px solid
+        rgba(0,255,100,0.15);
 
-    2px 0 #00ff88,
+    background:
+        rgba(0,0,0,0.45);
 
-    -2px 0 #00aa00,
+    backdrop-filter: blur(10px);
 
-    0 0 15px #39ff14;
+}
 
-  animation:
-    glitch 1.8s infinite;
+.logo {
+
+    font-size: 27px;
+
+    font-weight: 900;
+
+    letter-spacing: 2px;
+
+    color: #54ff8c;
+
+    text-shadow:
+        0 0 8px #00ff66,
+        0 0 18px rgba(0,255,100,0.5);
+
+    animation: glitch 3s infinite;
+
 }
 
 @keyframes glitch {
 
-  0%,
-  90%,
-  100% {
+    0%,
+    90%,
+    100% {
 
-    transform:
-      translate(0);
-  }
+        transform: translate(0);
 
-  92% {
+    }
 
-    transform:
-      translate(-3px,2px);
-  }
+    91% {
 
-  94% {
+        transform: translate(-2px, 1px);
 
-    transform:
-      translate(3px,-2px);
-  }
+    }
+
+    92% {
+
+        transform: translate(2px, -1px);
+
+    }
+
+    93% {
+
+        transform: translate(0);
+
+    }
+
+}
+
+.creator-credit {
+
+    color: #8cae99;
+
+    font-size: 12px;
+
+    text-align: right;
+
 }
 
 
-.subtitle {
+/* ==========================================
+   MAIN
+========================================== */
 
-  text-align: center;
+main {
 
-  margin:
-    5px 0 15px;
+    width: min(
+        1100px,
+        calc(100% - 30px)
+    );
 
-  opacity: 0.7;
+    margin: 30px auto;
+
+    flex: 1;
+
 }
 
 
-/* STATUS */
+/* ==========================================
+   TABS
+========================================== */
 
-.status {
+.tabs {
 
-  font-size: 12px;
+    display: flex;
 
-  margin-bottom: 10px;
+    gap: 8px;
 
-  opacity: 0.8;
+    margin-bottom: 15px;
+
+    flex-wrap: wrap;
+
+}
+
+.tab {
+
+    border: 1px solid
+        rgba(0,255,100,0.22);
+
+    background:
+        rgba(0,20,8,0.6);
+
+    color: #9edbb1;
+
+    padding: 10px 15px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-weight: 700;
+
+}
+
+.tab:hover {
+
+    border-color: #39ff7a;
+
+    color: #6aff9a;
+
+}
+
+.tab.active {
+
+    background:
+        rgba(0,255,100,0.1);
+
+    border-color: #35ff75;
+
+    color: #58ff8c;
+
 }
 
 
-/* CHAT */
+/* ==========================================
+   PANELS
+========================================== */
 
-.chat {
+.panel {
 
-  flex: 1;
+    display: none;
 
-  min-height: 0;
-
-  overflow-y: auto;
-
-  border:
-    1px solid #174d17;
-
-  background:
-    #000300;
-
-  padding: 15px;
-
-  margin-bottom: 15px;
 }
+
+.panel.active {
+
+    display: block;
+
+}
+
+
+/* ==========================================
+   CHAT BOX
+========================================== */
+
+.chat-container {
+
+    height: 570px;
+
+    border:
+        1px solid
+        rgba(0,255,100,0.18);
+
+    border-radius: 18px;
+
+    background:
+        rgba(0,8,3,0.82);
+
+    box-shadow:
+        0 0 40px
+        rgba(0,255,100,0.06);
+
+    display: flex;
+
+    flex-direction: column;
+
+    overflow: hidden;
+
+}
+
+.messages {
+
+    flex: 1;
+
+    overflow-y: auto;
+
+    padding: 20px;
+
+}
+
+
+/* ==========================================
+   MESSAGE
+========================================== */
 
 .message {
 
-  margin: 12px 0;
+    margin-bottom: 16px;
 
-  line-height: 1.5;
+    display: flex;
 
-  word-wrap: break-word;
 }
 
-.user {
+.message.user {
 
-  color: white;
+    justify-content: flex-end;
+
 }
 
-.foxie {
+.bubble {
 
-  color: #39ff14;
+    max-width: 80%;
 
-  text-shadow:
-    0 0 6px #39ff14;
+    padding: 13px 16px;
+
+    border-radius: 14px;
+
+    line-height: 1.5;
+
+    white-space: pre-wrap;
+
+}
+
+.message.foxie .bubble {
+
+    background:
+        rgba(0,255,100,0.06);
+
+    border:
+        1px solid
+        rgba(0,255,100,0.12);
+
+    color: #d8ffe3;
+
+}
+
+.message.user .bubble {
+
+    background:
+        rgba(0,255,100,0.13);
+
+    border:
+        1px solid
+        rgba(0,255,100,0.2);
+
+    color: #baffce;
+
 }
 
 
-/* INPUT */
+/* ==========================================
+   CHAT INPUT
+========================================== */
 
-.input-area {
+.chat-input {
 
-  display: flex;
+    display: flex;
 
-  gap: 10px;
+    gap: 10px;
+
+    padding: 14px;
+
+    border-top:
+        1px solid
+        rgba(0,255,100,0.12);
+
 }
 
-input {
+.chat-input input {
 
-  flex: 1;
+    flex: 1;
 
-  background: #000;
+    min-width: 0;
 
-  border:
-    1px solid #39ff14;
+    padding: 14px;
 
-  color: white;
+    border-radius: 12px;
 
-  padding: 14px;
+    border:
+        1px solid
+        rgba(0,255,100,0.2);
 
-  font-family:
-    "Courier New",
-    monospace;
+    background:
+        #020904;
 
-  font-size: 16px;
+    color: white;
 
-  outline: none;
+    outline: none;
+
+    font-size: 15px;
+
 }
 
-input::placeholder {
+.chat-input input:focus {
 
-  color: #397a39;
+    border-color: #36ff79;
+
+    box-shadow:
+        0 0 12px
+        rgba(0,255,100,0.12);
+
 }
-
-input:focus {
-
-  box-shadow:
-    0 0 12px
-    rgba(57,255,20,0.35);
-}
-
 
 button {
 
-  background:
-    #39ff14;
+    border: none;
 
-  color: #000;
+    cursor: pointer;
 
-  border: none;
-
-  padding:
-    14px 22px;
-
-  font-family:
-    "Courier New",
-    monospace;
-
-  font-weight: bold;
-
-  cursor: pointer;
 }
 
-button:hover {
+.send {
 
-  box-shadow:
+    padding: 0 20px;
 
-    0 0 10px #39ff14,
+    border-radius: 12px;
 
-    0 0 25px #39ff14;
+    background: #29e96d;
+
+    color: #001a08;
+
+    font-weight: 900;
+
 }
 
-button:disabled {
+.send:hover {
 
-  opacity: 0.5;
+    background: #54ff8c;
 
-  cursor: not-allowed;
 }
 
 
-/* GOOGLE BUTTON */
+/* ==========================================
+   SEARCH
+========================================== */
 
-.google-button {
+.search-box {
 
-  margin-top: 10px;
+    display: flex;
 
-  width: 100%;
+    gap: 10px;
 
-  background: transparent;
+    margin-bottom: 18px;
 
-  color: #39ff14;
-
-  border:
-    1px solid #39ff14;
-
-  padding: 10px;
-
-  cursor: pointer;
 }
 
-.google-button:hover {
+.search-box input {
 
-  background:
-    rgba(57,255,20,0.1);
+    flex: 1;
+
+    padding: 14px;
+
+    border-radius: 12px;
+
+    border:
+        1px solid
+        rgba(0,255,100,0.22);
+
+    background: #020904;
+
+    color: white;
+
+    font-size: 15px;
+
+    outline: none;
+
 }
 
+.search-button {
 
-/* GOOGLE PANEL */
+    padding: 0 20px;
 
-.google-panel {
+    border-radius: 12px;
 
-  display: none;
+    background: #29e96d;
 
-  position: fixed;
+    color: #001a08;
 
-  inset: 0;
+    font-weight: 900;
 
-  background:
-    rgba(0,0,0,0.98);
-
-  z-index: 150;
-
-  padding: 20px;
-}
-
-.google-box {
-
-  width: 100%;
-
-  height: 100%;
-
-  border:
-    1px solid #39ff14;
-
-  background:
-    #000800;
-
-  box-shadow:
-    0 0 30px
-    rgba(57,255,20,0.25);
-
-  display: flex;
-
-  flex-direction: column;
-}
-
-.google-header {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 10px;
-
-  padding: 15px;
-
-  border-bottom:
-    1px solid #174d17;
-}
-
-.google-header h2 {
-
-  margin: 0;
-
-  flex: 1;
-
-  font-size: 20px;
-}
-
-.google-search-area {
-
-  display: flex;
-
-  gap: 10px;
-
-  padding: 15px;
-}
-
-.google-search-area input {
-
-  flex: 1;
-}
-
-.google-results {
-
-  flex: 1;
-
-  padding: 15px;
-
-  overflow: hidden;
-
-  background: white;
-}
-
-.google-results iframe {
-
-  width: 100%;
-
-  height: 100%;
-
-  border: none;
-}
-
-.close-google {
-
-  background: transparent;
-
-  color: #39ff14;
-
-  border:
-    1px solid #39ff14;
-
-  padding: 8px 15px;
 }
 
 
-/* CREATOR LOGIN */
+/* ==========================================
+   SEARCH RESULTS
+========================================== */
 
-.creator-login {
+.search-result {
 
-  display: none;
+    padding: 16px;
 
-  position: fixed;
+    margin-bottom: 10px;
 
-  inset: 0;
+    border:
+        1px solid
+        rgba(0,255,100,0.12);
 
-  background:
-    rgba(0,0,0,0.97);
+    background:
+        rgba(0,20,8,0.55);
 
-  z-index: 200;
+    border-radius: 12px;
 
-  justify-content: center;
-
-  align-items: center;
-
-  padding: 20px;
 }
 
-.login-box {
+.search-result h3 {
 
-  width: 95%;
+    margin: 0 0 7px;
 
-  max-width: 500px;
+    color: #54ff8c;
 
-  border:
-    1px solid #39ff14;
-
-  background:
-    #000800;
-
-  padding: 35px;
-
-  box-shadow:
-
-    0 0 25px
-    rgba(57,255,20,0.4);
-
-  text-align: center;
 }
 
-.login-box h2 {
+.search-result p {
 
-  margin-top: 0;
+    margin: 0 0 8px;
 
-  font-size: 28px;
+    color: #b7c9bc;
 
-  text-shadow:
-    0 0 10px #39ff14;
+    line-height: 1.5;
+
 }
 
-.login-label {
+.search-result a {
 
-  font-size: 12px;
+    color: #42ff83;
 
-  opacity: 0.65;
+    word-break: break-all;
 
-  margin-bottom: 20px;
-}
-
-.password-area {
-
-  display: flex;
-
-  gap: 8px;
-
-  margin-bottom: 15px;
-}
-
-.show-password {
-
-  width: 55px;
-
-  padding: 10px;
-
-  background: transparent;
-
-  color: #39ff14;
-
-  border:
-    1px solid #39ff14;
-}
-
-.login-button,
-.cancel-button {
-
-  width: 100%;
-
-  margin-top: 10px;
-}
-
-.cancel-button {
-
-  background: transparent;
-
-  color: #39ff14;
-
-  border:
-    1px solid #39ff14;
-}
-
-.login-error {
-
-  color: #ff3333;
-
-  font-size: 12px;
-
-  min-height: 18px;
 }
 
 
-/* CREATOR MODE */
+/* ==========================================
+   IMAGE RESULTS
+========================================== */
 
-.creator-panel {
+.image-grid {
 
-  display: none;
+    display: grid;
 
-  position: fixed;
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(190px, 1fr)
+        );
 
-  inset: 0;
+    gap: 14px;
 
-  background:
-    rgba(0,0,0,0.97);
-
-  z-index: 300;
-
-  justify-content: center;
-
-  align-items: center;
-
-  padding: 20px;
 }
 
-.creator-box {
+.image-card {
 
-  width: 95%;
+    overflow: hidden;
 
-  max-width: 800px;
+    border:
+        1px solid
+        rgba(0,255,100,0.16);
 
-  height: 90vh;
+    border-radius: 14px;
 
-  max-height: 700px;
+    background:
+        rgba(0,15,6,0.8);
 
-  border:
-    1px solid #39ff14;
+    transition:
+        transform 0.2s,
+        border-color 0.2s;
 
-  padding: 25px;
-
-  background:
-    #000800;
-
-  box-shadow:
-
-    0 0 25px
-    rgba(57,255,20,0.4);
-
-  display: flex;
-
-  flex-direction: column;
 }
 
-.creator-header {
+.image-card:hover {
 
-  text-align: center;
+    transform: translateY(-3px);
 
-  margin-bottom: 15px;
+    border-color: #3dff7e;
+
 }
 
-.creator-header h2 {
+.image-card img {
 
-  font-size: 28px;
-
-  margin:
-    0 0 8px;
-
-  text-shadow:
-    0 0 10px #39ff14;
-}
-
-.creator-label {
-
-  font-size: 11px;
-
-  opacity: 0.6;
-}
-
-.creator-chat {
-
-  flex: 1;
-
-  min-height: 0;
-
-  overflow-y: auto;
-
-  border:
-    1px solid #174d17;
-
-  background:
-    #000300;
-
-  padding: 15px;
-
-  margin-bottom: 15px;
-}
-
-.creator-input-area {
-
-  display: flex;
-
-  gap: 10px;
-}
-
-.close-creator {
-
-  margin-top: 10px;
-
-  background: transparent;
-
-  color: #39ff14;
-
-  border:
-    1px solid #39ff14;
-}
-
-
-/* MOBILE */
-
-@media (max-width: 600px) {
-
-  .container {
-
-    width: 95%;
-
-    height: 95vh;
-
-    padding: 15px;
-  }
-
-  .glitch {
-
-    font-size: 30px;
-  }
-
-  .creator {
-
-    font-size: 9px;
-
-    right: 8px;
-  }
-
-  .input-area,
-  .creator-input-area,
-  .password-area,
-  .google-search-area {
-
-    flex-direction: column;
-  }
-
-  button {
-
-    width: 100%;
-  }
-
-  .creator-box {
+    display: block;
 
     width: 100%;
 
-    height: 95vh;
+    height: 160px;
 
-    padding: 15px;
-  }
+    object-fit: cover;
+
+    background: #020403;
+
+}
+
+.image-info {
+
+    padding: 10px;
+
+}
+
+.image-title {
+
+    color: #caffd7;
+
+    font-size: 13px;
+
+    line-height: 1.35;
+
+    margin-bottom: 8px;
+
+}
+
+.image-link {
+
+    color: #49ff87;
+
+    font-size: 12px;
+
+    text-decoration: none;
+
+}
+
+
+/* ==========================================
+   CONTROL PANEL
+========================================== */
+
+.control-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(250px, 1fr)
+        );
+
+    gap: 15px;
+
+}
+
+.control-card {
+
+    border:
+        1px solid
+        rgba(0,255,100,0.15);
+
+    border-radius: 15px;
+
+    padding: 20px;
+
+    background:
+        rgba(0,15,6,0.65);
+
+}
+
+.control-card h3 {
+
+    margin-top: 0;
+
+    color: #50ff89;
+
+}
+
+.control-card p {
+
+    color: #a6b8ab;
+
+    line-height: 1.5;
+
+}
+
+.control-card code {
+
+    color: #63ff97;
+
+    word-break: break-word;
+
+}
+
+
+/* ==========================================
+   CREATOR LOGIN
+========================================== */
+
+.modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 20;
+
+    background:
+        rgba(0,0,0,0.8);
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+}
+
+.modal.show {
+
+    display: flex;
+
+}
+
+.modal-box {
+
+    width: min(
+        420px,
+        100%
+    );
+
+    background: #031007;
+
+    border:
+        1px solid
+        rgba(0,255,100,0.25);
+
+    border-radius: 18px;
+
+    padding: 25px;
+
+    box-shadow:
+        0 0 40px
+        rgba(0,255,100,0.1);
+
+}
+
+.modal-box h2 {
+
+    color: #50ff89;
+
+    margin-top: 0;
+
+}
+
+.password-row {
+
+    display: flex;
+
+    gap: 8px;
+
+}
+
+.password-row input {
+
+    flex: 1;
+
+    padding: 13px;
+
+    border-radius: 10px;
+
+    border:
+        1px solid
+        rgba(0,255,100,0.2);
+
+    background: #010502;
+
+    color: white;
+
+    outline: none;
+
+}
+
+.eye {
+
+    width: 48px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(0,255,100,0.1);
+
+    color: #55ff8b;
+
+    border:
+        1px solid
+        rgba(0,255,100,0.2);
+
+}
+
+.modal-buttons {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 15px;
+
+}
+
+.modal-buttons button {
+
+    flex: 1;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    font-weight: 800;
+
+}
+
+.login-button {
+
+    background: #2af06f;
+
+    color: #001a08;
+
+}
+
+.close-button {
+
+    background:
+        rgba(255,255,255,0.06);
+
+    color: #b5c0b8;
+
+}
+
+
+/* ==========================================
+   CREATOR MODE
+========================================== */
+
+.creator-mode {
+
+    display: none;
+
+}
+
+.creator-mode.show {
+
+    display: block;
+
+}
+
+.creator-banner {
+
+    padding: 15px 18px;
+
+    border:
+        1px solid
+        rgba(0,255,100,0.22);
+
+    border-radius: 14px;
+
+    margin-bottom: 15px;
+
+    background:
+        rgba(0,255,100,0.05);
+
+    color: #55ff8b;
+
+    font-weight: 800;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+.creator-banner button {
+
+    padding: 8px 12px;
+
+    border-radius: 8px;
+
+    background:
+        rgba(255,255,255,0.07);
+
+    color: #c7d2ca;
+
+}
+
+
+/* ==========================================
+   STATUS
+========================================== */
+
+.status {
+
+    min-height: 20px;
+
+    padding: 8px 2px;
+
+    color: #82998a;
+
+    font-size: 13px;
+
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 650px) {
+
+    header {
+
+        padding: 18px;
+
+        align-items: flex-start;
+
+        gap: 12px;
+
+        flex-direction: column;
+
+    }
+
+    .creator-credit {
+
+        text-align: left;
+
+    }
+
+    main {
+
+        width:
+            calc(100% - 18px);
+
+        margin:
+            18px auto;
+
+    }
+
+    .chat-container {
+
+        height: 65vh;
+
+    }
+
+    .bubble {
+
+        max-width: 90%;
+
+    }
+
+    .chat-input {
+
+        padding: 10px;
+
+    }
+
+    .send {
+
+        padding: 0 15px;
+
+    }
+
+    .image-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 9px;
+
+    }
+
+    .image-card img {
+
+        height: 120px;
+
+    }
+
+    .search-box {
+
+        flex-direction: column;
+
+    }
+
+    .search-button {
+
+        padding: 13px;
+
+    }
+
+}
+
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+::-webkit-scrollbar {
+
+    width: 7px;
+
+}
+
+::-webkit-scrollbar-track {
+
+    background: #020403;
+
+}
+
+::-webkit-scrollbar-thumb {
+
+    background: #164b28;
+
+    border-radius: 10px;
 
 }
 
@@ -813,1058 +1119,1572 @@ button:disabled {
 <body>
 
 
-<!-- PARTICLES -->
+<!-- ========================================
+     BACKGROUND
+========================================= -->
 
-<div class="particles">
+<div class="background">
 
-  <div class="particle" style="left:5%;animation-delay:0s"></div>
-  <div class="particle" style="left:15%;animation-delay:2s"></div>
-  <div class="particle" style="left:25%;animation-delay:4s"></div>
-  <div class="particle" style="left:35%;animation-delay:1s"></div>
-  <div class="particle" style="left:45%;animation-delay:3s"></div>
-  <div class="particle" style="left:55%;animation-delay:5s"></div>
-  <div class="particle" style="left:65%;animation-delay:2s"></div>
-  <div class="particle" style="left:75%;animation-delay:4s"></div>
-  <div class="particle" style="left:85%;animation-delay:1s"></div>
-  <div class="particle" style="left:95%;animation-delay:3s"></div>
+    <div class="grid"></div>
 
 </div>
 
 
-<!-- CREATOR CREDIT -->
-
-<div class="creator">
-
-  Jayden Wayne MacDonald created this
-
-</div>
+<div class="app">
 
 
-<!-- MAIN FOXIE -->
+<!-- ========================================
+     HEADER
+========================================= -->
 
-<div class="container">
+<header>
 
-  <h1 class="glitch">
-
-    🦊 FOXIE AI
-
-  </h1>
-
-
-  <div class="subtitle">
-
-    // your friendly AI assistant //
-
-  </div>
-
-
-  <div class="status">
-
-    ● SYSTEM ONLINE
-
-  </div>
-
-
-  <div class="chat" id="chat">
-
-    <div class="message foxie">
-
-      🦊 Hey there! I'm Foxie.
-      How can I help you today?
-
+    <div class="logo">
+        🦊 FOXIE AI
     </div>
 
-  </div>
+    <div class="creator-credit">
+        Jayden Wayne MacDonald created this
+    </div>
+
+</header>
 
 
-  <div class="input-area">
+<main>
 
-    <input
-      id="message"
-      type="text"
-      placeholder="Talk to Foxie..."
-      autocomplete="off"
+
+<!-- ========================================
+     TABS
+========================================= -->
+
+<div class="tabs">
+
+    <button
+        class="tab active"
+        onclick="showPanel('chatPanel', this)"
     >
-
-    <button id="sendButton">
-
-      SEND
-
+        💬 Chat
     </button>
 
-  </div>
-
-
-  <button
-    class="google-button"
-    id="googleButton"
-  >
-
-    🔎 SEARCH GOOGLE
-
-  </button>
-
-
-  <div class="footer">
-
-    FOXIE AI // CONNECTION ESTABLISHED
-
-  </div>
-
-</div>
-
-
-<!-- GOOGLE PANEL -->
-
-<div
-  class="google-panel"
-  id="googlePanel"
->
-
-  <div class="google-box">
-
-    <div class="google-header">
-
-      <h2>
-        🔎 GOOGLE SEARCH
-      </h2>
-
-      <button
-        class="close-google"
-        id="closeGoogle"
-      >
-
-        CLOSE
-
-      </button>
-
-    </div>
-
-
-    <div class="google-search-area">
-
-      <input
-        id="googleQuery"
-        type="text"
-        placeholder="Search Google..."
-      >
-
-      <button id="googleSearchButton">
-
-        SEARCH
-
-      </button>
-
-    </div>
-
-
-    <div
-      class="google-results"
-      id="googleResults"
+    <button
+        class="tab"
+        onclick="showPanel('webPanel', this)"
     >
+        🔎 Web
+    </button>
 
-      <div
-        style="
-          color:#000;
-          padding:30px;
-          font-family:Arial;
-        "
-      >
+    <button
+        class="tab"
+        onclick="showPanel('imagesPanel', this)"
+    >
+        🖼️ Images
+    </button>
 
-        Type something above to search Google.
+    <button
+        class="tab"
+        onclick="showPanel('controlPanel', this)"
+    >
+        ⚙️ Control Panel
+    </button>
 
-      </div>
-
-    </div>
-
-  </div>
+    <button
+        class="tab"
+        onclick="openCreatorLogin()"
+    >
+        🔐 Creator
+    </button>
 
 </div>
 
 
-<!-- CREATOR LOGIN -->
+<!-- ========================================
+     NORMAL CHAT
+========================================= -->
 
-<div
-  class="creator-login"
-  id="creatorLogin"
+<section
+    id="chatPanel"
+    class="panel active"
 >
 
-  <div class="login-box">
+    <div class="chat-container">
 
-    <h2>
-      🔐 CREATOR ACCESS
-    </h2>
+        <div
+            id="messages"
+            class="messages"
+        >
 
-    <div class="login-label">
-      ENTER CREATOR CODE
+            <div class="message foxie">
+
+                <div class="bubble">
+
+                    🦊 Hey! I'm Foxie AI.
+
+                    <br><br>
+
+                    Ask me anything! I can chat,
+                    search the web, and find images.
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="chat-input">
+
+            <input
+                id="messageInput"
+                type="text"
+                placeholder="Talk to Foxie..."
+                autocomplete="off"
+            >
+
+            <button
+                class="send"
+                onclick="sendMessage()"
+            >
+                SEND
+            </button>
+
+        </div>
+
     </div>
-
-
-    <div class="password-area">
-
-      <input
-        id="creatorCodeInput"
-        type="password"
-        placeholder="••••••••••••"
-        autocomplete="off"
-      >
-
-
-      <button
-        class="show-password"
-        id="showPassword"
-        type="button"
-      >
-
-        👁️
-
-      </button>
-
-    </div>
-
 
     <div
-      class="login-error"
-      id="loginError"
+        id="chatStatus"
+        class="status"
     ></div>
 
-
-    <button
-      class="login-button"
-      id="loginButton"
-    >
-
-      UNLOCK
-
-    </button>
+</section>
 
 
-    <button
-      class="cancel-button"
-      id="cancelLogin"
-    >
+<!-- ========================================
+     WEB SEARCH
+========================================= -->
 
-      CANCEL
+<section
+    id="webPanel"
+    class="panel"
+>
 
-    </button>
+    <div class="search-box">
 
-  </div>
+        <input
+            id="webInput"
+            type="text"
+            placeholder="Search the web..."
+            onkeydown="if(event.key === 'Enter') searchWeb()"
+        >
+
+        <button
+            class="search-button"
+            onclick="searchWeb()"
+        >
+            🔎 SEARCH
+        </button>
+
+    </div>
+
+    <div
+        id="webStatus"
+        class="status"
+    ></div>
+
+    <div id="webResults"></div>
+
+</section>
+
+
+<!-- ========================================
+     IMAGE SEARCH
+========================================= -->
+
+<section
+    id="imagesPanel"
+    class="panel"
+>
+
+    <div class="search-box">
+
+        <input
+            id="imageInput"
+            type="text"
+            placeholder="Search for images..."
+            onkeydown="if(event.key === 'Enter') searchImages()"
+        >
+
+        <button
+            class="search-button"
+            onclick="searchImages()"
+        >
+            🖼️ FIND
+        </button>
+
+    </div>
+
+    <div
+        id="imageStatus"
+        class="status"
+    ></div>
+
+    <div
+        id="imageResults"
+        class="image-grid"
+    ></div>
+
+</section>
+
+
+<!-- ========================================
+     CONTROL PANEL
+========================================= -->
+
+<section
+    id="controlPanel"
+    class="panel"
+>
+
+    <div class="control-grid">
+
+
+        <div class="control-card">
+
+            <h3>🦊 Foxie</h3>
+
+            <p>
+                Foxie is your personal AI assistant.
+            </p>
+
+            <p>
+                <strong>Name:</strong>
+                Foxie AI
+            </p>
+
+        </div>
+
+
+        <div class="control-card">
+
+            <h3>🤖 AI</h3>
+
+            <p>
+                Provider:
+                <code>Hugging Face</code>
+            </p>
+
+            <p>
+                Model:
+                <code>openai/gpt-oss-120b:fastest</code>
+            </p>
+
+            <p>
+                Your secret token stays on Render.
+                It is not stored in this website.
+            </p>
+
+        </div>
+
+
+        <div class="control-card">
+
+            <h3>🌐 Backend</h3>
+
+            <p>
+                <code>
+                https://foxie-ai-backend.onrender.com/
+                </code>
+            </p>
+
+            <p>
+                Foxie's backend handles AI,
+                web search, image search and
+                creator login.
+            </p>
+
+        </div>
+
+
+        <div class="control-card">
+
+            <h3>🔎 Search</h3>
+
+            <p>
+                Web search:
+                <strong>DuckDuckGo</strong>
+            </p>
+
+            <p>
+                Image search:
+                <strong>DuckDuckGo Images</strong>
+            </p>
+
+            <p>
+                Google has been removed from Foxie.
+            </p>
+
+        </div>
+
+
+        <div class="control-card">
+
+            <h3>🔐 Creator Mode</h3>
+
+            <p>
+                Creator access is protected by
+                the server-side
+                <code>CREATOR_CODE</code>.
+            </p>
+
+            <p>
+                Never put your creator code
+                directly inside this file.
+            </p>
+
+        </div>
+
+
+        <div class="control-card">
+
+            <h3>💻 Website</h3>
+
+            <p>
+                Foxie website:
+            </p>
+
+            <p>
+                <code>
+                jmacdonald-st1872-maker.github.io/foxie-ai/
+                </code>
+            </p>
+
+        </div>
+
+
+        <div class="control-card">
+
+            <h3>📦 Website GitHub</h3>
+
+            <p>
+                <code>
+                github.com/jmacdonald-st1872-maker/foxie-ai
+                </code>
+            </p>
+
+        </div>
+
+
+        <div class="control-card">
+
+            <h3>⚙️ Backend GitHub</h3>
+
+            <p>
+                <code>
+                github.com/jmacdonald-st1872-maker/foxie-ai-backend
+                </code>
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- ========================================
+     CREATOR MODE
+========================================= -->
+
+<section
+    id="creatorMode"
+    class="creator-mode"
+>
+
+    <div class="creator-banner">
+
+        <span>
+            🔐 CREATOR MODE ACTIVE
+        </span>
+
+        <button onclick="closeCreatorMode()">
+            CLOSE
+        </button>
+
+    </div>
+
+
+    <div class="chat-container">
+
+        <div
+            id="creatorMessages"
+            class="messages"
+        >
+
+            <div class="message foxie">
+
+                <div class="bubble">
+
+                    🦊 Welcome back, Creator.
+
+                    <br><br>
+
+                    This is your private Foxie
+                    creator chat.
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="chat-input">
+
+            <input
+                id="creatorInput"
+                type="text"
+                placeholder="Creator chat..."
+                autocomplete="off"
+            >
+
+            <button
+                class="send"
+                onclick="sendCreatorMessage()"
+            >
+                SEND
+            </button>
+
+        </div>
+
+    </div>
+
+    <div
+        id="creatorStatus"
+        class="status"
+    ></div>
+
+</section>
+
+
+</main>
 
 </div>
 
 
-<!-- CREATOR MODE -->
+<!-- ========================================
+     CREATOR LOGIN MODAL
+========================================= -->
 
 <div
-  class="creator-panel"
-  id="creatorPanel"
+    id="creatorModal"
+    class="modal"
 >
 
-  <div class="creator-box">
+    <div class="modal-box">
 
-    <div class="creator-header">
+        <h2>🔐 Creator Access</h2>
 
-      <h2>
-        🦊 CREATOR MODE
-      </h2>
+        <p>
+            Enter the creator code to open
+            Creator Mode.
+        </p>
 
-      <div class="creator-label">
-        ACCESS GRANTED // CREATOR
-      </div>
+
+        <div class="password-row">
+
+            <input
+                id="creatorCodeInput"
+                type="password"
+                placeholder="••••••••••••"
+                autocomplete="off"
+            >
+
+            <button
+                class="eye"
+                onclick="togglePassword()"
+                id="eyeButton"
+            >
+                👁️
+            </button>
+
+        </div>
+
+
+        <div
+            id="loginStatus"
+            class="status"
+        ></div>
+
+
+        <div class="modal-buttons">
+
+            <button
+                class="login-button"
+                onclick="creatorLogin()"
+            >
+                ENTER
+            </button>
+
+            <button
+                class="close-button"
+                onclick="closeCreatorLogin()"
+            >
+                CANCEL
+            </button>
+
+        </div>
 
     </div>
-
-
-    <div
-      class="creator-chat"
-      id="creatorChat"
-    >
-
-      <div class="message foxie">
-
-        🦊 Hello Creator. How are you? 👋
-
-      </div>
-
-      <div class="message foxie">
-
-        🦊 Creator Mode is online.
-        You can chat with me here.
-
-      </div>
-
-    </div>
-
-
-    <div class="creator-input-area">
-
-      <input
-        id="creatorMessage"
-        type="text"
-        placeholder="Talk to Foxie, Creator..."
-        autocomplete="off"
-      >
-
-      <button id="creatorSend">
-
-        SEND
-
-      </button>
-
-    </div>
-
-
-    <button
-      class="close-creator"
-      id="closeCreator"
-    >
-
-      CLOSE CREATOR MODE
-
-    </button>
-
-  </div>
 
 </div>
 
 
 <script>
 
+/* ==========================================
+   CONFIG
+========================================== */
 
-/* ELEMENTS */
+const BACKEND =
+    "https://foxie-ai-backend.onrender.com";
 
-const input =
-  document.getElementById("message");
 
-const chat =
-  document.getElementById("chat");
+/* ==========================================
+   PARTICLES
+========================================== */
 
-const sendButton =
-  document.getElementById("sendButton");
+function createParticles() {
 
+    const background =
+        document.querySelector(".background");
 
-/* GOOGLE */
+    for (
+        let i = 0;
+        i < 65;
+        i++
+    ) {
 
-const googleButton =
-  document.getElementById("googleButton");
+        const particle =
+            document.createElement("div");
 
-const googlePanel =
-  document.getElementById("googlePanel");
+        particle.className =
+            "particle";
 
-const googleQuery =
-  document.getElementById("googleQuery");
+        particle.style.left =
+            Math.random() * 100 + "%";
 
-const googleSearchButton =
-  document.getElementById("googleSearchButton");
+        particle.style.animationDuration =
+            (5 + Math.random() * 10) + "s";
 
-const googleResults =
-  document.getElementById("googleResults");
+        particle.style.animationDelay =
+            (Math.random() * 8) + "s";
 
-const closeGoogle =
-  document.getElementById("closeGoogle");
+        particle.style.opacity =
+            0.2 + Math.random() * 0.7;
 
-
-/* CREATOR LOGIN */
-
-const creatorLogin =
-  document.getElementById("creatorLogin");
-
-const creatorCodeInput =
-  document.getElementById("creatorCodeInput");
-
-const showPassword =
-  document.getElementById("showPassword");
-
-const loginButton =
-  document.getElementById("loginButton");
-
-const cancelLogin =
-  document.getElementById("cancelLogin");
-
-const loginError =
-  document.getElementById("loginError");
-
-
-/* CREATOR MODE */
-
-const creatorPanel =
-  document.getElementById("creatorPanel");
-
-const creatorMessage =
-  document.getElementById("creatorMessage");
-
-const creatorChat =
-  document.getElementById("creatorChat");
-
-const creatorSend =
-  document.getElementById("creatorSend");
-
-const closeCreator =
-  document.getElementById("closeCreator");
-
-
-/* ================================= */
-/* NORMAL MESSAGE */
-/* ================================= */
-
-function addMessage(text, className) {
-
-  const div =
-    document.createElement("div");
-
-  div.className =
-    "message " + className;
-
-  div.textContent =
-    text;
-
-  chat.appendChild(div);
-
-  chat.scrollTop =
-    chat.scrollHeight;
-
-  return div;
-}
-
-
-/* ================================= */
-/* CREATOR MESSAGE */
-/* ================================= */
-
-function addCreatorMessage(
-  text,
-  className
-) {
-
-  const div =
-    document.createElement("div");
-
-  div.className =
-    "message " + className;
-
-  div.textContent =
-    text;
-
-  creatorChat.appendChild(div);
-
-  creatorChat.scrollTop =
-    creatorChat.scrollHeight;
-
-  return div;
-}
-
-
-/* ================================= */
-/* ASK FOXIE */
-/* ================================= */
-
-async function askFoxie(
-  message,
-  chatArea,
-  thinkingText
-) {
-
-  const thinking =
-    document.createElement("div");
-
-  thinking.className =
-    "message foxie";
-
-  thinking.textContent =
-    thinkingText;
-
-  chatArea.appendChild(thinking);
-
-
-  try {
-
-    const response =
-      await fetch(
-        "https://foxie-ai-backend.onrender.com/chat",
-        {
-
-          method: "POST",
-
-          headers: {
-            "Content-Type":
-              "application/json"
-          },
-
-          body: JSON.stringify({
-            message: message
-          })
-
-        }
-      );
-
-
-    const data =
-      await response.json();
-
-
-    thinking.remove();
-
-
-    if (data.reply) {
-
-      const reply =
-        document.createElement("div");
-
-      reply.className =
-        "message foxie";
-
-      reply.textContent =
-        "🦊 FOXIE: "
-        + data.reply;
-
-      chatArea.appendChild(reply);
+        background.appendChild(
+            particle
+        );
 
     }
 
-    else {
+}
 
-      const error =
-        document.createElement("div");
+createParticles();
 
-      error.className =
-        "message foxie";
 
-      error.textContent =
-        "🦊 Something went wrong.";
+/* ==========================================
+   PANEL SWITCHING
+========================================== */
 
-      chatArea.appendChild(error);
+function showPanel(
+    panelId,
+    button
+) {
+
+    document
+        .querySelectorAll(".panel")
+        .forEach(panel => {
+
+            panel.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    document
+        .querySelectorAll(".tab")
+        .forEach(tab => {
+
+            tab.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    document
+        .getElementById(panelId)
+        .classList.add("active");
+
+
+    if (button) {
+
+        button.classList.add("active");
+
+    }
+
+}
+
+
+/* ==========================================
+   CHAT
+========================================== */
+
+async function sendMessage() {
+
+    const input =
+        document.getElementById(
+            "messageInput"
+        );
+
+    const messages =
+        document.getElementById(
+            "messages"
+        );
+
+    const status =
+        document.getElementById(
+            "chatStatus"
+        );
+
+    const message =
+        input.value.trim();
+
+
+    if (!message) {
+
+        return;
 
     }
 
 
-  }
+    addMessage(
+        messages,
+        message,
+        "user"
+    );
 
-  catch (error) {
-
-    thinking.remove();
-
-    const errorMessage =
-      document.createElement("div");
-
-    errorMessage.className =
-      "message foxie";
-
-    errorMessage.textContent =
-      "🦊 ERROR: Foxie couldn't connect.";
-
-    chatArea.appendChild(errorMessage);
-
-  }
-
-
-  chatArea.scrollTop =
-    chatArea.scrollHeight;
-}
-
-
-/* ================================= */
-/* NORMAL CHAT */
-/* ================================= */
-
-async function talkToFoxie() {
-
-  const message =
-    input.value.trim();
-
-
-  if (!message) {
-    return;
-  }
-
-
-  /* CREATOR LOGIN */
-
-  if (
-    message.toLowerCase() ===
-    "creator"
-  ) {
 
     input.value = "";
 
-    creatorLogin.style.display =
-      "flex";
+    status.textContent =
+        "🦊 Foxie is thinking...";
 
-    creatorCodeInput.value =
-      "";
 
-    loginError.textContent =
-      "";
+    try {
 
-    creatorCodeInput.focus();
+        const response =
+            await fetch(
+                BACKEND + "/chat",
+                {
+                    method: "POST",
 
-    return;
-  }
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
 
+                    body: JSON.stringify({
+                        message: message
+                    })
+                }
+            );
 
-  addMessage(
-    "> YOU: " + message,
-    "user"
-  );
 
+        const data =
+            await response.json();
 
-  input.value = "";
 
-  sendButton.disabled =
-    true;
+        if (!response.ok) {
 
-
-  await askFoxie(
-    message,
-    chat,
-    "🦊 Foxie is thinking..."
-  );
-
-
-  sendButton.disabled =
-    false;
-
-  input.focus();
-}
-
-
-/* ================================= */
-/* GOOGLE SEARCH */
-/* ================================= */
-
-function searchGoogle() {
-
-  const query =
-    googleQuery.value.trim();
-
-
-  if (!query) {
-    return;
-  }
-
-
-  const googleURL =
-    "https://www.google.com/search?q="
-    + encodeURIComponent(query);
-
-
-  /* Try displaying Google */
-
-  googleResults.innerHTML = "";
-
-
-  const iframe =
-    document.createElement("iframe");
-
-  iframe.src =
-    googleURL;
-
-  iframe.title =
-    "Google Search";
-
-
-  googleResults.appendChild(
-    iframe
-  );
-
-
-  /*
-    Google may block iframe loading.
-
-    If that happens, show a button
-    that opens Google normally.
-  */
-
-  setTimeout(function() {
-
-    const fallback =
-      document.createElement("div");
-
-    fallback.style.position =
-      "absolute";
-
-    fallback.style.bottom =
-      "30px";
-
-    fallback.style.left =
-      "50%";
-
-    fallback.style.transform =
-      "translateX(-50%)";
-
-    fallback.style.zIndex =
-      "10";
-
-    fallback.style.background =
-      "#000";
-
-    fallback.style.border =
-      "1px solid #39ff14";
-
-    fallback.style.padding =
-      "15px";
-
-    fallback.innerHTML =
-      `
-      <span style="color:#39ff14">
-        Google may block embedded results.
-      </span>
-      <br><br>
-      <button
-        onclick="window.open('${googleURL}','_blank')"
-      >
-        OPEN GOOGLE
-      </button>
-      `;
-
-    googleResults.appendChild(
-      fallback
-    );
-
-  }, 2500);
-}
-
-
-/* GOOGLE OPEN */
-
-googleButton.addEventListener(
-  "click",
-  function() {
-
-    googlePanel.style.display =
-      "flex";
-
-    googleQuery.focus();
-
-  }
-);
-
-
-/* GOOGLE SEARCH */
-
-googleSearchButton.addEventListener(
-  "click",
-  searchGoogle
-);
-
-
-/* GOOGLE ENTER */
-
-googleQuery.addEventListener(
-  "keydown",
-  function(event) {
-
-    if (event.key === "Enter") {
-
-      searchGoogle();
-
-    }
-
-  }
-);
-
-
-/* CLOSE GOOGLE */
-
-closeGoogle.addEventListener(
-  "click",
-  function() {
-
-    googlePanel.style.display =
-      "none";
-
-    googleResults.innerHTML =
-      `
-      <div
-        style="
-          color:#000;
-          padding:30px;
-          font-family:Arial;
-        "
-      >
-        Type something above to search Google.
-      </div>
-      `;
-
-  }
-);
-
-
-/* ================================= */
-/* CREATOR LOGIN */
-/* ================================= */
-
-async function unlockCreator() {
-
-  const code =
-    creatorCodeInput.value;
-
-
-  if (!code) {
-
-    loginError.textContent =
-      "ENTER THE CREATOR CODE";
-
-    return;
-  }
-
-
-  loginButton.disabled =
-    true;
-
-  loginError.textContent =
-    "CHECKING ACCESS...";
-
-
-  try {
-
-    const response =
-      await fetch(
-        "https://foxie-ai-backend.onrender.com/creator-login",
-        {
-
-          method: "POST",
-
-          headers: {
-            "Content-Type":
-              "application/json"
-          },
-
-          body: JSON.stringify({
-            code: code
-          })
+            throw new Error(
+                data.error ||
+                "Request failed"
+            );
 
         }
-      );
 
 
-    const data =
-      await response.json();
+        addMessage(
+            messages,
+            data.reply,
+            "foxie"
+        );
 
 
-    if (data.success) {
+        status.textContent = "";
 
-      creatorLogin.style.display =
-        "none";
 
-      creatorPanel.style.display =
-        "flex";
+    } catch (error) {
 
-      creatorCodeInput.value =
-        "";
+        console.error(error);
 
-      loginError.textContent =
-        "";
+        addMessage(
+            messages,
+            "⚠️ I couldn't connect to my backend. Give it a moment and try again.",
+            "foxie"
+        );
 
-      creatorMessage.focus();
-
-    }
-
-    else {
-
-      loginError.textContent =
-        "❌ ACCESS DENIED";
+        status.textContent =
+            "Backend connection error.";
 
     }
 
-
-  }
-
-  catch (error) {
-
-    loginError.textContent =
-      "🦊 SERVER CONNECTION ERROR";
-
-  }
-
-
-  loginButton.disabled =
-    false;
 }
 
 
-/* SHOW / HIDE PASSWORD */
+/* ==========================================
+   ADD CHAT MESSAGE
+========================================== */
 
-showPassword.addEventListener(
-  "click",
-  function() {
+function addMessage(
+    container,
+    text,
+    type
+) {
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        "message " + type;
+
+
+    const bubble =
+        document.createElement("div");
+
+    bubble.className =
+        "bubble";
+
+
+    bubble.textContent =
+        text;
+
+
+    message.appendChild(
+        bubble
+    );
+
+
+    container.appendChild(
+        message
+    );
+
+
+    container.scrollTop =
+        container.scrollHeight;
+
+}
+
+
+/* ==========================================
+   WEB SEARCH
+========================================== */
+
+async function searchWeb() {
+
+    const input =
+        document.getElementById(
+            "webInput"
+        );
+
+    const results =
+        document.getElementById(
+            "webResults"
+        );
+
+    const status =
+        document.getElementById(
+            "webStatus"
+        );
+
+    const query =
+        input.value.trim();
+
+
+    if (!query) {
+
+        return;
+
+    }
+
+
+    results.innerHTML = "";
+
+    status.textContent =
+        "🔎 Searching DuckDuckGo...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                BACKEND +
+                "/search?q=" +
+                encodeURIComponent(query)
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Search failed"
+            );
+
+        }
+
+
+        if (
+            !data.results ||
+            data.results.length === 0
+        ) {
+
+            results.innerHTML =
+                "<p>No results found.</p>";
+
+            status.textContent = "";
+
+            return;
+
+        }
+
+
+        data.results.forEach(
+            result => {
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+                card.className =
+                    "search-result";
+
+
+                const title =
+                    document.createElement(
+                        "h3"
+                    );
+
+                title.textContent =
+                    result.title;
+
+
+                const body =
+                    document.createElement(
+                        "p"
+                    );
+
+                body.textContent =
+                    result.body;
+
+
+                const link =
+                    document.createElement(
+                        "a"
+                    );
+
+                link.href =
+                    result.href;
+
+                link.target =
+                    "_blank";
+
+                link.rel =
+                    "noopener noreferrer";
+
+                link.textContent =
+                    result.href;
+
+
+                card.appendChild(
+                    title
+                );
+
+                card.appendChild(
+                    body
+                );
+
+                card.appendChild(
+                    link
+                );
+
+
+                results.appendChild(
+                    card
+                );
+
+            }
+        );
+
+
+        status.textContent =
+            "✅ Search complete.";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        status.textContent =
+            "⚠️ Search failed.";
+
+        results.innerHTML =
+            "<p>Foxie couldn't complete the search.</p>";
+
+    }
+
+}
+
+
+/* ==========================================
+   IMAGE SEARCH
+========================================== */
+
+async function searchImages() {
+
+    const input =
+        document.getElementById(
+            "imageInput"
+        );
+
+    const results =
+        document.getElementById(
+            "imageResults"
+        );
+
+    const status =
+        document.getElementById(
+            "imageStatus"
+        );
+
+    const query =
+        input.value.trim();
+
+
+    if (!query) {
+
+        return;
+
+    }
+
+
+    results.innerHTML = "";
+
+    status.textContent =
+        "🖼️ Finding images...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                BACKEND +
+                "/images?q=" +
+                encodeURIComponent(query)
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Image search failed"
+            );
+
+        }
+
+
+        if (
+            !data.results ||
+            data.results.length === 0
+        ) {
+
+            status.textContent =
+                "No images found.";
+
+            return;
+
+        }
+
+
+        data.results.forEach(
+            result => {
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+                card.className =
+                    "image-card";
+
+
+                const image =
+                    document.createElement(
+                        "img"
+                    );
+
+                image.src =
+                    result.thumbnail ||
+                    result.image;
+
+                image.alt =
+                    result.title ||
+                    query;
+
+                image.loading =
+                    "lazy";
+
+
+                image.onerror =
+                    function() {
+
+                        if (
+                            this.src !==
+                            result.image
+                        ) {
+
+                            this.src =
+                                result.image;
+
+                        }
+
+                    };
+
+
+                const info =
+                    document.createElement(
+                        "div"
+                    );
+
+                info.className =
+                    "image-info";
+
+
+                const title =
+                    document.createElement(
+                        "div"
+                    );
+
+                title.className =
+                    "image-title";
+
+                title.textContent =
+                    result.title ||
+                    "Image";
+
+
+                const link =
+                    document.createElement(
+                        "a"
+                    );
+
+                link.className =
+                    "image-link";
+
+                link.href =
+                    result.url ||
+                    result.image;
+
+                link.target =
+                    "_blank";
+
+                link.rel =
+                    "noopener noreferrer";
+
+                link.textContent =
+                    "Open image/source ↗";
+
+
+                info.appendChild(
+                    title
+                );
+
+                info.appendChild(
+                    link
+                );
+
+
+                card.appendChild(
+                    image
+                );
+
+                card.appendChild(
+                    info
+                );
+
+
+                results.appendChild(
+                    card
+                );
+
+            }
+        );
+
+
+        status.textContent =
+            "✅ Images found!";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        status.textContent =
+            "⚠️ Image search failed.";
+
+        results.innerHTML =
+            "<p>Foxie couldn't find the images.</p>";
+
+    }
+
+}
+
+
+/* ==========================================
+   CREATOR LOGIN
+========================================== */
+
+function openCreatorLogin() {
+
+    document
+        .getElementById(
+            "creatorModal"
+        )
+        .classList.add("show");
+
+
+    document
+        .getElementById(
+            "creatorCodeInput"
+        )
+        .focus();
+
+}
+
+
+function closeCreatorLogin() {
+
+    document
+        .getElementById(
+            "creatorModal"
+        )
+        .classList.remove("show");
+
+}
+
+
+function togglePassword() {
+
+    const input =
+        document.getElementById(
+            "creatorCodeInput"
+        );
+
+    const button =
+        document.getElementById(
+            "eyeButton"
+        );
+
 
     if (
-      creatorCodeInput.type ===
-      "password"
+        input.type === "password"
     ) {
 
-      creatorCodeInput.type =
-        "text";
+        input.type = "text";
 
-      showPassword.textContent =
-        "🙈";
+        button.textContent =
+            "🙈";
 
-    }
+    } else {
 
-    else {
+        input.type = "password";
 
-      creatorCodeInput.type =
-        "password";
-
-      showPassword.textContent =
-        "👁️";
+        button.textContent =
+            "👁️";
 
     }
 
-  }
-);
-
-
-/* LOGIN */
-
-loginButton.addEventListener(
-  "click",
-  unlockCreator
-);
-
-
-/* LOGIN ENTER */
-
-creatorCodeInput.addEventListener(
-  "keydown",
-  function(event) {
-
-    if (event.key === "Enter") {
-
-      unlockCreator();
-
-    }
-
-  }
-);
-
-
-/* CANCEL */
-
-cancelLogin.addEventListener(
-  "click",
-  function() {
-
-    creatorLogin.style.display =
-      "none";
-
-    creatorCodeInput.value =
-      "";
-
-    loginError.textContent =
-      "";
-
-    input.focus();
-
-  }
-);
-
-
-/* ================================= */
-/* CREATOR CHAT */
-/* ================================= */
-
-async function talkToFoxieCreator() {
-
-  const message =
-    creatorMessage.value.trim();
-
-
-  if (!message) {
-    return;
-  }
-
-
-  addCreatorMessage(
-    "> CREATOR: " + message,
-    "user"
-  );
-
-
-  creatorMessage.value =
-    "";
-
-  creatorSend.disabled =
-    true;
-
-
-  await askFoxie(
-    message,
-    creatorChat,
-    "🦊 Foxie is thinking..."
-  );
-
-
-  creatorSend.disabled =
-    false;
-
-  creatorMessage.focus();
 }
 
 
-/* CREATOR SEND */
+/* ==========================================
+   CREATOR LOGIN REQUEST
+========================================== */
 
-creatorSend.addEventListener(
-  "click",
-  talkToFoxieCreator
-);
+async function creatorLogin() {
 
+    const input =
+        document.getElementById(
+            "creatorCodeInput"
+        );
 
-/* CREATOR ENTER */
+    const status =
+        document.getElementById(
+            "loginStatus"
+        );
 
-creatorMessage.addEventListener(
-  "keydown",
-  function(event) {
-
-    if (event.key === "Enter") {
-
-      talkToFoxieCreator();
-
-    }
-
-  }
-);
+    const code =
+        input.value;
 
 
-/* CLOSE CREATOR */
+    if (!code) {
 
-closeCreator.addEventListener(
-  "click",
-  function() {
+        status.textContent =
+            "Enter your creator code.";
 
-    creatorPanel.style.display =
-      "none";
-
-    input.focus();
-
-  }
-);
-
-
-/* NORMAL SEND */
-
-sendButton.addEventListener(
-  "click",
-  talkToFoxie
-);
-
-
-/* NORMAL ENTER */
-
-input.addEventListener(
-  "keydown",
-  function(event) {
-
-    if (event.key === "Enter") {
-
-      talkToFoxie();
+        return;
 
     }
 
-  }
-);
+
+    status.textContent =
+        "Checking...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                BACKEND +
+                "/creator-login",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        code: code
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            response.ok &&
+            data.success
+        ) {
+
+            closeCreatorLogin();
+
+            openCreatorMode();
+
+            input.value = "";
+
+            status.textContent = "";
+
+        } else {
+
+            status.textContent =
+                "❌ Wrong creator code.";
+
+        }
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        status.textContent =
+            "⚠️ Could not connect to Foxie.";
+
+    }
+
+}
+
+
+/* ==========================================
+   CREATOR MODE
+========================================== */
+
+function openCreatorMode() {
+
+    document
+        .querySelectorAll(".panel")
+        .forEach(panel => {
+
+            panel.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    document
+        .getElementById(
+            "creatorMode"
+        )
+        .classList.add("show");
+
+}
+
+
+function closeCreatorMode() {
+
+    document
+        .getElementById(
+            "creatorMode"
+        )
+        .classList.remove("show");
+
+
+    document
+        .getElementById(
+            "chatPanel"
+        )
+        .classList.add("active");
+
+
+    document
+        .querySelectorAll(".tab")
+        .forEach(tab => {
+
+            tab.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    document
+        .querySelector(".tab")
+        .classList.add("active");
+
+}
+
+
+/* ==========================================
+   CREATOR CHAT
+========================================== */
+
+async function sendCreatorMessage() {
+
+    const input =
+        document.getElementById(
+            "creatorInput"
+        );
+
+    const messages =
+        document.getElementById(
+            "creatorMessages"
+        );
+
+    const status =
+        document.getElementById(
+            "creatorStatus"
+        );
+
+    const message =
+        input.value.trim();
+
+
+    if (!message) {
+
+        return;
+
+    }
+
+
+    addMessage(
+        messages,
+        message,
+        "user"
+    );
+
+
+    input.value = "";
+
+    status.textContent =
+        "🦊 Foxie is thinking...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                BACKEND + "/chat",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        message: message
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Request failed"
+            );
+
+        }
+
+
+        addMessage(
+            messages,
+            data.reply,
+            "foxie"
+        );
+
+
+        status.textContent = "";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        addMessage(
+            messages,
+            "⚠️ Foxie couldn't connect.",
+            "foxie"
+        );
+
+        status.textContent =
+            "Connection error.";
+
+    }
+
+}
+
+
+/* ==========================================
+   ENTER KEY
+========================================== */
+
+document
+    .getElementById(
+        "messageInput"
+    )
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                event.preventDefault();
+
+                sendMessage();
+
+            }
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "creatorInput"
+    )
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                event.preventDefault();
+
+                sendCreatorMessage();
+
+            }
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "creatorCodeInput"
+    )
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                event.preventDefault();
+
+                creatorLogin();
+
+            }
+
+        }
+    );
+
+
+/* ==========================================
+   CREATOR MODAL CLICK OUTSIDE
+========================================== */
+
+document
+    .getElementById(
+        "creatorModal"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target === this
+            ) {
+
+                closeCreatorLogin();
+
+            }
+
+        }
+    );
 
 </script>
 
 </body>
+
 </html>
