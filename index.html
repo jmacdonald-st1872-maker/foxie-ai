@@ -1,9 +1,9 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>FOXIE AI 🦊</title>
 
 <style>
@@ -60,6 +60,18 @@ body {
     transform: translateY(-110vh);
     opacity: 0;
   }
+}
+
+/* CREATOR CREDIT */
+.creator {
+  position: fixed;
+  top: 10px;
+  right: 15px;
+  color: #39ff14;
+  font-size: 11px;
+  opacity: 0.7;
+  z-index: 20;
+  text-shadow: 0 0 6px #39ff14;
 }
 
 /* FOXIE WINDOW */
@@ -141,6 +153,7 @@ body {
 .message {
   margin: 12px 0;
   line-height: 1.5;
+  word-wrap: break-word;
 }
 
 .user {
@@ -202,6 +215,11 @@ button:hover {
     0 0 25px #39ff14;
 }
 
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .footer {
   text-align: center;
   font-size: 10px;
@@ -211,6 +229,7 @@ button:hover {
 
 /* MOBILE */
 @media (max-width: 600px) {
+
   .container {
     width: 95%;
     height: 95vh;
@@ -219,6 +238,11 @@ button:hover {
 
   .glitch {
     font-size: 30px;
+  }
+
+  .creator {
+    font-size: 9px;
+    right: 8px;
   }
 
   .input-area {
@@ -234,7 +258,9 @@ button:hover {
 
 <body>
 
+<!-- GREEN PARTICLES -->
 <div class="particles">
+
   <div class="particle" style="left:5%; animation-delay:0s;"></div>
   <div class="particle" style="left:15%; animation-delay:2s;"></div>
   <div class="particle" style="left:25%; animation-delay:4s;"></div>
@@ -245,11 +271,20 @@ button:hover {
   <div class="particle" style="left:75%; animation-delay:4s;"></div>
   <div class="particle" style="left:85%; animation-delay:1s;"></div>
   <div class="particle" style="left:95%; animation-delay:3s;"></div>
+
 </div>
 
+<!-- CREATOR -->
+<div class="creator">
+  Jayden Wayne MacDonald created this
+</div>
+
+<!-- FOXIE WINDOW -->
 <div class="container">
 
-  <h1 class="glitch">🦊 FOXIE AI</h1>
+  <h1 class="glitch">
+    🦊 FOXIE AI
+  </h1>
 
   <div class="subtitle">
     // your friendly AI assistant //
@@ -259,6 +294,7 @@ button:hover {
     ● SYSTEM ONLINE
   </div>
 
+  <!-- CHAT -->
   <div class="chat" id="chat">
 
     <div class="message foxie">
@@ -267,6 +303,7 @@ button:hover {
 
   </div>
 
+  <!-- INPUT -->
   <div class="input-area">
 
     <input
@@ -274,10 +311,9 @@ button:hover {
       type="text"
       placeholder="Talk to Foxie..."
       autocomplete="off"
-      onkeydown="if(event.key === 'Enter') talkToFoxie()"
     >
 
-    <button onclick="talkToFoxie()">
+    <button id="sendButton">
       SEND
     </button>
 
@@ -290,10 +326,31 @@ button:hover {
 </div>
 
 <script>
-async function talkToFoxie() {
 
-  const input = document.getElementById("message");
-  const chat = document.getElementById("chat");
+const input = document.getElementById("message");
+const chat = document.getElementById("chat");
+const sendButton = document.getElementById("sendButton");
+
+
+/* ADD MESSAGE SAFELY */
+function addMessage(text, className) {
+
+  const messageDiv = document.createElement("div");
+
+  messageDiv.className = "message " + className;
+
+  messageDiv.textContent = text;
+
+  chat.appendChild(messageDiv);
+
+  chat.scrollTop = chat.scrollHeight;
+
+  return messageDiv;
+}
+
+
+/* TALK TO FOXIE */
+async function talkToFoxie() {
 
   const message = input.value.trim();
 
@@ -301,21 +358,19 @@ async function talkToFoxie() {
     return;
   }
 
-  chat.innerHTML += `
-    <div class="message user">
-      &gt; YOU: ${message}
-    </div>
-  `;
+  /* SHOW USER MESSAGE */
+  addMessage("> YOU: " + message, "user");
 
   input.value = "";
 
-  chat.innerHTML += `
-    <div class="message foxie" id="thinking">
-      🦊 Foxie is thinking...
-    </div>
-  `;
+  /* DISABLE BUTTON */
+  sendButton.disabled = true;
 
-  chat.scrollTop = chat.scrollHeight;
+  /* THINKING MESSAGE */
+  const thinking = addMessage(
+    "🦊 Foxie is thinking...",
+    "foxie"
+  );
 
   try {
 
@@ -336,49 +391,64 @@ async function talkToFoxie() {
 
     const data = await response.json();
 
-    const thinking = document.getElementById("thinking");
-
-    if (thinking) {
-      thinking.remove();
-    }
+    /* REMOVE THINKING */
+    thinking.remove();
 
     if (data.reply) {
 
-      chat.innerHTML += `
-        <div class="message foxie">
-          🦊 FOXIE: ${data.reply}
-        </div>
-      `;
+      addMessage(
+        "🦊 FOXIE: " + data.reply,
+        "foxie"
+      );
 
     } else {
 
-      chat.innerHTML += `
-        <div class="message foxie">
-          🦊 Something went wrong.
-        </div>
-      `;
+      addMessage(
+        "🦊 Something went wrong.",
+        "foxie"
+      );
 
     }
 
   } catch (error) {
 
-    const thinking = document.getElementById("thinking");
+    thinking.remove();
 
-    if (thinking) {
-      thinking.remove();
-    }
+    addMessage(
+      "🦊 ERROR: Foxie couldn't connect.",
+      "foxie"
+    );
 
-    chat.innerHTML += `
-      <div class="message foxie">
-        🦊 ERROR: Foxie couldn't connect.
-      </div>
-    `;
   }
 
-  chat.scrollTop = chat.scrollHeight;
+  /* ENABLE BUTTON */
+  sendButton.disabled = false;
+
+  input.focus();
+
 }
+
+
+/* SEND BUTTON */
+sendButton.addEventListener(
+  "click",
+  talkToFoxie
+);
+
+
+/* ENTER KEY */
+input.addEventListener(
+  "keydown",
+  function(event) {
+
+    if (event.key === "Enter") {
+      talkToFoxie();
+    }
+
+  }
+);
+
 </script>
 
 </body>
 </html>
-```
