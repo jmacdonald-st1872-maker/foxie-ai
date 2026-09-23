@@ -2,546 +2,443 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Foxie AI 🦊</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-* {
-    box-sizing: border-box;
+*{box-sizing:border-box}
+
+html,body{
+    margin:0;
+    min-height:100%;
+    font-family:Arial,sans-serif;
+    background:#020402;
+    color:#00ff66;
 }
 
-html, body {
-    margin: 0;
-    padding: 0;
-    min-height: 100%;
-    font-family: Arial, sans-serif;
-    background: #020402;
-    color: #00ff66;
-}
+body{overflow-x:hidden}
 
-body {
-    overflow-x: hidden;
-}
-
-.background {
-    position: fixed;
-    inset: 0;
-    overflow: hidden;
-    z-index: -5;
+.background{
+    position:fixed;
+    inset:0;
+    z-index:-10;
+    overflow:hidden;
     background:
-        radial-gradient(circle at center, #062d16 0%, #020402 55%, #000 100%);
+      radial-gradient(circle at center,#073b1b 0%,#020402 50%,#000 100%);
 }
 
-.grid {
-    position: absolute;
-    inset: 0;
-    opacity: .16;
+.grid{
+    position:absolute;
+    inset:0;
+    opacity:.15;
     background-image:
-        linear-gradient(rgba(0,255,100,.15) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,255,100,.15) 1px, transparent 1px);
-    background-size: 40px 40px;
-    transform: perspective(500px) rotateX(55deg) scale(2);
-    transform-origin: bottom;
+      linear-gradient(rgba(0,255,100,.15) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(0,255,100,.15) 1px,transparent 1px);
+    background-size:40px 40px;
+    transform:perspective(500px) rotateX(55deg) scale(2);
+    transform-origin:bottom;
 }
 
-.particle {
-    position: absolute;
-    bottom: -20px;
-    width: 3px;
-    height: 3px;
-    background: #00ff66;
-    border-radius: 50%;
-    box-shadow: 0 0 8px #00ff66;
-    animation: rise linear infinite;
+.particle{
+    position:absolute;
+    bottom:-20px;
+    width:3px;
+    height:3px;
+    border-radius:50%;
+    background:#00ff66;
+    box-shadow:0 0 10px #00ff66;
+    animation:rise linear infinite;
 }
 
-@keyframes rise {
-    from {
-        transform: translateY(0);
-        opacity: 0;
-    }
-    10% {
-        opacity: 1;
-    }
-    90% {
-        opacity: 1;
-    }
-    to {
-        transform: translateY(-110vh);
-        opacity: 0;
-    }
+@keyframes rise{
+    from{transform:translateY(0);opacity:0}
+    10%{opacity:1}
+    90%{opacity:1}
+    to{transform:translateY(-110vh);opacity:0}
 }
 
-header {
-    width: 100%;
-    padding: 18px 22px;
-    border-bottom: 1px solid #00ff6640;
-    background: rgba(0,0,0,.72);
-    backdrop-filter: blur(8px);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    position: sticky;
-    top: 0;
-    z-index: 20;
+header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    padding:18px 22px;
+    background:rgba(0,0,0,.8);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid #00ff6640;
 }
 
-.logo {
-    font-size: 25px;
-    font-weight: bold;
-    text-shadow: 0 0 12px #00ff66;
+.logo{
+    font-size:25px;
+    font-weight:bold;
+    text-shadow:0 0 15px #00ff66;
 }
 
-.creator-credit {
-    font-size: 12px;
-    color: #6cff9c;
-    opacity: .8;
+.creator-credit{
+    font-size:12px;
+    color:#8affad;
 }
 
-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 14px;
-    justify-content: center;
-    border-bottom: 1px solid #00ff6630;
-    background: rgba(0,0,0,.55);
-    position: sticky;
-    top: 70px;
-    z-index: 19;
+nav{
+    position:sticky;
+    top:70px;
+    z-index:40;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    padding:12px;
+    background:rgba(0,0,0,.7);
+    border-bottom:1px solid #00ff6630;
 }
 
-nav button {
-    border: 1px solid #00ff66;
-    background: #001b0b;
-    color: #00ff66;
-    padding: 10px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
+nav button,
+.action{
+    border:1px solid #00ff66;
+    background:#001b0b;
+    color:#00ff66;
+    padding:10px 14px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
 }
 
 nav button:hover,
-nav button.active {
-    background: #00ff66;
-    color: #001b0b;
-    box-shadow: 0 0 15px #00ff66;
+nav button.active,
+.action:hover{
+    background:#00ff66;
+    color:#001b0b;
+    box-shadow:0 0 15px #00ff66;
 }
 
-main {
-    width: min(1100px, 94%);
-    margin: 25px auto 60px;
+main{
+    width:min(1100px,94%);
+    margin:25px auto 60px;
 }
 
-.panel {
-    display: none;
-    background: rgba(0,10,4,.88);
-    border: 1px solid #00ff6650;
-    border-radius: 15px;
-    padding: 22px;
-    box-shadow: 0 0 30px #00ff6612;
+.panel{
+    display:none;
+    padding:22px;
+    background:rgba(0,10,4,.9);
+    border:1px solid #00ff6650;
+    border-radius:15px;
+    box-shadow:0 0 30px #00ff6612;
 }
 
-.panel.active {
-    display: block;
+.panel.active{display:block}
+
+h1,h2,h3{
+    text-shadow:0 0 8px #00ff66;
 }
 
-h1, h2, h3 {
-    text-shadow: 0 0 8px #00ff66;
+.subtitle{color:#91ffb5}
+
+input,textarea,select{
+    width:100%;
+    padding:12px;
+    margin:7px 0;
+    border-radius:8px;
+    border:1px solid #00ff6670;
+    background:#000b04;
+    color:#00ff66;
+    outline:none;
 }
 
-.subtitle {
-    color: #91ffb5;
+textarea{
+    min-height:100px;
+    resize:vertical;
 }
 
-input,
-textarea {
-    width: 100%;
-    padding: 13px;
-    margin: 8px 0;
-    border-radius: 8px;
-    border: 1px solid #00ff6670;
-    background: #000b04;
-    color: #00ff66;
-    outline: none;
+button:disabled{
+    opacity:.4;
+    cursor:not-allowed;
 }
 
-textarea {
-    min-height: 100px;
-    resize: vertical;
+.chat-box{
+    height:430px;
+    overflow-y:auto;
+    padding:15px;
+    background:#000603;
+    border:1px solid #00ff6635;
+    border-radius:12px;
+    margin-bottom:12px;
 }
 
-input:focus,
-textarea:focus {
-    border-color: #00ff66;
-    box-shadow: 0 0 10px #00ff6635;
+.message{
+    max-width:85%;
+    padding:11px 14px;
+    margin:10px 0;
+    border-radius:10px;
+    white-space:pre-wrap;
+    line-height:1.5;
 }
 
-.action {
-    border: 1px solid #00ff66;
-    background: #001b0b;
-    color: #00ff66;
-    padding: 11px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    margin: 5px 3px;
+.user-message{
+    margin-left:auto;
+    background:#063d1b;
 }
 
-.action:hover {
-    background: #00ff66;
-    color: #001b0b;
+.foxie-message{
+    background:#001a09;
 }
 
-.chat-box {
-    height: 430px;
-    overflow-y: auto;
-    padding: 15px;
-    border: 1px solid #00ff6635;
-    border-radius: 12px;
-    background: #000603;
-    margin-bottom: 12px;
+.message-name{
+    font-size:11px;
+    opacity:.65;
+    margin-bottom:4px;
 }
 
-.message {
-    margin: 10px 0;
-    padding: 11px 14px;
-    border-radius: 10px;
-    max-width: 85%;
-    white-space: pre-wrap;
-    line-height: 1.5;
+.chat-row{
+    display:flex;
+    gap:8px;
 }
 
-.user-message {
-    margin-left: auto;
-    background: #063d1b;
-    border: 1px solid #00ff6645;
-    color: #caffd9;
+.chat-row input{margin:0}
+
+.result{
+    padding:14px;
+    margin:10px 0;
+    border:1px solid #00ff6635;
+    border-radius:10px;
+    background:#000b04;
 }
 
-.foxie-message {
-    margin-right: auto;
-    background: #001a09;
-    border: 1px solid #00ff6635;
+.result a{color:#66ff99}
+
+.image-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+    gap:15px;
 }
 
-.message-name {
-    font-size: 11px;
-    opacity: .65;
-    margin-bottom: 4px;
+.image-card{
+    overflow:hidden;
+    border:1px solid #00ff6640;
+    border-radius:10px;
+    background:#000b04;
 }
 
-.chat-input-row {
-    display: flex;
-    gap: 8px;
+.image-card img{
+    width:100%;
+    height:170px;
+    object-fit:cover;
 }
 
-.chat-input-row input {
-    margin: 0;
+.image-card div{padding:9px}
+
+.card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:15px;
 }
 
-.result {
-    padding: 15px;
-    margin: 10px 0;
-    border: 1px solid #00ff6635;
-    border-radius: 10px;
-    background: #000b04;
+.game-card{
+    padding:20px;
+    border:1px solid #00ff6650;
+    border-radius:14px;
+    background:#001108;
+    text-align:center;
 }
 
-.result a {
-    color: #66ff99;
+.game-card:hover{
+    box-shadow:0 0 20px #00ff6630;
 }
 
-.result-title {
-    font-weight: bold;
-    margin-bottom: 7px;
+.game-area{
+    margin-top:20px;
+    padding:20px;
+    border:1px solid #00ff6640;
+    border-radius:14px;
+    background:#000803;
+    text-align:center;
 }
 
-.image-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(180px,1fr));
-    gap: 15px;
-    margin-top: 15px;
+.game-area button{
+    margin:4px;
 }
 
-.image-card {
-    border: 1px solid #00ff6640;
-    border-radius: 10px;
-    overflow: hidden;
-    background: #000b04;
+.big-number{
+    font-size:45px;
+    font-weight:bold;
+    text-shadow:0 0 15px #00ff66;
 }
 
-.image-card img {
-    width: 100%;
-    height: 170px;
-    object-fit: cover;
-    display: block;
+.cards{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+    margin:15px 0;
 }
 
-.image-card div {
-    padding: 9px;
-    font-size: 12px;
+.playing-card{
+    width:65px;
+    height:90px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:9px;
+    background:#eee;
+    color:#111;
+    font-size:22px;
+    font-weight:bold;
+    box-shadow:0 0 8px #00ff6640;
 }
 
-/* PROFILE */
+.playing-card.red{color:#d00}
 
-.profile-container {
-    max-width: 650px;
-    margin: auto;
+.ttt{
+    display:grid;
+    grid-template-columns:repeat(3,90px);
+    justify-content:center;
+    gap:6px;
 }
 
-.profile-card {
-    border: 1px solid #00ff6655;
-    border-radius: 16px;
-    padding: 25px;
-    text-align: center;
-    background: radial-gradient(circle at top,#073b1c,#000b04 55%);
-    box-shadow: 0 0 30px #00ff6615;
+.ttt button{
+    height:90px;
+    font-size:35px;
+    background:#001b0b;
+    color:#00ff66;
+    border:1px solid #00ff66;
+    border-radius:10px;
 }
 
-.avatar {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #00ff66;
-    box-shadow: 0 0 25px #00ff66;
-    background: #001b0b;
+.leaderboard{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
 }
 
-.avatar-small {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #00ff66;
-    background: #001b0b;
+.leaderboard th,
+.leaderboard td{
+    padding:11px;
+    border-bottom:1px solid #00ff6630;
+    text-align:left;
 }
 
-.profile-name {
-    font-size: 27px;
-    font-weight: bold;
-    margin-top: 15px;
+.leaderboard th{
+    background:#003516;
 }
 
-.online {
-    color: #00ff66;
-    font-size: 13px;
+.rank{
+    font-size:20px;
+    font-weight:bold;
 }
 
-.bio {
-    color: #baffce;
-    margin: 15px auto;
-    white-space: pre-wrap;
-    max-width: 500px;
+.racer{
+    position:relative;
+    width:min(420px,100%);
+    height:480px;
+    margin:auto;
+    overflow:hidden;
+    border:3px solid #00ff66;
+    border-radius:15px;
+    background:
+      linear-gradient(90deg,
+      #111 0 29%,
+      #777 29% 31%,
+      #222 31% 69%,
+      #777 69% 71%,
+      #111 71%);
 }
 
-/* USER CARDS */
-
-.user-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
-    gap: 15px;
-    margin-top: 20px;
+.road-line{
+    position:absolute;
+    width:5px;
+    height:70px;
+    background:#fff;
+    left:50%;
+    transform:translateX(-50%);
+    opacity:.7;
 }
 
-.user-card {
-    border: 1px solid #00ff6645;
-    background: #000b04;
-    border-radius: 13px;
-    padding: 16px;
-    display: flex;
-    gap: 13px;
-    align-items: center;
+.car{
+    position:absolute;
+    width:48px;
+    height:80px;
+    border-radius:10px;
+    background:#00ff66;
+    box-shadow:0 0 18px #00ff66;
 }
 
-.user-card-info {
-    min-width: 0;
-    flex: 1;
+.enemy{
+    position:absolute;
+    width:48px;
+    height:80px;
+    border-radius:10px;
+    background:#ff3333;
+    box-shadow:0 0 15px #ff3333;
 }
 
-.user-card-name {
-    font-weight: bold;
-    font-size: 17px;
-    word-break: break-word;
+.profile-card,
+.notice{
+    padding:20px;
+    border:1px solid #00ff6640;
+    border-radius:14px;
+    background:#000b04;
+    margin:12px 0;
 }
 
-.user-card-bio {
-    color: #8cffad;
-    font-size: 12px;
-    margin-top: 5px;
-    word-break: break-word;
+.avatar{
+    width:130px;
+    height:130px;
+    border-radius:50%;
+    border:3px solid #00ff66;
+    object-fit:cover;
 }
 
-.user-card-actions {
-    margin-top: 8px;
+.user-list,
+.video-feed{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:15px;
 }
 
-/* FRIENDS */
-
-.friend-section {
-    margin-bottom: 25px;
+.user-card,
+.video-card{
+    padding:15px;
+    border:1px solid #00ff6640;
+    border-radius:12px;
+    background:#000b04;
 }
 
-.friend-card {
-    border: 1px solid #00ff6645;
-    background: #000b04;
-    border-radius: 12px;
-    padding: 13px;
-    margin: 9px 0;
-    display: flex;
-    align-items: center;
-    gap: 12px;
+.video-card video{
+    width:100%;
+    max-height:250px;
 }
 
-.friend-card-info {
-    flex: 1;
+.hidden{display:none!important}
+
+.admin-box{
+    border:1px solid #ffcc00;
+    box-shadow:0 0 20px #ffcc0020;
 }
 
-.friend-card-name {
-    font-weight: bold;
-}
+.admin-box h2{color:#ffcc00}
 
-.friend-card-status {
-    font-size: 12px;
-    color: #00ff66;
-}
-
-/* VIDEOS */
-
-.video-upload {
-    border: 1px dashed #00ff6655;
-    padding: 18px;
-    border-radius: 12px;
-    margin-bottom: 25px;
-    background: #000b04;
-}
-
-.video-feed {
-    display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
-    gap: 18px;
-}
-
-.video-card {
-    border: 1px solid #00ff6645;
-    border-radius: 13px;
-    overflow: hidden;
-    background: #000b04;
-}
-
-.video-card video {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    background: #000;
-    display: block;
-}
-
-.video-info {
-    padding: 13px;
-}
-
-.video-title {
-    font-weight: bold;
-    font-size: 17px;
-}
-
-.video-creator {
-    color: #75ff9d;
-    font-size: 12px;
-    margin-top: 5px;
-}
-
-.video-description {
-    color: #baffce;
-    font-size: 13px;
-    margin-top: 8px;
-    white-space: pre-wrap;
-}
-
-/* MODALS */
-
-.modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.8);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    z-index: 100;
-}
-
-.modal.show {
-    display: flex;
-}
-
-.modal-box {
-    width: min(500px,100%);
-    max-height: 90vh;
-    overflow-y: auto;
-    background: #020b05;
-    border: 1px solid #00ff66;
-    border-radius: 15px;
-    padding: 22px;
-    box-shadow: 0 0 35px #00ff6640;
-}
-
-.profile-login {
-    text-align: center;
-    padding: 40px 15px;
-}
-
-.creator-status {
-    padding: 15px;
-    border-radius: 10px;
-    border: 1px solid #00ff6635;
-    background: #000b04;
-    margin: 15px 0;
-}
-
-.hidden {
-    display: none !important;
-}
-
-.loading {
-    opacity: .7;
-}
-
-.notice {
-    padding: 14px;
-    border: 1px solid #00ff6635;
-    border-radius: 10px;
-    background: #000b04;
-    margin: 12px 0;
-}
-
-@media(max-width:700px) {
-
-    header {
-        flex-direction: column;
-        text-align: center;
+@media(max-width:700px){
+    header{
+        flex-direction:column;
+        text-align:center;
     }
 
-    nav {
-        top: 112px;
+    nav{top:112px}
+
+    .chat-row{
+        flex-direction:column;
     }
 
-    .chat-input-row {
-        flex-direction: column;
+    .ttt{
+        grid-template-columns:repeat(3,75px);
     }
 
-    .message {
-        max-width: 95%;
-    }
-
-    .user-card {
-        align-items: flex-start;
+    .ttt button{
+        height:75px;
     }
 }
 </style>
@@ -550,2471 +447,2347 @@ textarea:focus {
 <body>
 
 <div class="background">
-
     <div class="grid"></div>
-
-    <div class="particle" style="left:5%;animation-duration:8s;"></div>
-    <div class="particle" style="left:12%;animation-duration:11s;animation-delay:2s;"></div>
-    <div class="particle" style="left:19%;animation-duration:9s;animation-delay:1s;"></div>
-    <div class="particle" style="left:27%;animation-duration:13s;animation-delay:4s;"></div>
-    <div class="particle" style="left:35%;animation-duration:10s;animation-delay:3s;"></div>
-    <div class="particle" style="left:43%;animation-duration:12s;animation-delay:5s;"></div>
-    <div class="particle" style="left:51%;animation-duration:8s;animation-delay:2s;"></div>
-    <div class="particle" style="left:59%;animation-duration:14s;animation-delay:1s;"></div>
-    <div class="particle" style="left:67%;animation-duration:9s;animation-delay:3s;"></div>
-    <div class="particle" style="left:75%;animation-duration:12s;animation-delay:4s;"></div>
-    <div class="particle" style="left:83%;animation-duration:10s;animation-delay:2s;"></div>
-    <div class="particle" style="left:91%;animation-duration:13s;"></div>
-
+    <div class="particle" style="left:5%;animation-duration:8s"></div>
+    <div class="particle" style="left:12%;animation-duration:11s;animation-delay:2s"></div>
+    <div class="particle" style="left:20%;animation-duration:9s;animation-delay:1s"></div>
+    <div class="particle" style="left:29%;animation-duration:13s;animation-delay:3s"></div>
+    <div class="particle" style="left:38%;animation-duration:10s"></div>
+    <div class="particle" style="left:48%;animation-duration:12s;animation-delay:4s"></div>
+    <div class="particle" style="left:57%;animation-duration:8s"></div>
+    <div class="particle" style="left:66%;animation-duration:14s;animation-delay:2s"></div>
+    <div class="particle" style="left:75%;animation-duration:9s"></div>
+    <div class="particle" style="left:84%;animation-duration:12s;animation-delay:3s"></div>
+    <div class="particle" style="left:93%;animation-duration:10s"></div>
 </div>
 
 <header>
-
-    <div class="logo">
-        🦊 FOXIE AI
-    </div>
-
-    <div class="creator-credit">
-        Jayden Wayne MacDonald created this
-    </div>
-
+    <div class="logo">🦊 FOXIE AI</div>
+    <div class="creator-credit">Jayden Wayne MacDonald created this</div>
 </header>
 
 <nav>
-
-    <button class="tab active" data-panel="chatPanel">
-        💬 Chat
-    </button>
-
-    <button class="tab" data-panel="webPanel">
-        🌐 Web
-    </button>
-
-    <button class="tab" data-panel="imagesPanel">
-        🖼️ Images
-    </button>
-
-    <button class="tab" data-panel="profilePanel">
-        👤 Profile
-    </button>
-
-    <button class="tab" data-panel="usersPanel">
-        👥 Users
-    </button>
-
-    <button class="tab" data-panel="friendsPanel">
-        🤝 Friends
-    </button>
-
-    <button class="tab" data-panel="videosPanel">
-        🎬 Foxie Vids
-    </button>
-
-    <button class="tab" data-panel="controlPanel">
-        ⚙️ Control
-    </button>
-
-    <button class="tab" data-panel="creatorPanel">
-        🦊 Creator
-    </button>
-
+    <button class="tab active" data-panel="chatPanel">💬 Chat</button>
+    <button class="tab" data-panel="webPanel">🌐 Web</button>
+    <button class="tab" data-panel="imagesPanel">🖼️ Images</button>
+    <button class="tab" data-panel="profilePanel">👤 Profile</button>
+    <button class="tab" data-panel="usersPanel">👥 Users</button>
+    <button class="tab" data-panel="friendsPanel">🤝 Friends</button>
+    <button class="tab" data-panel="videosPanel">🎬 Foxie Vids</button>
+    <button class="tab" data-panel="gamesPanel">🎮 Games</button>
+    <button class="tab" data-panel="leaderboardPanel">🏆 Leaderboard</button>
+    <button class="tab" data-panel="calculatorPanel">🧮 Calculator</button>
+    <button class="tab" data-panel="controlPanel">⚙️ Control</button>
+    <button class="tab" data-panel="creatorPanel">🦊 Creator</button>
+    <button class="tab hidden" id="adminTab" data-panel="adminPanel">🛡️ Admin</button>
 </nav>
 
 <main>
 
 <!-- CHAT -->
-
 <section id="chatPanel" class="panel active">
-
     <h1>🦊 Foxie</h1>
-
-    <p class="subtitle">
-        Your own AI assistant.
-    </p>
+    <p class="subtitle">Your own AI assistant.</p>
 
     <div id="chatBox" class="chat-box">
-
         <div class="message foxie-message">
-
-            <div class="message-name">
-                🦊 FOXIE
-            </div>
-
+            <div class="message-name">🦊 FOXIE</div>
             Hey! I'm Foxie. Ask me anything!
-
         </div>
-
     </div>
 
-    <div class="chat-input-row">
-
-        <input
-            id="chatInput"
-            type="text"
-            placeholder="Talk to Foxie..."
-            autocomplete="off"
-        >
-
-        <button id="sendChat" class="action">
-            Send 🦊
-        </button>
-
+    <div class="chat-row">
+        <input id="chatInput" placeholder="Talk to Foxie...">
+        <button class="action" id="sendChat">Send 🦊</button>
     </div>
-
 </section>
 
 <!-- WEB -->
-
 <section id="webPanel" class="panel">
-
     <h2>🌐 Web Search</h2>
-
-    <input
-        id="webInput"
-        type="text"
-        placeholder="Search the web..."
-    >
-
-    <button id="webButton" class="action">
-        Search 🌐
-    </button>
-
+    <input id="webInput" placeholder="Search the web...">
+    <button class="action" id="webButton">Search 🌐</button>
     <div id="webResults"></div>
-
 </section>
 
 <!-- IMAGES -->
-
 <section id="imagesPanel" class="panel">
-
     <h2>🖼️ Image Search</h2>
-
-    <input
-        id="imageInput"
-        type="text"
-        placeholder="Search for images..."
-    >
-
-    <button id="imageButton" class="action">
-        Search Images 🖼️
-    </button>
-
+    <input id="imageInput" placeholder="Search images...">
+    <button class="action" id="imageButton">Search Images 🖼️</button>
     <div id="imageResults" class="image-grid"></div>
-
 </section>
 
 <!-- PROFILE -->
-
 <section id="profilePanel" class="panel">
-
-    <div id="profileLoggedOut" class="profile-login">
-
+    <div id="loggedOut">
         <h2>👤 Foxie Profile</h2>
+        <input id="email" type="email" placeholder="Email">
+        <input id="password" type="password" placeholder="Password">
+        <input id="username" placeholder="Username">
 
-        <p class="subtitle">
-            Create a Foxie profile.
-        </p>
-
-        <button id="showLoginButton" class="action">
-            🔐 Login
-        </button>
-
-        <button id="showSignupButton" class="action">
-            ✨ Create Account
-        </button>
+        <button class="action" id="signup">✨ Create Account</button>
+        <button class="action" id="login">🔐 Login</button>
 
         <p id="authMessage"></p>
-
     </div>
 
-    <div id="profileLoggedIn" class="profile-container hidden">
-
+    <div id="loggedIn" class="hidden">
         <div class="profile-card">
+            <img id="avatar" class="avatar"
+                 src="https://placehold.co/300x300/001b0b/00ff66?text=FOXIE">
 
-            <img
-                id="profileAvatar"
-                class="avatar"
-                src="https://placehold.co/300x300/001b0b/00ff66?text=🦊"
-                alt="Profile picture"
-            >
+            <h2 id="myUsername">User</h2>
+            <p id="myBio">No bio yet.</p>
 
-            <div
-                id="profileUsername"
-                class="profile-name"
-            >
-                Foxie User
-            </div>
+            <input id="newUsername" placeholder="New username">
+            <textarea id="newBio" placeholder="Your bio"></textarea>
+            <input id="avatarFile" type="file" accept="image/*">
 
-            <div class="online">
-                🟢 Online
-            </div>
-
-            <div
-                id="profileBio"
-                class="bio"
-            >
-                No bio yet.
-            </div>
-
-            <button
-                id="editProfileButton"
-                class="action"
-            >
-                ✏️ Edit Profile
-            </button>
-
-            <button
-                id="logoutButton"
-                class="action"
-            >
-                🚪 Log Out
-            </button>
-
+            <button class="action" id="saveProfile">💾 Save Profile</button>
+            <button class="action" id="logout">🚪 Log Out</button>
         </div>
-
     </div>
-
 </section>
 
 <!-- USERS -->
-
 <section id="usersPanel" class="panel">
-
-    <h2>👥 Other Users</h2>
-
-    <p class="subtitle">
-        Find other people on Foxie.
-    </p>
-
-    <input
-        id="userSearchInput"
-        type="text"
-        placeholder="Search usernames..."
-    >
-
-    <button
-        id="userSearchButton"
-        class="action"
-    >
-        🔎 Search Users
-    </button>
-
-    <div id="usersMessage"></div>
-
-    <div
-        id="usersList"
-        class="user-list"
-    ></div>
-
+    <h2>👥 Users</h2>
+    <input id="userSearch" placeholder="Search usernames...">
+    <button class="action" id="findUsers">🔎 Search</button>
+    <div id="usersList" class="user-list"></div>
 </section>
 
 <!-- FRIENDS -->
-
 <section id="friendsPanel" class="panel">
-
     <h2>🤝 Friends</h2>
 
-    <div class="friend-section">
+    <h3>📨 Requests</h3>
+    <div id="friendRequests"></div>
 
-        <h3>📨 Friend Requests</h3>
-
-        <div id="friendRequests">
-            <div class="notice">
-                Log in to see friend requests.
-            </div>
-        </div>
-
-    </div>
-
-    <div class="friend-section">
-
-        <h3>👥 My Friends</h3>
-
-        <div id="friendsList">
-            <div class="notice">
-                Log in to see your friends.
-            </div>
-        </div>
-
-    </div>
-
+    <h3>👥 Friends</h3>
+    <div id="friendsList"></div>
 </section>
 
-<!-- FOXIE VIDS -->
-
+<!-- VIDEOS -->
 <section id="videosPanel" class="panel">
-
     <h2>🎬 Foxie Vids</h2>
 
-    <p class="subtitle">
-        Watch and share videos on Foxie.
-    </p>
+    <input id="videoTitle" placeholder="Video title">
+    <textarea id="videoDescription" placeholder="Description"></textarea>
+    <input id="videoFile" type="file" accept="video/*">
 
-    <div class="video-upload">
+    <button class="action" id="uploadVideo">⬆️ Upload Video</button>
+    <p id="videoMessage"></p>
 
-        <h3>⬆️ Upload a video</h3>
+    <input id="videoSearch" placeholder="Search videos">
+    <button class="action" id="searchVideos">🔎 Search</button>
 
-        <input
-            id="videoTitle"
-            type="text"
-            maxlength="100"
-            placeholder="Video title..."
-        >
+    <div id="videoFeed" class="video-feed"></div>
+</section>
 
-        <textarea
-            id="videoDescription"
-            maxlength="500"
-            placeholder="Video description..."
-        ></textarea>
+<!-- GAMES -->
+<section id="gamesPanel" class="panel">
+    <h2>🎮 FOXIE GAMES</h2>
+    <p class="subtitle">Play games and earn leaderboard points!</p>
 
-        <input
-            id="videoFile"
-            type="file"
-            accept="video/mp4,video/webm,video/ogg"
-        >
+    <div class="card-grid">
 
-        <button
-            id="uploadVideoButton"
-            class="action"
-        >
-            ⬆️ Upload to Foxie Vids
-        </button>
+        <div class="game-card">
+            <h3>🃏 Poker</h3>
+            <p>5-card draw against Foxie.</p>
+            <button class="action" onclick="startPoker()">PLAY</button>
+        </div>
 
-        <p id="videoUploadMessage"></p>
+        <div class="game-card">
+            <h3>🃏 Solitaire</h3>
+            <p>Foxie's quick solitaire challenge.</p>
+            <button class="action" onclick="startSolitaire()">PLAY</button>
+        </div>
+
+        <div class="game-card">
+            <h3>♠️ Blackjack</h3>
+            <p>Get as close to 21 as possible.</p>
+            <button class="action" onclick="startBlackjack()">PLAY</button>
+        </div>
+
+        <div class="game-card">
+            <h3>🔮 Higher / Lower</h3>
+            <p>Guess whether the next card is higher.</p>
+            <button class="action" onclick="startHigherLower()">PLAY</button>
+        </div>
+
+        <div class="game-card">
+            <h3>❌ Tic-Tac-Toe</h3>
+            <p>Battle Foxie.</p>
+            <button class="action" onclick="startTicTacToe()">PLAY</button>
+        </div>
+
+        <div class="game-card">
+            <h3>🚗 Foxie Racer</h3>
+            <p>Dodge traffic and survive!</p>
+            <button class="action" onclick="startRacer()">PLAY</button>
+        </div>
+
+        <div class="game-card">
+            <h3>🏁 Time Trial</h3>
+            <p>How fast can you reach the target?</p>
+            <button class="action" onclick="startTimeTrial()">PLAY</button>
+        </div>
+
+        <div class="game-card">
+            <h3>✊ Rock Paper Scissors</h3>
+            <p>Challenge Foxie.</p>
+            <button class="action" onclick="startRPS()">PLAY</button>
+        </div>
 
     </div>
 
-    <input
-        id="videoSearch"
-        type="text"
-        placeholder="Search Foxie Vids..."
-    >
+    <div id="gameArea" class="game-area">
+        <h2>🎮 Choose a game!</h2>
+    </div>
+</section>
 
-    <button
-        id="videoSearchButton"
-        class="action"
-    >
-        🔎 Search Videos
-    </button>
+<!-- LEADERBOARD -->
+<section id="leaderboardPanel" class="panel">
+    <h2>🏆 FOXIE LEADERBOARD</h2>
 
-    <div
-        id="videoFeed"
-        class="video-feed"
-    ></div>
+    <select id="leaderboardPeriod">
+        <option value="week">📅 This Week</option>
+        <option value="month">📅 This Month</option>
+        <option value="year">📅 This Year</option>
+        <option value="all">🏆 All Time</option>
+    </select>
 
+    <select id="leaderboardGame">
+        <option value="all">🎮 All Games</option>
+        <option value="Poker">🃏 Poker</option>
+        <option value="Solitaire">🃏 Solitaire</option>
+        <option value="Blackjack">♠️ Blackjack</option>
+        <option value="HigherLower">🔮 Higher/Lower</option>
+        <option value="TicTacToe">❌ Tic-Tac-Toe</option>
+        <option value="Racer">🚗 Racer</option>
+        <option value="TimeTrial">🏁 Time Trial</option>
+        <option value="RPS">✊ RPS</option>
+    </select>
+
+    <button class="action" id="refreshLeaderboard">🔄 Refresh</button>
+
+    <table class="leaderboard">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Player</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody id="leaderboardBody"></tbody>
+    </table>
+</section>
+
+<!-- CALCULATOR -->
+<section id="calculatorPanel" class="panel">
+    <h2>🧮 Calculator</h2>
+
+    <input id="calcDisplay" readonly>
+
+    <div class="card-grid">
+        <button class="action" onclick="calc('7')">7</button>
+        <button class="action" onclick="calc('8')">8</button>
+        <button class="action" onclick="calc('9')">9</button>
+        <button class="action" onclick="calc('/')">÷</button>
+
+        <button class="action" onclick="calc('4')">4</button>
+        <button class="action" onclick="calc('5')">5</button>
+        <button class="action" onclick="calc('6')">6</button>
+        <button class="action" onclick="calc('*')">×</button>
+
+        <button class="action" onclick="calc('1')">1</button>
+        <button class="action" onclick="calc('2')">2</button>
+        <button class="action" onclick="calc('3')">3</button>
+        <button class="action" onclick="calc('-')">−</button>
+
+        <button class="action" onclick="calc('0')">0</button>
+        <button class="action" onclick="calc('.')">.</button>
+        <button class="action" onclick="calculate()">=</button>
+        <button class="action" onclick="calc('+')">+</button>
+    </div>
+
+    <button class="action" onclick="clearCalc()">CLEAR</button>
 </section>
 
 <!-- CONTROL -->
-
 <section id="controlPanel" class="panel">
-
     <h2>⚙️ Control Panel</h2>
 
-    <div class="creator-status">
-
-        <strong>AI:</strong> Foxie<br>
-        <strong>Web Search:</strong> DuckDuckGo<br>
-        <strong>Backend:</strong> Render<br>
-        <strong>Social:</strong> Supabase<br>
-        <strong>Video Platform:</strong> Foxie Vids
-
+    <div class="notice">
+        <b>🦊 AI:</b> Foxie<br>
+        <b>🌐 Web:</b> DuckDuckGo<br>
+        <b>🤖 Backend:</b> Render<br>
+        <b>👥 Social:</b> Supabase<br>
+        <b>🎬 Videos:</b> Supabase Storage<br>
+        <b>🎮 Games:</b> Foxie Games<br>
+        <b>🏆 Scores:</b> Supabase
     </div>
-
 </section>
 
 <!-- CREATOR -->
-
 <section id="creatorPanel" class="panel">
-
     <h2>🦊 Creator Mode</h2>
 
     <div id="creatorLocked">
+        <p>Creator Mode is locked.</p>
+        <input id="creatorCode" type="password" placeholder="Creator code">
+        <button class="action" id="creatorLogin">🔐 Unlock</button>
+        <p id="creatorMessage"></p>
+    </div>
+
+    <div id="creatorUnlocked" class="hidden">
+        <div class="notice">
+            🟢 Creator Mode unlocked.
+        </div>
+
+        <div id="creatorChat" class="chat-box"></div>
+
+        <div class="chat-row">
+            <input id="creatorInput" placeholder="Talk to Foxie as creator...">
+            <button class="action" id="creatorSend">Send</button>
+        </div>
+    </div>
+</section>
+
+<!-- ADMIN -->
+<section id="adminPanel" class="panel">
+    <div class="admin-box">
+        <h2>🛡️ OWNER / ADMIN PANEL</h2>
 
         <p>
-            Creator Mode is locked.
+            🟢 Admin access detected.
         </p>
 
-        <button
-            id="openCreatorLogin"
-            class="action"
-        >
-            🔐 Creator Login
+        <div class="notice">
+            Admin tools can manage Foxie game scores.
+        </div>
+
+        <button class="action" id="adminRefreshScores">
+            🔄 Load Scores
         </button>
 
+        <div id="adminScores"></div>
     </div>
-
-    <div
-        id="creatorUnlocked"
-        class="hidden"
-    >
-
-        <div class="creator-status">
-            🟢 Creator Mode unlocked
-        </div>
-
-        <div
-            id="creatorChatBox"
-            class="chat-box"
-        >
-
-            <div class="message foxie-message">
-
-                <div class="message-name">
-                    🦊 FOXIE
-                </div>
-
-                Creator Mode activated.
-
-            </div>
-
-        </div>
-
-        <div class="chat-input-row">
-
-            <input
-                id="creatorInput"
-                type="text"
-                placeholder="Creator message..."
-            >
-
-            <button
-                id="creatorSend"
-                class="action"
-            >
-                Send 🦊
-            </button>
-
-        </div>
-
-    </div>
-
 </section>
 
 </main>
 
-<!-- AUTH MODAL -->
-
-<div id="authModal" class="modal">
-
-    <div class="modal-box">
-
-        <h2 id="authTitle">
-            🔐 Login
-        </h2>
-
-        <input
-            id="authEmail"
-            type="email"
-            placeholder="Email"
-        >
-
-        <input
-            id="authPassword"
-            type="password"
-            placeholder="Password"
-        >
-
-        <button
-            id="authSubmit"
-            class="action"
-        >
-            Login
-        </button>
-
-        <button
-            id="authSwitch"
-            class="action"
-        >
-            Create account instead
-        </button>
-
-        <button
-            id="authClose"
-            class="action"
-        >
-            Close
-        </button>
-
-        <p id="authModalMessage"></p>
-
-    </div>
-
-</div>
-
-<!-- EDIT PROFILE -->
-
-<div id="profileModal" class="modal">
-
-    <div class="modal-box">
-
-        <h2>✏️ Edit Profile</h2>
-
-        <input
-            id="editUsername"
-            type="text"
-            maxlength="30"
-            placeholder="Username"
-        >
-
-        <textarea
-            id="editBio"
-            maxlength="300"
-            placeholder="Your bio..."
-        ></textarea>
-
-        <input
-            id="avatarFile"
-            type="file"
-            accept="image/png,image/jpeg,image/webp"
-        >
-
-        <button
-            id="saveProfile"
-            class="action"
-        >
-            💾 Save Profile
-        </button>
-
-        <button
-            id="closeProfileModal"
-            class="action"
-        >
-            Close
-        </button>
-
-        <p id="profileMessage"></p>
-
-    </div>
-
-</div>
-
-<!-- CREATOR LOGIN -->
-
-<div id="creatorModal" class="modal">
-
-    <div class="modal-box">
-
-        <h2>🦊 Creator Login</h2>
-
-        <input
-            id="creatorCode"
-            type="password"
-            placeholder="Creator code"
-        >
-
-        <button
-            id="creatorLoginButton"
-            class="action"
-        >
-            Unlock
-        </button>
-
-        <button
-            id="creatorCloseButton"
-            class="action"
-        >
-            Close
-        </button>
-
-        <p id="creatorMessage"></p>
-
-    </div>
-
-</div>
-
 <script>
 
-/* ================================
-   FOXIE SETTINGS
-================================ */
-
-const BACKEND =
-    "https://foxie-ai-backend.onrender.com";
+/* =========================
+   CONFIG
+========================= */
 
 const SUPABASE_URL =
-    "https://hsojgfgtlzaqyzhlcgtv.supabase.co";
+"https://hsojgfgtlzaqyzhlcgtv.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable_MIY9cTZKQQDcp-DB6QGz3Q_cASkMaDN";
+"sb_publishable_MIY9cTZKQQDcp-DB6QGz3Q_cASkMaDN";
 
 const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
+supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+const BACKEND =
+"https://foxie-ai-backend.onrender.com";
+
+
+/* =========================
+   GLOBALS
+========================= */
 
 let currentUser = null;
 let currentProfile = null;
+let isAdmin = false;
 
-/* ================================
+
+/* =========================
+   TABS
+========================= */
+
+document.querySelectorAll(".tab").forEach(button=>{
+    button.addEventListener("click",()=>{
+        document.querySelectorAll(".tab")
+            .forEach(x=>x.classList.remove("active"));
+
+        document.querySelectorAll(".panel")
+            .forEach(x=>x.classList.remove("active"));
+
+        button.classList.add("active");
+
+        const panel =
+            document.getElementById(button.dataset.panel);
+
+        if(panel) panel.classList.add("active");
+
+        if(button.dataset.panel==="leaderboardPanel"){
+            loadLeaderboard();
+        }
+    });
+});
+
+
+/* =========================
+   FOXIE CHAT
+========================= */
+
+async function sendFoxie(){
+
+    const input =
+        document.getElementById("chatInput");
+
+    const box =
+        document.getElementById("chatBox");
+
+    const message =
+        input.value.trim();
+
+    if(!message)return;
+
+    box.innerHTML += `
+        <div class="message user-message">
+            <div class="message-name">YOU</div>
+            ${escapeHTML(message)}
+        </div>
+    `;
+
+    input.value="";
+
+    box.innerHTML += `
+        <div class="message foxie-message" id="thinking">
+            <div class="message-name">🦊 FOXIE</div>
+            Thinking...
+        </div>
+    `;
+
+    box.scrollTop=box.scrollHeight;
+
+    try{
+
+        const response =
+            await fetch(BACKEND+"/chat",{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+                    message
+                })
+            });
+
+        const data=await response.json();
+
+        const thinking=
+            document.getElementById("thinking");
+
+        if(thinking){
+            thinking.removeAttribute("id");
+            thinking.innerHTML=`
+                <div class="message-name">🦊 FOXIE</div>
+                ${escapeHTML(data.reply||data.error||"No response.")}
+            `;
+        }
+
+    }catch(error){
+
+        const thinking=
+            document.getElementById("thinking");
+
+        if(thinking){
+            thinking.innerHTML=`
+                <div class="message-name">🦊 FOXIE</div>
+                Foxie could not connect to the server.
+            `;
+        }
+    }
+
+    box.scrollTop=box.scrollHeight;
+}
+
+document
+.getElementById("sendChat")
+.addEventListener("click",sendFoxie);
+
+document
+.getElementById("chatInput")
+.addEventListener("keydown",e=>{
+    if(e.key==="Enter")sendFoxie();
+});
+
+
+/* =========================
+   WEB SEARCH
+========================= */
+
+document
+.getElementById("webButton")
+.addEventListener("click",async()=>{
+
+    const q=
+        document.getElementById("webInput").value.trim();
+
+    if(!q)return;
+
+    const output=
+        document.getElementById("webResults");
+
+    output.innerHTML="Searching...";
+
+    try{
+
+        const response=
+            await fetch(
+                BACKEND+"/search?q="+encodeURIComponent(q)
+            );
+
+        const data=await response.json();
+
+        output.innerHTML="";
+
+        (data.results||[]).forEach(result=>{
+
+            output.innerHTML+=`
+                <div class="result">
+                    <div>
+                        <b>${escapeHTML(result.title)}</b>
+                    </div>
+                    <p>${escapeHTML(result.body)}</p>
+                    <a href="${safeURL(result.href)}"
+                       target="_blank"
+                       rel="noopener">
+                       Open result ↗
+                    </a>
+                </div>
+            `;
+        });
+
+    }catch(error){
+        output.innerHTML="Search failed.";
+    }
+});
+
+
+/* =========================
+   IMAGE SEARCH
+========================= */
+
+document
+.getElementById("imageButton")
+.addEventListener("click",async()=>{
+
+    const q=
+        document.getElementById("imageInput").value.trim();
+
+    if(!q)return;
+
+    const output=
+        document.getElementById("imageResults");
+
+    output.innerHTML="Searching...";
+
+    try{
+
+        const response=
+            await fetch(
+                BACKEND+"/images?q="+encodeURIComponent(q)
+            );
+
+        const data=await response.json();
+
+        output.innerHTML="";
+
+        (data.results||[]).forEach(image=>{
+
+            if(!image.image)return;
+
+            output.innerHTML+=`
+                <div class="image-card">
+                    <img src="${safeURL(image.image)}"
+                         loading="lazy"
+                         onerror="this.style.display='none'">
+                    <div>
+                        ${escapeHTML(image.title||"Image")}
+                    </div>
+                </div>
+            `;
+        });
+
+    }catch(error){
+        output.innerHTML="Image search failed.";
+    }
+});
+
+
+/* =========================
+   AUTH
+========================= */
+
+document
+.getElementById("signup")
+.addEventListener("click",async()=>{
+
+    const email=
+        document.getElementById("email").value.trim();
+
+    const password=
+        document.getElementById("password").value;
+
+    const username=
+        document.getElementById("username").value.trim();
+
+    if(!email||!password||!username){
+        setAuthMessage("Fill everything in.");
+        return;
+    }
+
+    const {data,error}=
+        await supabaseClient.auth.signUp({
+            email,
+            password
+        });
+
+    if(error){
+        setAuthMessage(error.message);
+        return;
+    }
+
+    if(data.user){
+
+        const {error:profileError}=
+            await supabaseClient
+            .from("profiles")
+            .insert({
+                id:data.user.id,
+                username,
+                bio:"",
+                online:true
+            });
+
+        if(profileError){
+            setAuthMessage(profileError.message);
+            return;
+        }
+    }
+
+    setAuthMessage("Account created! 🦊");
+});
+
+
+document
+.getElementById("login")
+.addEventListener("click",async()=>{
+
+    const email=
+        document.getElementById("email").value.trim();
+
+    const password=
+        document.getElementById("password").value;
+
+    const {error}=
+        await supabaseClient.auth.signInWithPassword({
+            email,
+            password
+        });
+
+    if(error){
+        setAuthMessage(error.message);
+    }else{
+        setAuthMessage("Logged in! 🦊");
+    }
+});
+
+
+document
+.getElementById("logout")
+.addEventListener("click",async()=>{
+
+    if(currentUser){
+
+        await supabaseClient
+            .from("profiles")
+            .update({online:false})
+            .eq("id",currentUser.id);
+    }
+
+    await supabaseClient.auth.signOut();
+});
+
+
+function setAuthMessage(text){
+    document.getElementById("authMessage").textContent=text;
+}
+
+
+/* =========================
+   AUTH STATE
+========================= */
+
+async function handleAuth(){
+
+    const {data}=
+        await supabaseClient.auth.getSession();
+
+    currentUser=
+        data.session?.user||null;
+
+    await refreshUser();
+}
+
+async function refreshUser(){
+
+    if(!currentUser){
+
+        document
+            .getElementById("loggedOut")
+            .classList.remove("hidden");
+
+        document
+            .getElementById("loggedIn")
+            .classList.add("hidden");
+
+        document
+            .getElementById("adminTab")
+            .classList.add("hidden");
+
+        return;
+    }
+
+    let {data:profile}=await supabaseClient
+        .from("profiles")
+        .select("*")
+        .eq("id",currentUser.id)
+        .maybeSingle();
+
+    currentProfile=profile;
+
+    if(!profile){
+
+        const username=
+            currentUser.email
+            ?currentUser.email.split("@")[0]
+            :"FoxieUser";
+
+        const {data:newProfile}=
+            await supabaseClient
+            .from("profiles")
+            .insert({
+                id:currentUser.id,
+                username,
+                online:true
+            })
+            .select()
+            .single();
+
+        currentProfile=newProfile;
+    }else{
+
+        await supabaseClient
+            .from("profiles")
+            .update({online:true})
+            .eq("id",currentUser.id);
+    }
+
+    document
+        .getElementById("loggedOut")
+        .classList.add("hidden");
+
+    document
+        .getElementById("loggedIn")
+        .classList.remove("hidden");
+
+    displayProfile();
+
+    await checkAdmin();
+}
+
+
+function displayProfile(){
+
+    if(!currentProfile)return;
+
+    document
+        .getElementById("myUsername")
+        .textContent=currentProfile.username||"User";
+
+    document
+        .getElementById("myBio")
+        .textContent=currentProfile.bio||"No bio yet.";
+
+    document
+        .getElementById("newUsername")
+        .value=currentProfile.username||"";
+
+    document
+        .getElementById("newBio")
+        .value=currentProfile.bio||"";
+
+    if(currentProfile.avatar_url){
+
+        document
+            .getElementById("avatar")
+            .src=currentProfile.avatar_url;
+    }
+}
+
+
+supabaseClient.auth
+.onAuthStateChange(async(event,session)=>{
+
+    currentUser=session?.user||null;
+
+    await refreshUser();
+});
+
+
+/* =========================
+   PROFILE UPDATE
+========================= */
+
+document
+.getElementById("saveProfile")
+.addEventListener("click",async()=>{
+
+    if(!currentUser)return;
+
+    const username=
+        document.getElementById("newUsername")
+        .value.trim();
+
+    const bio=
+        document.getElementById("newBio")
+        .value.trim();
+
+    if(!username)return;
+
+    let avatarURL=currentProfile?.avatar_url||null;
+
+    const file=
+        document.getElementById("avatarFile").files[0];
+
+    if(file){
+
+        const extension=
+            file.name.split(".").pop();
+
+        const path=
+            currentUser.id+"/avatar."+extension;
+
+        const upload=
+            await supabaseClient
+            .storage
+            .from("avatars")
+            .upload(path,file,{
+                upsert:true
+            });
+
+        if(upload.error){
+            alert(upload.error.message);
+            return;
+        }
+
+        const publicURL=
+            supabaseClient
+            .storage
+            .from("avatars")
+            .getPublicUrl(path);
+
+        avatarURL=publicURL.data.publicUrl;
+    }
+
+    const {error}=
+        await supabaseClient
+        .from("profiles")
+        .update({
+            username,
+            bio,
+            avatar_url:avatarURL
+        })
+        .eq("id",currentUser.id);
+
+    if(error){
+        alert(error.message);
+        return;
+    }
+
+    await refreshUser();
+
+    alert("Profile saved! 🦊");
+});
+
+
+/* =========================
+   USERS
+========================= */
+
+document
+.getElementById("findUsers")
+.addEventListener("click",loadUsers);
+
+async function loadUsers(){
+
+    if(!currentUser){
+        document.getElementById("usersList").innerHTML=
+            "<div class='notice'>Log in first.</div>";
+        return;
+    }
+
+    const search=
+        document.getElementById("userSearch")
+        .value.trim();
+
+    let query=
+        supabaseClient
+        .from("profiles")
+        .select("*")
+        .neq("id",currentUser.id)
+        .limit(30);
+
+    if(search){
+        query=query.ilike("username","%"+search+"%");
+    }
+
+    const {data,error}=await query;
+
+    if(error){
+        document.getElementById("usersList").textContent=
+            error.message;
+        return;
+    }
+
+    const list=document.getElementById("usersList");
+
+    list.innerHTML="";
+
+    (data||[]).forEach(user=>{
+
+        list.innerHTML+=`
+            <div class="user-card">
+                <div>
+                    <b>${escapeHTML(user.username)}</b>
+                    <p>${escapeHTML(user.bio||"")}</p>
+                    <button class="action"
+                        onclick="sendFriendRequest('${user.id}')">
+                        ➕ Add Friend
+                    </button>
+                </div>
+            </div>
+        `;
+    });
+}
+
+
+async function sendFriendRequest(friendID){
+
+    if(!currentUser){
+        alert("Log in first.");
+        return;
+    }
+
+    const {error}=
+        await supabaseClient
+        .from("friends")
+        .insert({
+            user_id:currentUser.id,
+            friend_id:friendID,
+            status:"pending"
+        });
+
+    if(error){
+        alert(error.message);
+    }else{
+        alert("Friend request sent! 🤝");
+    }
+}
+
+
+/* =========================
+   FRIENDS
+========================= */
+
+async function loadFriends(){
+
+    if(!currentUser)return;
+
+    const {data,error}=
+        await supabaseClient
+        .from("friends")
+        .select("*")
+        .or(
+            "user_id.eq."+currentUser.id+
+            ",friend_id.eq."+currentUser.id
+        );
+
+    if(error)return;
+
+    const friendIDs=
+        [...new Set(
+            (data||[])
+            .flatMap(x=>[
+                x.user_id,
+                x.friend_id
+            ])
+            .filter(id=>id!==currentUser.id)
+        )];
+
+    let profiles=[];
+
+    if(friendIDs.length){
+
+        const result=
+            await supabaseClient
+            .from("profiles")
+            .select("*")
+            .in("id",friendIDs);
+
+        profiles=result.data||[];
+    }
+
+    document
+        .getElementById("friendsList")
+        .innerHTML=
+        profiles.length
+        ?profiles.map(x=>`
+            <div class="notice">
+                👤 <b>${escapeHTML(x.username)}</b>
+            </div>
+        `).join("")
+        :"No friends yet.";
+
+    const requests=
+        (data||[]).filter(
+            x=>x.friend_id===currentUser.id &&
+               x.status==="pending"
+        );
+
+    document
+        .getElementById("friendRequests")
+        .innerHTML=
+        requests.length
+        ?requests.map(x=>`
+            <div class="notice">
+                Friend request
+                <button class="action"
+                    onclick="acceptFriend(${x.id})">
+                    ✅ Accept
+                </button>
+                <button class="action"
+                    onclick="declineFriend(${x.id})">
+                    ❌ Decline
+                </button>
+            </div>
+        `).join("")
+        :"No pending requests.";
+}
+
+
+async function acceptFriend(id){
+
+    await supabaseClient
+        .from("friends")
+        .update({status:"accepted"})
+        .eq("id",id);
+
+    loadFriends();
+}
+
+
+async function declineFriend(id){
+
+    await supabaseClient
+        .from("friends")
+        .delete()
+        .eq("id",id);
+
+    loadFriends();
+}
+
+
+/* =========================
+   VIDEOS
+========================= */
+
+document
+.getElementById("uploadVideo")
+.addEventListener("click",uploadVideo);
+
+async function uploadVideo(){
+
+    if(!currentUser){
+        alert("Log in first.");
+        return;
+    }
+
+    const file=
+        document.getElementById("videoFile").files[0];
+
+    const title=
+        document.getElementById("videoTitle")
+        .value.trim();
+
+    const description=
+        document.getElementById("videoDescription")
+        .value.trim();
+
+    if(!file||!title){
+        alert("Add a title and video.");
+        return;
+    }
+
+    const path=
+        currentUser.id+"/"+Date.now()+"_"+file.name;
+
+    const upload=
+        await supabaseClient
+        .storage
+        .from("videos")
+        .upload(path,file);
+
+    if(upload.error){
+        alert(upload.error.message);
+        return;
+    }
+
+    const publicURL=
+        supabaseClient
+        .storage
+        .from("videos")
+        .getPublicUrl(path)
+        .data.publicUrl;
+
+    const {error}=
+        await supabaseClient
+        .from("videos")
+        .insert({
+            user_id:currentUser.id,
+            title,
+            description,
+            video_url:publicURL
+        });
+
+    if(error){
+        alert(error.message);
+        return;
+    }
+
+    document.getElementById("videoMessage")
+        .textContent="Video uploaded! 🎬";
+
+    loadVideos();
+}
+
+
+document
+.getElementById("searchVideos")
+.addEventListener("click",loadVideos);
+
+
+async function loadVideos(){
+
+    let query=
+        supabaseClient
+        .from("videos")
+        .select("*,profiles(username)")
+        .order("created_at",{ascending:false})
+        .limit(30);
+
+    const search=
+        document.getElementById("videoSearch")
+        .value.trim();
+
+    if(search){
+        query=query.ilike("title","%"+search+"%");
+    }
+
+    const {data,error}=await query;
+
+    if(error){
+        document.getElementById("videoFeed").innerHTML=
+            error.message;
+        return;
+    }
+
+    document.getElementById("videoFeed").innerHTML=
+        (data||[]).map(video=>`
+            <div class="video-card">
+                <video controls src="${safeURL(video.video_url)}"></video>
+                <h3>${escapeHTML(video.title)}</h3>
+                <p>${escapeHTML(video.description||"")}</p>
+                <small>
+                    by ${escapeHTML(video.profiles?.username||"Unknown")}
+                </small>
+            </div>
+        `).join("");
+}
+
+
+/* =========================
+   SCORE SYSTEM
+========================= */
+
+async function saveScore(game,score){
+
+    if(!currentUser){
+        alert("Log in to save your score! 🦊");
+        return;
+    }
+
+    const cleanScore=
+        Math.max(0,Math.floor(Number(score)||0));
+
+    const {error}=
+        await supabaseClient
+        .from("game_scores")
+        .insert({
+            user_id:currentUser.id,
+            game,
+            score:cleanScore
+        });
+
+    if(error){
+        console.error(error);
+        alert("Could not save score.");
+    }
+}
+
+
+function gameMessage(text){
+
+    document.getElementById("gameArea").innerHTML=
+        `<h2>${text}</h2>`;
+}
+
+
+/* =========================
+   BLACKJACK
+========================= */
+
+let blackjackPlayer=[];
+let blackjackDealer=[];
+
+function randomCard(){
+    const values=[
+        {name:"A",value:11},
+        {name:"2",value:2},
+        {name:"3",value:3},
+        {name:"4",value:4},
+        {name:"5",value:5},
+        {name:"6",value:6},
+        {name:"7",value:7},
+        {name:"8",value:8},
+        {name:"9",value:9},
+        {name:"10",value:10},
+        {name:"J",value:10},
+        {name:"Q",value:10},
+        {name:"K",value:10}
+    ];
+
+    return values[
+        Math.floor(Math.random()*values.length)
+    ];
+}
+
+function handValue(hand){
+
+    let total=
+        hand.reduce((sum,c)=>sum+c.value,0);
+
+    let aces=
+        hand.filter(c=>c.name==="A").length;
+
+    while(total>21&&aces>0){
+        total-=10;
+        aces--;
+    }
+
+    return total;
+}
+
+function cardsHTML(hand){
+
+    return hand.map(c=>
+        `<span class="playing-card">${c.name}</span>`
+    ).join("");
+}
+
+function startBlackjack(){
+
+    blackjackPlayer=[
+        randomCard(),
+        randomCard()
+    ];
+
+    blackjackDealer=[
+        randomCard(),
+        randomCard()
+    ];
+
+    renderBlackjack();
+}
+
+function renderBlackjack(){
+
+    const p=handValue(blackjackPlayer);
+    const d=handValue(blackjackDealer);
+
+    document.getElementById("gameArea").innerHTML=`
+        <h2>♠️ Blackjack</h2>
+
+        <h3>Dealer</h3>
+        <div class="cards">
+            ${cardsHTML(blackjackDealer)}
+        </div>
+
+        <h3>You: ${p}</h3>
+        <div class="cards">
+            ${cardsHTML(blackjackPlayer)}
+        </div>
+
+        <button class="action" onclick="blackjackHit()">
+            HIT
+        </button>
+
+        <button class="action" onclick="blackjackStand()">
+            STAND
+        </button>
+    `;
+
+    if(p>21){
+        blackjackEnd("💥 Bust!","Blackjack",0);
+    }
+}
+
+function blackjackHit(){
+
+    blackjackPlayer.push(randomCard());
+    renderBlackjack();
+}
+
+function blackjackStand(){
+
+    while(handValue(blackjackDealer)<17){
+        blackjackDealer.push(randomCard());
+    }
+
+    const p=handValue(blackjackPlayer);
+    const d=handValue(blackjackDealer);
+
+    let score=0;
+    let message="";
+
+    if(d>21||p>d){
+        score=p*10;
+        message="🎉 YOU WIN!";
+    }else if(p===d){
+        score=5;
+        message="🤝 DRAW!";
+    }else{
+        message="🦊 Foxie wins!";
+    }
+
+    document.getElementById("gameArea").innerHTML+=`
+        <h2>${message}</h2>
+        <p>Dealer: ${d} | You: ${p}</p>
+        <button class="action" onclick="startBlackjack()">
+            PLAY AGAIN
+        </button>
+    `;
+
+    saveScore("Blackjack",score);
+}
+
+function blackjackEnd(message,game,score){
+
+    document.getElementById("gameArea").innerHTML+=`
+        <h2>${message}</h2>
+        <button class="action" onclick="startBlackjack()">
+            PLAY AGAIN
+        </button>
+    `;
+
+    saveScore(game,score);
+}
+
+
+/* =========================
+   HIGHER LOWER
+========================= */
+
+let hlCurrent=0;
+let hlScore=0;
+
+function startHigherLower(){
+
+    hlCurrent=
+        Math.floor(Math.random()*13)+1;
+
+    hlScore=0;
+
+    renderHigherLower();
+}
+
+function renderHigherLower(){
+
+    document.getElementById("gameArea").innerHTML=`
+        <h2>🔮 Higher / Lower</h2>
+
+        <div class="big-number">
+            ${hlCurrent}
+        </div>
+
+        <p>Will the next card be higher or lower?</p>
+
+        <button class="action"
+            onclick="higherLowerGuess('higher')">
+            ⬆️ HIGHER
+        </button>
+
+        <button class="action"
+            onclick="higherLowerGuess('lower')">
+            ⬇️ LOWER
+        </button>
+
+        <h3>Score: ${hlScore}</h3>
+    `;
+}
+
+function higherLowerGuess(guess){
+
+    const next=
+        Math.floor(Math.random()*13)+1;
+
+    const correct=
+        guess==="higher"
+        ?next>hlCurrent
+        :next<hlCurrent;
+
+    if(correct){
+
+        hlScore+=10;
+        hlCurrent=next;
+        renderHigherLower();
+
+    }else{
+
+        document.getElementById("gameArea").innerHTML=`
+            <h2>💥 Wrong!</h2>
+            <p>The card was ${next}.</p>
+            <h3>Score: ${hlScore}</h3>
+            <button class="action"
+                onclick="startHigherLower()">
+                PLAY AGAIN
+            </button>
+        `;
+
+        saveScore("HigherLower",hlScore);
+    }
+}
+
+
+/* =========================
+   POKER
+========================= */
+
+function startPoker(){
+
+    const deck=[];
+
+    for(let i=2;i<=14;i++){
+        for(let j=0;j<4;j++){
+            deck.push(i);
+        }
+    }
+
+    deck.sort(()=>Math.random()-.5);
+
+    const player=deck.splice(0,5);
+    const foxie=deck.splice(0,5);
+
+    const playerScore=pokerValue(player);
+    const foxieScore=pokerValue(foxie);
+
+    let message;
+    let score;
+
+    if(playerScore>foxieScore){
+        message="🎉 YOU WIN!";
+        score=playerScore*20;
+    }else if(playerScore===foxieScore){
+        message="🤝 DRAW!";
+        score=10;
+    }else{
+        message="🦊 FOXIE WINS!";
+        score=0;
+    }
+
+    document.getElementById("gameArea").innerHTML=`
+        <h2>🃏 Poker</h2>
+
+        <h3>Your Hand</h3>
+        <div class="cards">
+            ${player.map(c=>
+                `<span class="playing-card">${cardName(c)}</span>`
+            ).join("")}
+        </div>
+
+        <h3>Foxie's Hand</h3>
+        <div class="cards">
+            ${foxie.map(c=>
+                `<span class="playing-card">${cardName(c)}</span>`
+            ).join("")}
+        </div>
+
+        <h2>${message}</h2>
+
+        <button class="action" onclick="startPoker()">
+            DEAL AGAIN
+        </button>
+    `;
+
+    saveScore("Poker",score);
+}
+
+function cardName(n){
+
+    const names={
+        11:"J",
+        12:"Q",
+        13:"K",
+        14:"A"
+    };
+
+    return names[n]||n;
+}
+
+function pokerValue(hand){
+
+    const counts={};
+
+    hand.forEach(x=>{
+        counts[x]=(counts[x]||0)+1;
+    });
+
+    const values=
+        Object.values(counts).sort((a,b)=>b-a);
+
+    if(values[0]===4)return 80;
+    if(values[0]===3&&values[1]===2)return 70;
+    if(values[0]===3)return 50;
+    if(values[0]===2&&values[1]===2)return 40;
+    if(values[0]===2)return 25;
+
+    return Math.max(...hand);
+}
+
+
+/* =========================
+   SOLITAIRE
+========================= */
+
+let solitaireScore=0;
+
+function startSolitaire(){
+
+    solitaireScore=0;
+
+    let cards=
+        Array.from({length:52},(_,i)=>i+1);
+
+    cards.sort(()=>Math.random()-.5);
+
+    const shown=cards.slice(0,12);
+
+    document.getElementById("gameArea").innerHTML=`
+        <h2>🃏 Foxie Solitaire</h2>
+
+        <p>
+            Pick the highest card from each round.
+            Build your score!
+        </p>
+
+        <div class="cards" id="solitaireCards">
+            ${shown.map((c,i)=>`
+                <button class="playing-card"
+                    onclick="solitairePick(${c},${i})">
+                    ${cardName(((c-1)%13)+2)}
+                </button>
+            `).join("")}
+        </div>
+
+        <h3>Score: <span id="solScore">0</span></h3>
+
+        <button class="action" onclick="startSolitaire()">
+            NEW GAME
+        </button>
+    `;
+}
+
+function solitairePick(card){
+
+    solitaireScore+=
+        ((card-1)%13+2)*5;
+
+    document.getElementById("solScore")
+        .textContent=solitaireScore;
+
+    if(solitaireScore>=300){
+
+        document.getElementById("gameArea").innerHTML+=`
+            <h2>🎉 SOLITAIRE COMPLETE!</h2>
+        `;
+
+        saveScore("Solitaire",solitaireScore);
+    }
+}
+
+
+/* =========================
+   TIC TAC TOE
+========================= */
+
+let tttBoard=[];
+
+function startTicTacToe(){
+
+    tttBoard=Array(9).fill("");
+
+    renderTTT();
+}
+
+function renderTTT(){
+
+    document.getElementById("gameArea").innerHTML=`
+        <h2>❌ Tic-Tac-Toe</h2>
+
+        <div class="ttt">
+            ${tttBoard.map((x,i)=>`
+                <button onclick="tttMove(${i})">
+                    ${x}
+                </button>
+            `).join("")}
+        </div>
+
+        <button class="action" onclick="startTicTacToe()">
+            RESET
+        </button>
+    `;
+}
+
+function tttMove(i){
+
+    if(tttBoard[i])return;
+
+    tttBoard[i]="X";
+
+    if(checkTTT("X")){
+        renderTTT();
+        document.getElementById("gameArea").innerHTML+=
+            "<h2>🎉 YOU WIN!</h2>";
+        saveScore("TicTacToe",50);
+        return;
+    }
+
+    const empty=
+        tttBoard
+        .map((x,i)=>x?null:i)
+        .filter(x=>x!==null);
+
+    if(!empty.length)return;
+
+    const move=
+        empty[Math.floor(Math.random()*empty.length)];
+
+    tttBoard[move]="O";
+
+    if(checkTTT("O")){
+        renderTTT();
+        document.getElementById("gameArea").innerHTML+=
+            "<h2>🦊 Foxie wins!</h2>";
+        saveScore("TicTacToe",0);
+        return;
+    }
+
+    renderTTT();
+}
+
+function checkTTT(p){
+
+    const wins=[
+        [0,1,2],
+        [3,4,5],
+        [6,7,8],
+        [0,3,6],
+        [1,4,7],
+        [2,5,8],
+        [0,4,8],
+        [2,4,6]
+    ];
+
+    return wins.some(w=>
+        w.every(i=>tttBoard[i]===p)
+    );
+}
+
+
+/* =========================
+   ROCK PAPER SCISSORS
+========================= */
+
+function startRPS(){
+
+    document.getElementById("gameArea").innerHTML=`
+        <h2>✊ Rock Paper Scissors</h2>
+
+        <button class="action"
+            onclick="playRPS('Rock')">
+            ✊ Rock
+        </button>
+
+        <button class="action"
+            onclick="playRPS('Paper')">
+            ✋ Paper
+        </button>
+
+        <button class="action"
+            onclick="playRPS('Scissors')">
+            ✌️ Scissors
+        </button>
+
+        <div id="rpsResult"></div>
+    `;
+}
+
+function playRPS(player){
+
+    const choices=[
+        "Rock",
+        "Paper",
+        "Scissors"
+    ];
+
+    const foxie=
+        choices[Math.floor(Math.random()*3)];
+
+    let result;
+    let score=0;
+
+    if(player===foxie){
+        result="🤝 DRAW!";
+        score=5;
+    }else if(
+        (player==="Rock"&&foxie==="Scissors")||
+        (player==="Paper"&&foxie==="Rock")||
+        (player==="Scissors"&&foxie==="Paper")
+    ){
+        result="🎉 YOU WIN!";
+        score=25;
+    }else{
+        result="🦊 FOXIE WINS!";
+    }
+
+    document.getElementById("rpsResult").innerHTML=`
+        <h3>You: ${player}</h3>
+        <h3>Foxie: ${foxie}</h3>
+        <h2>${result}</h2>
+    `;
+
+    saveScore("RPS",score);
+}
+
+
+/* =========================
+   RACER
+========================= */
+
+let racerTimer=null;
+let racerScore=0;
+let racerX=185;
+let enemyY=-100;
+
+function startRacer(){
+
+    clearInterval(racerTimer);
+
+    racerScore=0;
+    racerX=185;
+    enemyY=-100;
+
+    document.getElementById("gameArea").innerHTML=`
+        <h2>🚗 FOXIE RACER</h2>
+
+        <p>Use ⬅️ ➡️ or A/D</p>
+
+        <div class="racer" id="raceTrack">
+            <div class="road-line" style="top:0"></div>
+            <div class="road-line" style="top:120px"></div>
+            <div class="road-line" style="top:240px"></div>
+            <div class="road-line" style="top:360px"></div>
+
+            <div class="car"
+                 id="playerCar"
+                 style="left:185px;bottom:25px"></div>
+
+            <div class="enemy"
+                 id="enemyCar"
+                 style="left:100px;top:-100px"></div>
+        </div>
+
+        <h2>Score: <span id="raceScore">0</span></h2>
+    `;
+
+    racerTimer=setInterval(updateRacer,30);
+}
+
+function updateRacer(){
+
+    const enemy=
+        document.getElementById("enemyCar");
+
+    const player=
+        document.getElementById("playerCar");
+
+    if(!enemy||!player){
+        clearInterval(racerTimer);
+        return;
+    }
+
+    enemyY+=5;
+
+    if(enemyY>480){
+
+        enemyY=-100;
+        enemy.style.left=
+            Math.floor(Math.random()*300+30)+"px";
+
+        racerScore++;
+        document.getElementById("raceScore")
+            .textContent=racerScore;
+    }
+
+    enemy.style.top=enemyY+"px";
+
+    const ex=parseInt(enemy.style.left);
+
+    if(
+        enemyY>350 &&
+        enemyY<460 &&
+        Math.abs(ex-racerX)<55
+    ){
+        endRacer();
+    }
+}
+
+function endRacer(){
+
+    clearInterval(racerTimer);
+
+    document.getElementById("gameArea").innerHTML+=`
+        <h2>💥 CRASH!</h2>
+        <button class="action" onclick="startRacer()">
+            RACE AGAIN
+        </button>
+    `;
+
+    saveScore("Racer",racerScore*10);
+}
+
+document.addEventListener("keydown",e=>{
+
+    if(e.key==="ArrowLeft"||e.key.toLowerCase()==="a"){
+        racerX=Math.max(30,racerX-20);
+
+        const car=document.getElementById("playerCar");
+
+        if(car)car.style.left=racerX+"px";
+    }
+
+    if(e.key==="ArrowRight"||e.key.toLowerCase()==="d"){
+        racerX=Math.min(340,racerX+20);
+
+        const car=document.getElementById("playerCar");
+
+        if(car)car.style.left=racerX+"px";
+    }
+});
+
+
+/* =========================
+   TIME TRIAL
+========================= */
+
+function startTimeTrial(){
+
+    let clicks=0;
+    const target=30;
+    const start=Date.now();
+
+    document.getElementById("gameArea").innerHTML=`
+        <h2>🏁 TIME TRIAL</h2>
+
+        <p>Click the button ${target} times!</p>
+
+        <div class="big-number" id="trialCount">0</div>
+
+        <button class="action"
+            style="font-size:25px;padding:25px"
+            id="trialButton">
+            🚗 GO!
+        </button>
+    `;
+
+    document
+        .getElementById("trialButton")
+        .onclick=()=>{
+
+            clicks++;
+
+            document
+                .getElementById("trialCount")
+                .textContent=clicks;
+
+            if(clicks>=target){
+
+                const seconds=
+                    (Date.now()-start)/1000;
+
+                const score=
+                    Math.max(
+                        1,
+                        Math.floor(1000/seconds)
+                    );
+
+                document.getElementById("gameArea")
+                    .innerHTML+=`
+                        <h2>🏁 ${seconds.toFixed(2)} seconds!</h2>
+                        <h3>Score: ${score}</h3>
+                        <button class="action"
+                            onclick="startTimeTrial()">
+                            AGAIN
+                        </button>
+                    `;
+
+                saveScore("TimeTrial",score);
+            }
+        };
+}
+
+
+/* =========================
+   LEADERBOARD
+========================= */
+
+document
+.getElementById("refreshLeaderboard")
+.addEventListener("click",loadLeaderboard);
+
+document
+.getElementById("leaderboardPeriod")
+.addEventListener("change",loadLeaderboard);
+
+document
+.getElementById("leaderboardGame")
+.addEventListener("change",loadLeaderboard);
+
+
+function periodStart(period){
+
+    const now=new Date();
+
+    if(period==="week"){
+
+        const day=now.getDay();
+
+        const diff=
+            day===0?6:day-1;
+
+        now.setDate(now.getDate()-diff);
+        now.setHours(0,0,0,0);
+
+        return now;
+    }
+
+    if(period==="month"){
+
+        now.setDate(1);
+        now.setHours(0,0,0,0);
+
+        return now;
+    }
+
+    if(period==="year"){
+
+        now.setMonth(0,1);
+        now.setHours(0,0,0,0);
+
+        return now;
+    }
+
+    return null;
+}
+
+
+async function loadLeaderboard(){
+
+    const period=
+        document.getElementById("leaderboardPeriod")
+        .value;
+
+    const game=
+        document.getElementById("leaderboardGame")
+        .value;
+
+    let query=
+        supabaseClient
+        .from("game_scores")
+        .select("user_id,game,score,created_at");
+
+    const start=periodStart(period);
+
+    if(start){
+        query=query.gte(
+            "created_at",
+            start.toISOString()
+        );
+    }
+
+    if(game!=="all"){
+        query=query.eq("game",game);
+    }
+
+    const {data,error}=await query;
+
+    if(error){
+        document.getElementById("leaderboardBody")
+            .innerHTML=
+            `<tr><td colspan="3">${escapeHTML(error.message)}</td></tr>`;
+        return;
+    }
+
+    const totals={};
+
+    (data||[]).forEach(row=>{
+
+        if(!totals[row.user_id]){
+            totals[row.user_id]=0;
+        }
+
+        totals[row.user_id]+=Number(row.score)||0;
+    });
+
+    const ids=
+        Object.keys(totals)
+        .sort((a,b)=>totals[b]-totals[a])
+        .slice(0,20);
+
+    if(!ids.length){
+
+        document.getElementById("leaderboardBody")
+            .innerHTML=
+            `<tr><td colspan="3">No scores yet!</td></tr>`;
+
+        return;
+    }
+
+    const {data:profiles}=
+        await supabaseClient
+        .from("profiles")
+        .select("id,username")
+        .in("id",ids);
+
+    const names={};
+
+    (profiles||[]).forEach(p=>{
+        names[p.id]=p.username;
+    });
+
+    document.getElementById("leaderboardBody")
+        .innerHTML=
+        ids.map((id,index)=>`
+            <tr>
+                <td class="rank">${index+1}</td>
+                <td>${escapeHTML(names[id]||"Unknown")}</td>
+                <td>${totals[id]}</td>
+            </tr>
+        `).join("");
+}
+
+
+/* =========================
+   ADMIN
+========================= */
+
+async function checkAdmin(){
+
+    if(!currentUser){
+        isAdmin=false;
+        return;
+    }
+
+    const {data}=
+        await supabaseClient
+        .from("admins")
+        .select("user_id")
+        .eq("user_id",currentUser.id)
+        .maybeSingle();
+
+    isAdmin=!!data;
+
+    document
+        .getElementById("adminTab")
+        .classList.toggle("hidden",!isAdmin);
+}
+
+
+document
+.getElementById("adminRefreshScores")
+.addEventListener("click",loadAdminScores);
+
+
+async function loadAdminScores(){
+
+    if(!isAdmin)return;
+
+    const {data,error}=
+        await supabaseClient
+        .from("game_scores")
+        .select("*,profiles(username)")
+        .order("created_at",{ascending:false})
+        .limit(100);
+
+    if(error){
+        document.getElementById("adminScores")
+            .textContent=error.message;
+        return;
+    }
+
+    document.getElementById("adminScores").innerHTML=
+        (data||[]).map(score=>`
+            <div class="notice">
+                👤 ${escapeHTML(score.profiles?.username||"Unknown")}
+                |
+                🎮 ${escapeHTML(score.game)}
+                |
+                🏆 ${score.score}
+
+                <button class="action"
+                    onclick="deleteScore(${score.id})">
+                    🗑️ Delete
+                </button>
+            </div>
+        `).join("");
+}
+
+
+async function deleteScore(id){
+
+    if(!isAdmin)return;
+
+    const {error}=
+        await supabaseClient
+        .from("game_scores")
+        .delete()
+        .eq("id",id);
+
+    if(error){
+        alert(error.message);
+        return;
+    }
+
+    loadAdminScores();
+    loadLeaderboard();
+}
+
+
+/* =========================
+   CREATOR MODE
+========================= */
+
+document
+.getElementById("creatorLogin")
+.addEventListener("click",async()=>{
+
+    const code=
+        document.getElementById("creatorCode").value;
+
+    if(!code)return;
+
+    try{
+
+        const response=
+            await fetch(BACKEND+"/creator-login",{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({code})
+            });
+
+        const data=await response.json();
+
+        if(data.success){
+
+            document
+                .getElementById("creatorLocked")
+                .classList.add("hidden");
+
+            document
+                .getElementById("creatorUnlocked")
+                .classList.remove("hidden");
+
+        }else{
+
+            document
+                .getElementById("creatorMessage")
+                .textContent="Wrong creator code.";
+        }
+
+    }catch(error){
+
+        document
+            .getElementById("creatorMessage")
+            .textContent="Creator server unavailable.";
+    }
+});
+
+
+document
+.getElementById("creatorSend")
+.addEventListener("click",async()=>{
+
+    const input=
+        document.getElementById("creatorInput");
+
+    const box=
+        document.getElementById("creatorChat");
+
+    const message=input.value.trim();
+
+    if(!message)return;
+
+    box.innerHTML+=`
+        <div class="message user-message">
+            <div class="message-name">CREATOR</div>
+            ${escapeHTML(message)}
+        </div>
+    `;
+
+    input.value="";
+
+    try{
+
+        const response=
+            await fetch(BACKEND+"/chat",{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({message})
+            });
+
+        const data=await response.json();
+
+        box.innerHTML+=`
+            <div class="message foxie-message">
+                <div class="message-name">🦊 FOXIE</div>
+                ${escapeHTML(data.reply||"No response")}
+            </div>
+        `;
+
+        box.scrollTop=box.scrollHeight;
+
+    }catch(error){
+
+        box.innerHTML+=`
+            <div class="message foxie-message">
+                Foxie could not connect.
+            </div>
+        `;
+    }
+});
+
+
+/* =========================
+   CALCULATOR
+========================= */
+
+function calc(value){
+
+    document.getElementById("calcDisplay")
+        .value+=value;
+}
+
+function calculate(){
+
+    const display=
+        document.getElementById("calcDisplay");
+
+    try{
+
+        display.value=
+            Function(
+                '"use strict";return ('+
+                display.value+
+                ')'
+            )();
+
+    }catch{
+        display.value="ERROR";
+    }
+}
+
+function clearCalc(){
+    document.getElementById("calcDisplay").value="";
+}
+
+
+/* =========================
    HELPERS
-================================ */
+========================= */
 
-function escapeHtml(value) {
+function escapeHTML(value){
 
-    return String(value ?? "")
+    return String(value??"")
         .replaceAll("&","&amp;")
         .replaceAll("<","&lt;")
         .replaceAll(">","&gt;")
         .replaceAll('"',"&quot;")
         .replaceAll("'","&#039;");
-
 }
 
-function escapeAttribute(value) {
-    return escapeHtml(value);
-}
+function safeURL(value){
 
-function defaultAvatar() {
+    try{
 
-    return "https://placehold.co/300x300/001b0b/00ff66?text=🦊";
+        const url=new URL(value);
 
-}
-
-/* ================================
-   TABS
-================================ */
-
-document
-.querySelectorAll(".tab")
-.forEach(button => {
-
-    button.addEventListener("click", () => {
-
-        document
-        .querySelectorAll(".tab")
-        .forEach(tab => {
-            tab.classList.remove("active");
-        });
-
-        document
-        .querySelectorAll(".panel")
-        .forEach(panel => {
-            panel.classList.remove("active");
-        });
-
-        button.classList.add("active");
-
-        document
-        .getElementById(button.dataset.panel)
-        .classList.add("active");
-
-        if (button.dataset.panel === "usersPanel") {
-            loadUsers();
+        if(
+            url.protocol==="https:"||
+            url.protocol==="http:"
+        ){
+            return escapeHTML(url.href);
         }
 
-        if (button.dataset.panel === "friendsPanel") {
-            loadFriends();
-        }
+    }catch{}
 
-        if (button.dataset.panel === "videosPanel") {
-            loadVideos();
-        }
-
-    });
-
-});
-
-/* ================================
-   CHAT
-================================ */
-
-const chatInput =
-    document.getElementById("chatInput");
-
-const chatBox =
-    document.getElementById("chatBox");
-
-function addChatMessage(text,type) {
-
-    const div =
-        document.createElement("div");
-
-    div.className =
-        "message " +
-        (type === "user"
-            ? "user-message"
-            : "foxie-message");
-
-    div.innerHTML = `
-        <div class="message-name">
-            ${type === "user" ? "YOU" : "🦊 FOXIE"}
-        </div>
-        ${escapeHtml(text)}
-    `;
-
-    chatBox.appendChild(div);
-
-    chatBox.scrollTop =
-        chatBox.scrollHeight;
-
+    return "#";
 }
 
-async function sendMessage() {
 
-    const message =
-        chatInput.value.trim();
+/* =========================
+   STARTUP
+========================= */
 
-    if (!message) return;
-
-    chatInput.value = "";
-
-    addChatMessage(message,"user");
-
-    const loading =
-        document.createElement("div");
-
-    loading.className =
-        "message foxie-message loading";
-
-    loading.innerHTML = `
-        <div class="message-name">
-            🦊 FOXIE
-        </div>
-        Thinking...
-    `;
-
-    chatBox.appendChild(loading);
-
-    try {
-
-        const response =
-            await fetch(
-                BACKEND + "/chat",
-                {
-                    method:"POST",
-                    headers:{
-                        "Content-Type":
-                            "application/json"
-                    },
-                    body:JSON.stringify({
-                        message
-                    })
-                }
-            );
-
-        const data =
-            await response.json();
-
-        loading.remove();
-
-        addChatMessage(
-            data.reply ||
-            "Foxie couldn't respond.",
-            "foxie"
-        );
-
-    } catch(error) {
-
-        loading.remove();
-
-        addChatMessage(
-            "I couldn't connect to Foxie right now. 🦊",
-            "foxie"
-        );
-
-    }
-
-}
+handleAuth();
+loadVideos();
 
 document
-.getElementById("sendChat")
-.addEventListener(
-    "click",
-    sendMessage
-);
-
-chatInput.addEventListener(
-    "keydown",
-    event => {
-
-        if (event.key === "Enter") {
-            sendMessage();
-        }
-
-    }
-);
-
-/* ================================
-   WEB SEARCH
-================================ */
-
-async function searchWeb() {
-
-    const query =
-        document
-        .getElementById("webInput")
-        .value
-        .trim();
-
-    const resultsBox =
-        document
-        .getElementById("webResults");
-
-    if (!query) return;
-
-    resultsBox.innerHTML =
-        "<p>Searching... 🌐</p>";
-
-    try {
-
-        const response =
-            await fetch(
-                BACKEND +
-                "/search?q=" +
-                encodeURIComponent(query)
-            );
-
-        const data =
-            await response.json();
-
-        resultsBox.innerHTML = "";
-
-        (data.results || [])
-        .forEach(result => {
-
-            const div =
-                document.createElement("div");
-
-            div.className = "result";
-
-            div.innerHTML = `
-                <div class="result-title">
-                    ${escapeHtml(result.title)}
-                </div>
-
-                <div>
-                    ${escapeHtml(result.body)}
-                </div>
-
-                <br>
-
-                <a
-                    href="${escapeAttribute(result.href)}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Open result →
-                </a>
-            `;
-
-            resultsBox.appendChild(div);
-
-        });
-
-        if (!data.results?.length) {
-            resultsBox.innerHTML =
-                "<p>No results found.</p>";
-        }
-
-    } catch(error) {
-
-        resultsBox.innerHTML =
-            "<p>Search failed.</p>";
-
-    }
-
-}
-
-document
-.getElementById("webButton")
-.addEventListener(
-    "click",
-    searchWeb
-);
-
-document
-.getElementById("webInput")
-.addEventListener(
-    "keydown",
-    event => {
-
-        if (event.key === "Enter") {
-            searchWeb();
-        }
-
-    }
-);
-
-/* ================================
-   IMAGE SEARCH
-================================ */
-
-async function searchImages() {
-
-    const query =
-        document
-        .getElementById("imageInput")
-        .value
-        .trim();
-
-    const box =
-        document
-        .getElementById("imageResults");
-
-    if (!query) return;
-
-    box.innerHTML =
-        "<p>Searching images... 🖼️</p>";
-
-    try {
-
-        const response =
-            await fetch(
-                BACKEND +
-                "/images?q=" +
-                encodeURIComponent(query)
-            );
-
-        const data =
-            await response.json();
-
-        box.innerHTML = "";
-
-        (data.results || [])
-        .forEach(result => {
-
-            if (!result.image) return;
-
-            const card =
-                document.createElement("div");
-
-            card.className =
-                "image-card";
-
-            card.innerHTML = `
-                <a
-                    href="${escapeAttribute(result.image)}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <img
-                        src="${escapeAttribute(result.thumbnail || result.image)}"
-                        alt="${escapeAttribute(result.title || query)}"
-                        loading="lazy"
-                    >
-                </a>
-
-                <div>
-                    ${escapeHtml(result.title || "Image")}
-                </div>
-            `;
-
-            box.appendChild(card);
-
-        });
-
-    } catch(error) {
-
-        box.innerHTML =
-            "<p>Image search failed.</p>";
-
-    }
-
-}
-
-document
-.getElementById("imageButton")
-.addEventListener(
-    "click",
-    searchImages
-);
-
-/* ================================
-   AUTH
-================================ */
-
-let authMode = "login";
-
-function openAuth(mode) {
-
-    authMode = mode;
-
-    document
-    .getElementById("authModal")
-    .classList.add("show");
-
-    document
-    .getElementById("authTitle")
-    .textContent =
-        mode === "login"
-        ? "🔐 Login"
-        : "✨ Create Foxie Account";
-
-    document
-    .getElementById("authSubmit")
-    .textContent =
-        mode === "login"
-        ? "Login"
-        : "Create Account";
-
-}
-
-document
-.getElementById("showLoginButton")
-.addEventListener(
-    "click",
-    () => openAuth("login")
-);
-
-document
-.getElementById("showSignupButton")
-.addEventListener(
-    "click",
-    () => openAuth("signup")
-);
-
-document
-.getElementById("authClose")
-.addEventListener(
-    "click",
-    () => {
-        document
-        .getElementById("authModal")
-        .classList.remove("show");
-    }
-);
-
-document
-.getElementById("authSwitch")
-.addEventListener(
-    "click",
-    () => {
-
-        openAuth(
-            authMode === "login"
-            ? "signup"
-            : "login"
-        );
-
-    }
-);
-
-document
-.getElementById("authSubmit")
-.addEventListener(
-    "click",
-    handleAuth
-);
-
-async function handleAuth() {
-
-    const email =
-        document
-        .getElementById("authEmail")
-        .value
-        .trim();
-
-    const password =
-        document
-        .getElementById("authPassword")
-        .value;
-
-    const message =
-        document
-        .getElementById("authModalMessage");
-
-    if (!email || !password) {
-
-        message.textContent =
-            "Enter your email and password.";
-
-        return;
-
-    }
-
-    message.textContent =
-        "Please wait...";
-
-    try {
-
-        if (authMode === "signup") {
-
-            const {data,error} =
-                await supabaseClient.auth.signUp({
-                    email,
-                    password
-                });
-
-            if (error) throw error;
-
-            if (data.session) {
-
-                document
-                .getElementById("authModal")
-                .classList.remove("show");
-
-                await loadProfile();
-
-            } else {
-
-                message.textContent =
-                    "Account created! You may need to log in.";
-
-            }
-
-        } else {
-
-            const {error} =
-                await supabaseClient.auth.signInWithPassword({
-                    email,
-                    password
-                });
-
-            if (error) throw error;
-
-            document
-            .getElementById("authModal")
-            .classList.remove("show");
-
-            await loadProfile();
-
-        }
-
-    } catch(error) {
-
-        message.textContent =
-            error.message ||
-            "Authentication failed.";
-
-    }
-
-}
-
-/* ================================
-   PROFILE
-================================ */
-
-async function loadProfile() {
-
-    const {data:{user}} =
-        await supabaseClient.auth.getUser();
-
-    currentUser = user;
-
-    if (!user) {
-
-        document
-        .getElementById("profileLoggedOut")
-        .classList.remove("hidden");
-
-        document
-        .getElementById("profileLoggedIn")
-        .classList.add("hidden");
-
-        return;
-
-    }
-
-    document
-    .getElementById("profileLoggedOut")
-    .classList.add("hidden");
-
-    document
-    .getElementById("profileLoggedIn")
-    .classList.remove("hidden");
-
-    let {data:profile,error} =
-        await supabaseClient
-        .from("profiles")
-        .select("*")
-        .eq("id",user.id)
-        .maybeSingle();
-
-    if (error) {
-        console.error(error);
-        return;
-    }
-
-    if (!profile) {
-
-        const username =
-            user.email
-            ? user.email.split("@")[0]
-            : "FoxieUser";
-
-        const result =
-            await supabaseClient
-            .from("profiles")
-            .insert({
-                id:user.id,
-                username
-            })
-            .select()
-            .single();
-
-        if (result.error) {
-            console.error(result.error);
-            return;
-        }
-
-        profile = result.data;
-
-    }
-
-    currentProfile = profile;
-
-    displayProfile(profile);
-
-}
-
-function displayProfile(profile) {
-
-    document
-    .getElementById("profileUsername")
-    .textContent =
-        "@" + profile.username;
-
-    document
-    .getElementById("profileBio")
-    .textContent =
-        profile.bio || "No bio yet.";
-
-    document
-    .getElementById("profileAvatar")
-    .src =
-        profile.avatar_url ||
-        defaultAvatar();
-
-}
-
-/* EDIT PROFILE */
-
-document
-.getElementById("editProfileButton")
-.addEventListener(
-    "click",
-    () => {
-
-        if (!currentProfile) return;
-
-        document
-        .getElementById("editUsername")
-        .value =
-            currentProfile.username || "";
-
-        document
-        .getElementById("editBio")
-        .value =
-            currentProfile.bio || "";
-
-        document
-        .getElementById("profileModal")
-        .classList.add("show");
-
-    }
-);
-
-document
-.getElementById("closeProfileModal")
-.addEventListener(
-    "click",
-    () => {
-
-        document
-        .getElementById("profileModal")
-        .classList.remove("show");
-
-    }
-);
-
-document
-.getElementById("saveProfile")
-.addEventListener(
-    "click",
-    saveProfile
-);
-
-async function saveProfile() {
-
-    if (!currentUser) return;
-
-    const username =
-        document
-        .getElementById("editUsername")
-        .value
-        .trim();
-
-    const bio =
-        document
-        .getElementById("editBio")
-        .value
-        .trim();
-
-    const file =
-        document
-        .getElementById("avatarFile")
-        .files[0];
-
-    const message =
-        document
-        .getElementById("profileMessage");
-
-    if (!username) {
-
-        message.textContent =
-            "Username cannot be empty.";
-
-        return;
-
-    }
-
-    message.textContent =
-        "Saving...";
-
-    try {
-
-        let avatarUrl =
-            currentProfile.avatar_url || null;
-
-        if (file) {
-
-            if (file.size > 5 * 1024 * 1024) {
-
-                message.textContent =
-                    "Image must be under 5MB.";
-
-                return;
-
-            }
-
-            const extension =
-                file.name
-                .split(".")
-                .pop()
-                .toLowerCase();
-
-            const path =
-                currentUser.id +
-                "/avatar." +
-                extension;
-
-            const {error} =
-                await supabaseClient
-                .storage
-                .from("avatars")
-                .upload(
-                    path,
-                    file,
-                    {
-                        upsert:true,
-                        contentType:file.type
-                    }
-                );
-
-            if (error) throw error;
-
-            const {data} =
-                supabaseClient
-                .storage
-                .from("avatars")
-                .getPublicUrl(path);
-
-            avatarUrl =
-                data.publicUrl +
-                "?t=" +
-                Date.now();
-
-        }
-
-        const {data,error} =
-            await supabaseClient
-            .from("profiles")
-            .update({
-                username,
-                bio,
-                avatar_url:avatarUrl
-            })
-            .eq("id",currentUser.id)
-            .select()
-            .single();
-
-        if (error) throw error;
-
-        currentProfile = data;
-
-        displayProfile(data);
-
-        message.textContent =
-            "Profile saved! 🦊💚";
-
-        setTimeout(() => {
-
-            document
-            .getElementById("profileModal")
-            .classList.remove("show");
-
-        },700);
-
-    } catch(error) {
-
-        message.textContent =
-            error.message ||
-            "Could not save profile.";
-
-    }
-
-}
-
-/* LOGOUT */
-
-document
-.getElementById("logoutButton")
-.addEventListener(
-    "click",
-    async () => {
-
-        await supabaseClient.auth.signOut();
-
-        currentUser = null;
-        currentProfile = null;
-
-        await loadProfile();
-
-    }
-);
-
-/* ================================
-   OTHER USERS
-================================ */
-
-async function loadUsers(search = "") {
-
-    const list =
-        document.getElementById("usersList");
-
-    const message =
-        document.getElementById("usersMessage");
-
-    list.innerHTML =
-        "<p>Loading users... 👥</p>";
-
-    let query =
-        supabaseClient
-        .from("profiles")
-        .select("*")
-        .order("created_at",{ascending:false})
-        .limit(50);
-
-    if (search) {
-
-        query =
-            query.ilike(
-                "username",
-                "%" + search + "%"
-            );
-
-    }
-
-    const {data,error} =
-        await query;
-
-    if (error) {
-
-        list.innerHTML =
-            "<div class='notice'>Could not load users.</div>";
-
-        console.error(error);
-
-        return;
-
-    }
-
-    list.innerHTML = "";
-
-    const users =
-        (data || [])
-        .filter(user =>
-            !currentUser ||
-            user.id !== currentUser.id
-        );
-
-    if (!users.length) {
-
-        list.innerHTML =
-            "<div class='notice'>No other users found.</div>";
-
-        return;
-
-    }
-
-    users.forEach(user => {
-
-        const card =
-            document.createElement("div");
-
-        card.className =
-            "user-card";
-
-        card.innerHTML = `
-
-            <img
-                class="avatar-small"
-                src="${escapeAttribute(
-                    user.avatar_url ||
-                    defaultAvatar()
-                )}"
-                alt="Avatar"
-            >
-
-            <div class="user-card-info">
-
-                <div class="user-card-name">
-                    @${escapeHtml(user.username)}
-                </div>
-
-                <div class="user-card-bio">
-                    ${escapeHtml(
-                        user.bio ||
-                        "No bio yet."
-                    )}
-                </div>
-
-                <div class="user-card-actions">
-
-                    <button
-                        class="action add-friend-button"
-                    >
-                        ➕ Add Friend
-                    </button>
-
-                </div>
-
-            </div>
-        `;
-
-        const button =
-            card.querySelector(
-                ".add-friend-button"
-            );
-
-        button.addEventListener(
-            "click",
-            () => sendFriendRequest(user.id,button)
-        );
-
-        list.appendChild(card);
-
-    });
-
-}
-
-document
-.getElementById("userSearchButton")
-.addEventListener(
-    "click",
-    () => {
-
-        const value =
-            document
-            .getElementById("userSearchInput")
-            .value
-            .trim();
-
-        loadUsers(value);
-
-    }
-);
-
-document
-.getElementById("userSearchInput")
-.addEventListener(
-    "keydown",
-    event => {
-
-        if (event.key === "Enter") {
-
-            loadUsers(
-                event.target.value.trim()
-            );
-
-        }
-
-    }
-);
-
-/* ================================
-   FRIEND REQUESTS
-================================ */
-
-async function sendFriendRequest(
-    friendId,
-    button
-) {
-
-    if (!currentUser) {
-
-        alert(
-            "You need to log in first."
-        );
-
-        return;
-
-    }
-
-    if (currentUser.id === friendId) {
-        return;
-    }
-
-    button.disabled = true;
-    button.textContent = "Sending...";
-
-    const {error} =
-        await supabaseClient
-        .from("friends")
-        .insert({
-            user_id:currentUser.id,
-            friend_id:friendId,
-            status:"pending"
-        });
-
-    if (error) {
-
-        if (
-            error.code === "23505"
-        ) {
-
-            button.textContent =
-                "Already sent";
-
-        } else {
-
-            console.error(error);
-
-            button.textContent =
-                "Try again";
-
-            button.disabled = false;
-
-        }
-
-        return;
-
-    }
-
-    button.textContent =
-        "✓ Request Sent";
-
-}
-
-async function loadFriends() {
-
-    const requests =
-        document
-        .getElementById("friendRequests");
-
-    const friends =
-        document
-        .getElementById("friendsList");
-
-    if (!currentUser) {
-
-        requests.innerHTML =
-            "<div class='notice'>Log in first.</div>";
-
-        friends.innerHTML =
-            "<div class='notice'>Log in first.</div>";
-
-        return;
-
-    }
-
-    requests.innerHTML =
-        "<p>Loading...</p>";
-
-    friends.innerHTML =
-        "<p>Loading...</p>";
-
-    const {data,error} =
-        await supabaseClient
-        .from("friends")
-        .select("*")
-        .or(
-            "user_id.eq." +
-            currentUser.id +
-            ",friend_id.eq." +
-            currentUser.id
-        );
-
-    if (error) {
-
-        console.error(error);
-
-        requests.innerHTML =
-            "<div class='notice'>Could not load friend requests.</div>";
-
-        friends.innerHTML =
-            "<div class='notice'>Could not load friends.</div>";
-
-        return;
-
-    }
-
-    const incoming =
-        (data || [])
-        .filter(row =>
-            row.friend_id === currentUser.id &&
-            row.status === "pending"
-        );
-
-    const accepted =
-        (data || [])
-        .filter(row =>
-            row.status === "accepted"
-        );
-
-    requests.innerHTML = "";
-
-    if (!incoming.length) {
-
-        requests.innerHTML =
-            "<div class='notice'>No new friend requests.</div>";
-
-    } else {
-
-        for (const request of incoming) {
-
-            const otherId =
-                request.user_id;
-
-            const {data:user} =
-                await supabaseClient
-                .from("profiles")
-                .select("*")
-                .eq("id",otherId)
-                .maybeSingle();
-
-            if (!user) continue;
-
-            const card =
-                document.createElement("div");
-
-            card.className =
-                "friend-card";
-
-            card.innerHTML = `
-
-                <img
-                    class="avatar-small"
-                    src="${escapeAttribute(
-                        user.avatar_url ||
-                        defaultAvatar()
-                    )}"
-                >
-
-                <div class="friend-card-info">
-
-                    <div class="friend-card-name">
-                        @${escapeHtml(user.username)}
-                    </div>
-
-                    <div class="friend-card-status">
-                        Wants to be your friend
-                    </div>
-
-                    <button
-                        class="action accept-button"
-                    >
-                        ✅ Accept
-                    </button>
-
-                    <button
-                        class="action decline-button"
-                    >
-                        ❌ Decline
-                    </button>
-
-                </div>
-            `;
-
-            card
-            .querySelector(".accept-button")
-            .addEventListener(
-                "click",
-                () => updateFriendRequest(
-                    request.id,
-                    "accepted"
-                )
-            );
-
-            card
-            .querySelector(".decline-button")
-            .addEventListener(
-                "click",
-                () => deleteFriendRequest(
-                    request.id
-                )
-            );
-
-            requests.appendChild(card);
-
-        }
-
-    }
-
-    friends.innerHTML = "";
-
-    if (!accepted.length) {
-
-        friends.innerHTML =
-            "<div class='notice'>You don't have any friends yet.</div>";
-
-        return;
-
-    }
-
-    for (const friendship of accepted) {
-
-        const otherId =
-            friendship.user_id === currentUser.id
-            ? friendship.friend_id
-            : friendship.user_id;
-
-        const {data:user} =
-            await supabaseClient
-            .from("profiles")
-            .select("*")
-            .eq("id",otherId)
-            .maybeSingle();
-
-        if (!user) continue;
-
-        const card =
-            document.createElement("div");
-
-        card.className =
-            "friend-card";
-
-        card.innerHTML = `
-
-            <img
-                class="avatar-small"
-                src="${escapeAttribute(
-                    user.avatar_url ||
-                    defaultAvatar()
-                )}"
-            >
-
-            <div class="friend-card-info">
-
-                <div class="friend-card-name">
-                    @${escapeHtml(user.username)}
-                </div>
-
-                <div class="friend-card-status">
-                    ${user.online
-                        ? "🟢 Online"
-                        : "⚫ Offline"}
-                </div>
-
-            </div>
-
-        `;
-
-        friends.appendChild(card);
-
-    }
-
-}
-
-async function updateFriendRequest(
-    id,
-    status
-) {
-
-    const {error} =
-        await supabaseClient
-        .from("friends")
-        .update({status})
-        .eq("id",id);
-
-    if (error) {
-
-        console.error(error);
-
-        alert(
-            "Could not update request."
-        );
-
-        return;
-
-    }
-
-    loadFriends();
-
-}
-
-async function deleteFriendRequest(id) {
-
-    const {error} =
-        await supabaseClient
-        .from("friends")
-        .delete()
-        .eq("id",id);
-
-    if (error) {
-
-        console.error(error);
-
-        return;
-
-    }
-
-    loadFriends();
-
-}
-
-/* ================================
-   FOXIE VIDS
-================================ */
-
-async function loadVideos(search = "") {
-
-    const feed =
-        document.getElementById("videoFeed");
-
-    feed.innerHTML =
-        "<div class='notice'>Loading Foxie Vids... 🎬</div>";
-
-    let query =
-        supabaseClient
-        .from("videos")
-        .select(`
-            id,
-            title,
-            description,
-            video_url,
-            created_at,
-            profiles (
-                username,
-                avatar_url
-            )
-        `)
-        .order("created_at",{ascending:false})
-        .limit(50);
-
-    if (search) {
-
-        query =
-            query.ilike(
-                "title",
-                "%" + search + "%"
-            );
-
-    }
-
-    const {data,error} =
-        await query;
-
-    if (error) {
-
-        console.error(error);
-
-        feed.innerHTML = `
-            <div class="notice">
-                Foxie Vids needs its video database setup first. 🦊🎬
-            </div>
-        `;
-
-        return;
-
-    }
-
-    feed.innerHTML = "";
-
-    if (!data?.length) {
-
-        feed.innerHTML =
-            "<div class='notice'>No videos yet. Be the first to upload one! 🎬</div>";
-
-        return;
-
-    }
-
-    data.forEach(video => {
-
-        const card =
-            document.createElement("div");
-
-        card.className =
-            "video-card";
-
-        const creator =
-            video.profiles?.username ||
-            "Foxie User";
-
-        card.innerHTML = `
-
-            <video
-                controls
-                preload="metadata"
-                src="${escapeAttribute(video.video_url)}"
-            ></video>
-
-            <div class="video-info">
-
-                <div class="video-title">
-                    ${escapeHtml(video.title)}
-                </div>
-
-                <div class="video-creator">
-                    🦊 @${escapeHtml(creator)}
-                </div>
-
-                <div class="video-description">
-                    ${escapeHtml(
-                        video.description || ""
-                    )}
-                </div>
-
-            </div>
-
-        `;
-
-        feed.appendChild(card);
-
-    });
-
-}
-
-document
-.getElementById("videoSearchButton")
-.addEventListener(
-    "click",
-    () => {
-
-        const search =
-            document
-            .getElementById("videoSearch")
-            .value
-            .trim();
-
-        loadVideos(search);
-
-    }
-);
-
-document
-.getElementById("uploadVideoButton")
-.addEventListener(
-    "click",
-    uploadVideo
-);
-
-async function uploadVideo() {
-
-    const message =
-        document
-        .getElementById("videoUploadMessage");
-
-    if (!currentUser) {
-
-        message.textContent =
-            "You need to log in before uploading videos.";
-
-        return;
-
-    }
-
-    const title =
-        document
-        .getElementById("videoTitle")
-        .value
-        .trim();
-
-    const description =
-        document
-        .getElementById("videoDescription")
-        .value
-        .trim();
-
-    const file =
-        document
-        .getElementById("videoFile")
-        .files[0];
-
-    if (!title) {
-
-        message.textContent =
-            "Give your video a title.";
-
-        return;
-
-    }
-
-    if (!file) {
-
-        message.textContent =
-            "Choose a video first.";
-
-        return;
-
-    }
-
-    if (file.size > 100 * 1024 * 1024) {
-
-        message.textContent =
-            "Video must be under 100MB.";
-
-        return;
-
-    }
-
-    message.textContent =
-        "Uploading video... 🎬";
-
-    try {
-
-        const extension =
-            file.name
-            .split(".")
-            .pop()
-            .toLowerCase();
-
-        const path =
-            currentUser.id +
-            "/" +
-            Date.now() +
-            "." +
-            extension;
-
-        const {error:uploadError} =
-            await supabaseClient
-            .storage
-            .from("videos")
-            .upload(
-                path,
-                file,
-                {
-                    upsert:false,
-                    contentType:file.type
-                }
-            );
-
-        if (uploadError) {
-            throw uploadError;
-        }
-
-        const {data:urlData} =
-            supabaseClient
-            .storage
-            .from("videos")
-            .getPublicUrl(path);
-
-        const videoUrl =
-            urlData.publicUrl;
-
-        const {error:dbError} =
-            await supabaseClient
-            .from("videos")
-            .insert({
-                user_id:currentUser.id,
-                title,
-                description,
-                video_url:videoUrl
-            });
-
-        if (dbError) {
-            throw dbError;
-        }
-
-        message.textContent =
-            "Video uploaded! 🦊🎬";
-
-        document
-        .getElementById("videoTitle")
-        .value = "";
-
-        document
-        .getElementById("videoDescription")
-        .value = "";
-
-        document
-        .getElementById("videoFile")
-        .value = "";
-
-        loadVideos();
-
-    } catch(error) {
-
-        console.error(error);
-
-        message.textContent =
-            error.message ||
-            "Video upload failed.";
-
-    }
-
-}
-
-/* ================================
-   CREATOR MODE
-================================ */
-
-document
-.getElementById("openCreatorLogin")
-.addEventListener(
-    "click",
-    () => {
-
-        document
-        .getElementById("creatorModal")
-        .classList.add("show");
-
-    }
-);
-
-document
-.getElementById("creatorCloseButton")
-.addEventListener(
-    "click",
-    () => {
-
-        document
-        .getElementById("creatorModal")
-        .classList.remove("show");
-
-    }
-);
-
-document
-.getElementById("creatorLoginButton")
-.addEventListener(
-    "click",
-    creatorLogin
-);
-
-async function creatorLogin() {
-
-    const code =
-        document
-        .getElementById("creatorCode")
-        .value;
-
-    const message =
-        document
-        .getElementById("creatorMessage");
-
-    if (!code) {
-
-        message.textContent =
-            "Enter your creator code.";
-
-        return;
-
-    }
-
-    message.textContent =
-        "Checking...";
-
-    try {
-
-        const response =
-            await fetch(
-                BACKEND +
-                "/creator-login",
-                {
-                    method:"POST",
-                    headers:{
-                        "Content-Type":
-                            "application/json"
-                    },
-                    body:JSON.stringify({
-                        code
-                    })
-                }
-            );
-
-        const data =
-            await response.json();
-
-        if (data.success) {
-
-            document
-            .getElementById("creatorModal")
-            .classList.remove("show");
-
-            document
-            .getElementById("creatorLocked")
-            .classList.add("hidden");
-
-            document
-            .getElementById("creatorUnlocked")
-            .classList.remove("hidden");
-
-        } else {
-
-            message.textContent =
-                "Wrong creator code.";
-
-        }
-
-    } catch(error) {
-
-        message.textContent =
-            "Could not connect to Foxie.";
-
-    }
-
-}
-
-/* CREATOR CHAT */
-
-async function sendCreatorMessage() {
-
-    const input =
-        document
-        .getElementById("creatorInput");
-
-    const box =
-        document
-        .getElementById("creatorChatBox");
-
-    const message =
-        input.value.trim();
-
-    if (!message) return;
-
-    input.value = "";
-
-    const user =
-        document.createElement("div");
-
-    user.className =
-        "message user-message";
-
-    user.innerHTML = `
-        <div class="message-name">
-            YOU
-        </div>
-        ${escapeHtml(message)}
-    `;
-
-    box.appendChild(user);
-
-    const loading =
-        document.createElement("div");
-
-    loading.className =
-        "message foxie-message loading";
-
-    loading.innerHTML = `
-        <div class="message-name">
-            🦊 FOXIE
-        </div>
-        Thinking...
-    `;
-
-    box.appendChild(loading);
-
-    try {
-
-        const response =
-            await fetch(
-                BACKEND + "/chat",
-                {
-                    method:"POST",
-                    headers:{
-                        "Content-Type":
-                            "application/json"
-                    },
-                    body:JSON.stringify({
-                        message:
-                            "[CREATOR MODE] " +
-                            message
-                    })
-                }
-            );
-
-        const data =
-            await response.json();
-
-        loading.remove();
-
-        const reply =
-            document.createElement("div");
-
-        reply.className =
-            "message foxie-message";
-
-        reply.innerHTML = `
-            <div class="message-name">
-                🦊 FOXIE
-            </div>
-            ${escapeHtml(
-                data.reply ||
-                "No response."
-            )}
-        `;
-
-        box.appendChild(reply);
-
-        box.scrollTop =
-            box.scrollHeight;
-
-    } catch(error) {
-
-        loading.remove();
-
-        const reply =
-            document.createElement("div");
-
-        reply.className =
-            "message foxie-message";
-
-        reply.innerHTML = `
-            <div class="message-name">
-                🦊 FOXIE
-            </div>
-            Couldn't connect to Foxie.
-        `;
-
-        box.appendChild(reply);
-
-    }
-
-}
-
-document
-.getElementById("creatorSend")
-.addEventListener(
-    "click",
-    sendCreatorMessage
-);
-
-document
-.getElementById("creatorInput")
-.addEventListener(
-    "keydown",
-    event => {
-
-        if (event.key === "Enter") {
-            sendCreatorMessage();
-        }
-
-    }
-);
-
-/* ================================
-   AUTH STATE
-================================ */
-
-supabaseClient.auth.onAuthStateChange(
-    async (event,session) => {
-
-        currentUser =
-            session?.user || null;
-
-        await loadProfile();
-
-    }
-);
-
-/* ================================
-   START
-================================ */
-
-loadProfile();
+.getElementById("friendsPanel")
+.addEventListener("click",loadFriends);
 
 </script>
 
