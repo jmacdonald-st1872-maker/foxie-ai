@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Foxie AI 🦊</title>
+<title>Foxie AI</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 * {
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     margin: 0;
+    padding: 0;
+    width: 100%;
     min-height: 100%;
     background: #020403;
-    color: #eaffea;
+    color: #d8ffe8;
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -25,11 +30,7 @@ body {
     overflow-x: hidden;
 }
 
-/* =========================
-   BACKGROUND
-========================= */
-
-#particles {
+.background {
     position: fixed;
     inset: 0;
     overflow: hidden;
@@ -37,137 +38,186 @@ body {
     z-index: 0;
 }
 
+.grid {
+    position: absolute;
+    inset: 0;
+
+    background-image:
+        linear-gradient(
+            rgba(0,255,100,0.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(0,255,100,0.035) 1px,
+            transparent 1px
+        );
+
+    background-size: 40px 40px;
+}
+
 .particle {
     position: absolute;
     bottom: -20px;
+
     width: 3px;
     height: 3px;
-    background: #35ff72;
-    box-shadow: 0 0 12px #35ff72;
+
     border-radius: 50%;
+
+    background: #3cff88;
+
+    box-shadow:
+        0 0 6px #00ff66,
+        0 0 12px #00ff66;
+
     animation: rise linear infinite;
-    opacity: .7;
+
+    opacity: 0.7;
 }
 
 @keyframes rise {
-    from {
-        transform: translateY(0) translateX(0);
+
+    0% {
+        transform:
+            translateY(0)
+            translateX(0);
         opacity: 0;
     }
 
     15% {
-        opacity: .8;
+        opacity: 0.8;
     }
 
     85% {
-        opacity: .5;
+        opacity: 0.7;
     }
 
-    to {
-        transform: translateY(-110vh) translateX(40px);
+    100% {
+        transform:
+            translateY(-110vh)
+            translateX(40px);
         opacity: 0;
     }
 }
 
-/* =========================
-   APP
-========================= */
-
 .app {
     position: relative;
     z-index: 2;
+
     min-height: 100vh;
+
     display: flex;
     flex-direction: column;
 }
 
 header {
-    min-height: 82px;
-    padding: 18px 24px;
-    border-bottom: 1px solid rgba(50,255,110,.18);
-    background: rgba(0,8,3,.82);
-    backdrop-filter: blur(12px);
+    padding: 22px 28px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 15px;
+
+    border-bottom:
+        1px solid
+        rgba(0,255,100,0.15);
+
+    background:
+        rgba(0,0,0,0.45);
+
+    backdrop-filter: blur(10px);
 }
 
 .logo {
-    font-size: 28px;
+    font-size: 27px;
     font-weight: 900;
-    color: #5cff83;
+    letter-spacing: 2px;
+
+    color: #54ff8c;
+
     text-shadow:
-        0 0 5px #25ff63,
-        0 0 20px rgba(37,255,99,.5);
+        0 0 8px #00ff66,
+        0 0 18px rgba(0,255,100,0.5);
+
     animation: glitch 3s infinite;
 }
 
 @keyframes glitch {
-    0%, 90%, 100% {
+
+    0%,
+    90%,
+    100% {
         transform: translate(0);
     }
 
+    91% {
+        transform: translate(-2px, 1px);
+    }
+
     92% {
-        transform: translate(2px,-1px);
+        transform: translate(2px, -1px);
     }
 
-    94% {
-        transform: translate(-2px,1px);
-    }
-
-    96% {
-        transform: translate(1px,0);
+    93% {
+        transform: translate(0);
     }
 }
 
 .creator-credit {
+    color: #8cae99;
     font-size: 12px;
-    color: #8ca58f;
     text-align: right;
 }
 
-/* =========================
-   NAV
-========================= */
-
-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 12px 20px;
-    border-bottom: 1px solid rgba(50,255,110,.12);
-    background: rgba(0,5,2,.75);
-}
-
-.nav-btn {
-    border: 1px solid rgba(50,255,110,.25);
-    background: rgba(10,25,13,.7);
-    color: #b8d9bd;
-    padding: 10px 16px;
-    border-radius: 9px;
-    cursor: pointer;
-    transition: .2s;
-}
-
-.nav-btn:hover,
-.nav-btn.active {
-    background: rgba(35,255,90,.12);
-    color: #61ff86;
-    border-color: rgba(70,255,110,.6);
-    box-shadow: 0 0 15px rgba(40,255,90,.12);
-}
-
-/* =========================
-   MAIN
-========================= */
-
 main {
+    width: min(
+        1100px,
+        calc(100% - 30px)
+    );
+
+    margin: 30px auto;
+
     flex: 1;
-    width: 100%;
-    max-width: 1250px;
-    margin: auto;
-    padding: 25px;
+}
+
+.tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.tab {
+    border:
+        1px solid
+        rgba(0,255,100,0.22);
+
+    background:
+        rgba(0,20,8,0.6);
+
+    color: #9edbb1;
+
+    padding: 10px 15px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-weight: 700;
+}
+
+.tab:hover {
+    border-color: #39ff7a;
+    color: #6aff9a;
+}
+
+.tab.active {
+    background:
+        rgba(0,255,100,0.1);
+
+    border-color: #35ff75;
+
+    color: #58ff8c;
 }
 
 .panel {
@@ -178,265 +228,609 @@ main {
     display: block;
 }
 
-.card {
-    background: rgba(4,12,7,.82);
-    border: 1px solid rgba(50,255,110,.2);
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 0 30px rgba(0,255,70,.04);
+.chat-container {
+    height: 570px;
+
+    border:
+        1px solid
+        rgba(0,255,100,0.18);
+
+    border-radius: 18px;
+
+    background:
+        rgba(0,8,3,0.82);
+
+    box-shadow:
+        0 0 40px
+        rgba(0,255,100,0.06);
+
+    display: flex;
+
+    flex-direction: column;
+
+    overflow: hidden;
 }
 
-h1, h2, h3 {
-    color: #68ff8d;
-}
+.messages {
+    flex: 1;
 
-.small {
-    color: #819886;
-    font-size: 13px;
-}
-
-/* =========================
-   CHAT
-========================= */
-
-.chat-box {
-    height: 58vh;
-    min-height: 350px;
     overflow-y: auto;
+
     padding: 20px;
-    border: 1px solid rgba(50,255,110,.15);
-    border-radius: 14px;
-    background: rgba(0,3,1,.6);
 }
 
 .message {
-    max-width: 80%;
-    padding: 12px 15px;
-    margin: 10px 0;
-    border-radius: 13px;
-    line-height: 1.5;
-    white-space: pre-wrap;
-    word-wrap: break-word;
+    margin-bottom: 16px;
+
+    display: flex;
 }
 
 .message.user {
-    margin-left: auto;
-    background: rgba(39,255,100,.12);
-    border: 1px solid rgba(55,255,110,.28);
+    justify-content: flex-end;
 }
 
-.message.foxie {
-    margin-right: auto;
-    background: rgba(255,255,255,.035);
-    border: 1px solid rgba(255,255,255,.08);
+.bubble {
+    max-width: 80%;
+
+    padding: 13px 16px;
+
+    border-radius: 14px;
+
+    line-height: 1.5;
+
+    white-space: pre-wrap;
+}
+
+.message.foxie .bubble {
+    background:
+        rgba(0,255,100,0.06);
+
+    border:
+        1px solid
+        rgba(0,255,100,0.12);
+
+    color: #d8ffe3;
+}
+
+.message.user .bubble {
+    background:
+        rgba(0,255,100,0.13);
+
+    border:
+        1px solid
+        rgba(0,255,100,0.2);
+
+    color: #baffce;
 }
 
 .chat-input {
     display: flex;
+
     gap: 10px;
-    margin-top: 12px;
+
+    padding: 14px;
+
+    border-top:
+        1px solid
+        rgba(0,255,100,0.12);
 }
 
-input,
-textarea,
-select {
-    width: 100%;
-    background: #050a06;
-    color: #eaffea;
-    border: 1px solid rgba(50,255,110,.25);
-    border-radius: 9px;
-    padding: 12px;
+.chat-input input {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 14px;
+
+    border-radius: 12px;
+
+    border:
+        1px solid
+        rgba(0,255,100,0.2);
+
+    background:
+        #020904;
+
+    color: white;
+
     outline: none;
+
+    font-size: 15px;
 }
 
-input:focus,
-textarea:focus {
-    border-color: #43ff73;
-    box-shadow: 0 0 12px rgba(40,255,80,.12);
+.chat-input input:focus {
+    border-color: #36ff79;
+
+    box-shadow:
+        0 0 12px
+        rgba(0,255,100,0.12);
 }
 
 button {
-    font-family: inherit;
-}
-
-.primary {
-    background: #36ff70;
-    color: #001a07;
-    border: 0;
-    border-radius: 9px;
-    padding: 12px 18px;
-    font-weight: 800;
+    border: none;
     cursor: pointer;
 }
 
-.primary:hover {
-    filter: brightness(1.1);
+.send {
+    padding: 0 20px;
+
+    border-radius: 12px;
+
+    background: #29e96d;
+
+    color: #001a08;
+
+    font-weight: 900;
 }
 
-.secondary {
-    background: rgba(40,255,90,.08);
-    color: #69ff8c;
-    border: 1px solid rgba(50,255,110,.3);
-    border-radius: 9px;
-    padding: 10px 15px;
-    cursor: pointer;
+.send:hover {
+    background: #54ff8c;
 }
 
-/* =========================
-   SOCIAL
-========================= */
-
-.social-grid {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 15px;
-}
-
-.users-list {
-    max-height: 58vh;
-    overflow-y: auto;
-}
-
-.user-item {
-    padding: 12px;
-    margin-bottom: 8px;
-    border: 1px solid rgba(50,255,110,.12);
-    border-radius: 10px;
-    background: rgba(255,255,255,.025);
-    cursor: pointer;
-}
-
-.user-item:hover {
-    background: rgba(40,255,90,.08);
-}
-
-.online-dot {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #38ff70;
-    box-shadow: 0 0 8px #38ff70;
-    margin-right: 6px;
-}
-
-.offline-dot {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #555;
-    margin-right: 6px;
-}
-
-.social-chat {
+.search-box {
     display: flex;
-    flex-direction: column;
-}
 
-.private-messages {
-    height: 46vh;
-    min-height: 300px;
-    overflow-y: auto;
-    border: 1px solid rgba(50,255,110,.15);
-    border-radius: 14px;
-    padding: 15px;
-    background: rgba(0,3,1,.55);
-}
-
-/* =========================
-   SEARCH
-========================= */
-
-.search-row {
-    display: flex;
     gap: 10px;
+
+    margin-bottom: 18px;
 }
 
-.result {
-    margin-top: 12px;
+.search-box input {
+    flex: 1;
+
     padding: 14px;
-    border: 1px solid rgba(50,255,110,.15);
-    border-radius: 10px;
-    background: rgba(255,255,255,.025);
+
+    border-radius: 12px;
+
+    border:
+        1px solid
+        rgba(0,255,100,0.22);
+
+    background: #020904;
+
+    color: white;
+
+    font-size: 15px;
+
+    outline: none;
 }
 
-.result a {
-    color: #65ff88;
+.search-button {
+    padding: 0 20px;
+
+    border-radius: 12px;
+
+    background: #29e96d;
+
+    color: #001a08;
+
+    font-weight: 900;
 }
 
-/* =========================
-   IMAGES
-========================= */
+.search-result {
+    padding: 16px;
+
+    margin-bottom: 10px;
+
+    border:
+        1px solid
+        rgba(0,255,100,0.12);
+
+    background:
+        rgba(0,20,8,0.55);
+
+    border-radius: 12px;
+}
+
+.search-result h3 {
+    margin: 0 0 7px;
+
+    color: #54ff8c;
+}
+
+.search-result p {
+    margin: 0 0 8px;
+
+    color: #b7c9bc;
+
+    line-height: 1.5;
+}
+
+.search-result a {
+    color: #42ff83;
+
+    word-break: break-all;
+}
 
 .image-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(180px,1fr));
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(190px, 1fr)
+        );
+
     gap: 14px;
-    margin-top: 20px;
 }
 
 .image-card {
-    background: rgba(255,255,255,.03);
-    border: 1px solid rgba(50,255,110,.15);
-    border-radius: 12px;
     overflow: hidden;
+
+    border:
+        1px solid
+        rgba(0,255,100,0.16);
+
+    border-radius: 14px;
+
+    background:
+        rgba(0,15,6,0.8);
+
+    transition:
+        transform 0.2s,
+        border-color 0.2s;
+}
+
+.image-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #3dff7e;
 }
 
 .image-card img {
+    display: block;
+
     width: 100%;
-    height: 170px;
+
+    height: 160px;
+
     object-fit: cover;
-    display: block;
+
+    background: #020403;
 }
 
-.image-card div {
-    padding: 9px;
+.image-info {
+    padding: 10px;
+}
+
+.image-title {
+    color: #caffd7;
+
+    font-size: 13px;
+
+    line-height: 1.35;
+
+    margin-bottom: 8px;
+}
+
+.image-link {
+    color: #49ff87;
+
     font-size: 12px;
+
+    text-decoration: none;
 }
 
-/* =========================
-   AUTH
-========================= */
+.control-grid {
+    display: grid;
 
-.auth-wrap {
-    max-width: 450px;
-    margin: 50px auto;
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(250px, 1fr)
+        );
+
+    gap: 15px;
 }
 
-.auth-tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 15px;
+.control-card {
+    border:
+        1px solid
+        rgba(0,255,100,0.15);
+
+    border-radius: 15px;
+
+    padding: 20px;
+
+    background:
+        rgba(0,15,6,0.65);
 }
 
-.auth-tabs button {
-    flex: 1;
+.control-card h3 {
+    margin-top: 0;
+
+    color: #50ff89;
 }
 
-.form-group {
-    margin-bottom: 12px;
+.control-card p {
+    color: #a6b8ab;
+
+    line-height: 1.5;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 6px;
-    color: #9ebaa2;
+.control-card code {
+    color: #63ff97;
+
+    word-break: break-word;
+}
+
+.status {
+    min-height: 20px;
+
+    padding: 8px 2px;
+
+    color: #82998a;
+
     font-size: 13px;
 }
 
-/* =========================
+
+/* ==========================================
+   PROFILE
+========================================== */
+
+.profile-card {
+    max-width: 650px;
+
+    margin: 0 auto;
+
+    padding: 30px;
+
+    border:
+        1px solid
+        rgba(0,255,100,0.2);
+
+    border-radius: 20px;
+
+    background:
+        rgba(0,15,6,0.78);
+
+    box-shadow:
+        0 0 40px
+        rgba(0,255,100,0.06);
+
+    text-align: center;
+}
+
+.avatar {
+    width: 130px;
+    height: 130px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    display: block;
+
+    margin: 0 auto 18px;
+
+    border:
+        3px solid
+        #35ff75;
+
+    background:
+        #031007;
+
+    box-shadow:
+        0 0 25px
+        rgba(0,255,100,0.2);
+}
+
+.default-avatar {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 65px;
+}
+
+.profile-name {
+    font-size: 27px;
+
+    font-weight: 900;
+
+    color: #54ff8c;
+
+    margin-bottom: 8px;
+}
+
+.profile-email {
+    color: #82998a;
+
+    font-size: 13px;
+
+    margin-bottom: 15px;
+}
+
+.online-status {
+    color: #42ff83;
+
+    font-weight: 700;
+
+    margin-bottom: 15px;
+}
+
+.profile-bio {
+    color: #b7c9bc;
+
+    line-height: 1.6;
+
+    margin: 15px auto 25px;
+
+    max-width: 500px;
+}
+
+.profile-button {
+    padding: 12px 18px;
+
+    border-radius: 10px;
+
+    background: #29e96d;
+
+    color: #001a08;
+
+    font-weight: 900;
+
+    margin: 5px;
+}
+
+.secondary-button {
+    padding: 12px 18px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(0,255,100,0.08);
+
+    color: #63ff97;
+
+    border:
+        1px solid
+        rgba(0,255,100,0.2);
+
+    font-weight: 800;
+
+    margin: 5px;
+}
+
+.profile-form {
+    max-width: 500px;
+
+    margin: 25px auto 0;
+
+    text-align: left;
+
+    display: none;
+}
+
+.profile-form.show {
+    display: block;
+}
+
+.profile-form label {
+    display: block;
+
+    margin:
+        15px 0 7px;
+
+    color: #8edca8;
+
+    font-weight: 700;
+}
+
+.profile-form input,
+.profile-form textarea {
+    width: 100%;
+
+    padding: 13px;
+
+    border-radius: 10px;
+
+    border:
+        1px solid
+        rgba(0,255,100,0.2);
+
+    background:
+        #020904;
+
+    color: white;
+
+    outline: none;
+
+    font-family: inherit;
+}
+
+.profile-form textarea {
+    min-height: 110px;
+
+    resize: vertical;
+}
+
+.profile-form input:focus,
+.profile-form textarea:focus {
+    border-color: #35ff75;
+}
+
+.auth-box {
+    max-width: 500px;
+
+    margin: 0 auto;
+
+    padding: 30px;
+
+    border:
+        1px solid
+        rgba(0,255,100,0.2);
+
+    border-radius: 18px;
+
+    background:
+        rgba(0,15,6,0.75);
+}
+
+.auth-box h2 {
+    color: #54ff8c;
+
+    margin-top: 0;
+}
+
+.auth-box input {
+    width: 100%;
+
+    padding: 14px;
+
+    margin-bottom: 10px;
+
+    border-radius: 10px;
+
+    border:
+        1px solid
+        rgba(0,255,100,0.2);
+
+    background:
+        #020904;
+
+    color: white;
+
+    outline: none;
+}
+
+.auth-button {
+    padding: 13px 18px;
+
+    border-radius: 10px;
+
+    background: #29e96d;
+
+    color: #001a08;
+
+    font-weight: 900;
+
+    margin-right: 8px;
+}
+
+
+/* ==========================================
    MODAL
-========================= */
+========================================== */
 
 .modal {
     position: fixed;
+
     inset: 0;
-    z-index: 100;
-    background: rgba(0,0,0,.8);
+
+    z-index: 20;
+
+    background:
+        rgba(0,0,0,0.8);
+
     display: none;
+
     align-items: center;
+
     justify-content: center;
+
     padding: 20px;
 }
 
@@ -445,86 +839,167 @@ button {
 }
 
 .modal-box {
-    width: 100%;
-    max-width: 430px;
-    background: #050b06;
-    border: 1px solid rgba(50,255,110,.3);
-    border-radius: 16px;
+    width: min(
+        420px,
+        100%
+    );
+
+    background: #031007;
+
+    border:
+        1px solid
+        rgba(0,255,100,0.25);
+
+    border-radius: 18px;
+
     padding: 25px;
-    box-shadow: 0 0 50px rgba(20,255,70,.12);
+
+    box-shadow:
+        0 0 40px
+        rgba(0,255,100,0.1);
+}
+
+.modal-box h2 {
+    color: #50ff89;
+
+    margin-top: 0;
 }
 
 .password-row {
     display: flex;
+
     gap: 8px;
 }
 
-.password-row button {
-    width: 50px;
+.password-row input {
+    flex: 1;
+
+    padding: 13px;
+
+    border-radius: 10px;
+
+    border:
+        1px solid
+        rgba(0,255,100,0.2);
+
+    background: #010502;
+
+    color: white;
+
+    outline: none;
 }
 
-/* =========================
-   CREATOR
-========================= */
+.eye {
+    width: 48px;
 
-.creator-grid {
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    gap: 15px;
+    border-radius: 10px;
+
+    background:
+        rgba(0,255,100,0.1);
+
+    color: #55ff8b;
+
+    border:
+        1px solid
+        rgba(0,255,100,0.2);
 }
 
-.creator-menu {
+.modal-buttons {
     display: flex;
-    flex-direction: column;
-    gap: 7px;
+
+    gap: 10px;
+
+    margin-top: 15px;
 }
 
-.creator-menu button {
-    text-align: left;
+.modal-buttons button {
+    flex: 1;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    font-weight: 800;
 }
 
-.creator-section {
+.login-button {
+    background: #2af06f;
+
+    color: #001a08;
+}
+
+.close-button {
+    background:
+        rgba(255,255,255,0.06);
+
+    color: #b5c0b8;
+}
+
+
+/* ==========================================
+   CREATOR MODE
+========================================== */
+
+.creator-mode {
     display: none;
 }
 
-.creator-section.active {
+.creator-mode.show {
     display: block;
 }
 
-.info-row {
-    padding: 12px;
-    border-bottom: 1px solid rgba(50,255,110,.1);
+.creator-banner {
+    padding: 15px 18px;
+
+    border:
+        1px solid
+        rgba(0,255,100,0.22);
+
+    border-radius: 14px;
+
+    margin-bottom: 15px;
+
+    background:
+        rgba(0,255,100,0.05);
+
+    color: #55ff8b;
+
+    font-weight: 800;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 10px;
 }
 
-.info-row strong {
-    color: #67ff89;
+.creator-banner button {
+    padding: 8px 12px;
+
+    border-radius: 8px;
+
+    background:
+        rgba(255,255,255,0.07);
+
+    color: #c7d2ca;
 }
 
-/* =========================
-   TOAST
-========================= */
 
-#toast {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #08130a;
-    color: #72ff91;
-    border: 1px solid rgba(50,255,110,.3);
-    padding: 12px 16px;
-    border-radius: 10px;
-    display: none;
-    z-index: 500;
-}
-
-/* =========================
+/* ==========================================
    MOBILE
-========================= */
+========================================== */
 
-@media(max-width:800px) {
+@media (max-width: 650px) {
 
     header {
+        padding: 18px;
+
         align-items: flex-start;
+
+        gap: 12px;
+
         flex-direction: column;
     }
 
@@ -533,43 +1008,92 @@ button {
     }
 
     main {
-        padding: 14px;
+        width:
+            calc(100% - 18px);
+
+        margin:
+            18px auto;
     }
 
-    .social-grid,
-    .creator-grid {
-        grid-template-columns: 1fr;
+    .chat-container {
+        height: 65vh;
     }
 
-    .users-list {
-        max-height: 220px;
+    .bubble {
+        max-width: 90%;
     }
 
-    .chat-box {
-        height: 55vh;
-    }
-
-    .search-row,
     .chat-input {
+        padding: 10px;
+    }
+
+    .send {
+        padding: 0 15px;
+    }
+
+    .image-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 9px;
+    }
+
+    .image-card img {
+        height: 120px;
+    }
+
+    .search-box {
         flex-direction: column;
     }
 
-    .message {
-        max-width: 92%;
+    .search-button {
+        padding: 13px;
     }
+
+    .profile-card {
+        padding: 20px;
+    }
+
 }
+
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: #020403;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #164b28;
+
+    border-radius: 10px;
+}
+
 </style>
+
 </head>
 
 <body>
 
-<div id="particles"></div>
+<div class="background">
+
+    <div class="grid"></div>
+
+</div>
 
 <div class="app">
 
 <header>
 
-    <div class="logo">🦊 FOXIE AI</div>
+    <div class="logo">
+        🦊 FOXIE AI
+    </div>
 
     <div class="creator-credit">
         Jayden Wayne MacDonald created this
@@ -577,54 +1101,88 @@ button {
 
 </header>
 
-<nav id="mainNav">
+<main>
 
-    <button class="nav-btn active" onclick="showPanel('foxie',this)">
-        🦊 Foxie
+<div class="tabs">
+
+    <button
+        class="tab active"
+        onclick="showPanel('chatPanel', this)"
+    >
+        💬 Chat
     </button>
 
-    <button class="nav-btn" onclick="showPanel('social',this)">
-        💬 Social
+    <button
+        class="tab"
+        onclick="showPanel('webPanel', this)"
+    >
+        🔎 Web
     </button>
 
-    <button class="nav-btn" onclick="showPanel('web',this)">
-        🌐 Web
-    </button>
-
-    <button class="nav-btn" onclick="showPanel('images',this)">
+    <button
+        class="tab"
+        onclick="showPanel('imagesPanel', this)"
+    >
         🖼️ Images
     </button>
 
-    <button class="nav-btn" onclick="openCreatorLogin()">
+    <button
+        class="tab"
+        onclick="showPanel('profilePanel', this)"
+    >
+        👤 Profile
+    </button>
+
+    <button
+        class="tab"
+        onclick="showPanel('controlPanel', this)"
+    >
+        ⚙️ Control Panel
+    </button>
+
+    <button
+        class="tab"
+        onclick="openCreatorLogin()"
+    >
         🔐 Creator
     </button>
 
-    <button class="nav-btn" id="authNav" onclick="showPanel('account',this)">
-        👤 Account
-    </button>
+</div>
 
-</nav>
 
-<main>
+<!-- CHAT -->
 
-<!-- =========================
-     FOXIE AI
-========================= -->
+<section
+    id="chatPanel"
+    class="panel active"
+>
 
-<section id="foxie" class="panel active">
+    <div class="chat-container">
 
-    <div class="card">
-
-        <h1>🦊 Foxie</h1>
-
-        <p class="small">
-            Your general-purpose AI assistant.
-        </p>
-
-        <div id="foxieChat" class="chat-box">
+        <div
+            id="messages"
+            class="messages"
+        >
 
             <div class="message foxie">
-                🦊 Hey! I'm Foxie. What can I help you with?
+
+                <div class="bubble">
+
+                    🦊 Hey! I'm Foxie AI.
+
+                    <br><br>
+
+                    I'm a general-purpose AI assistant.
+
+                    <br><br>
+
+                    Chat with me, ask questions,
+                    search the web, find images,
+                    code, brainstorm ideas,
+                    or just talk.
+
+                </div>
+
             </div>
 
         </div>
@@ -632,14 +1190,255 @@ button {
         <div class="chat-input">
 
             <input
-                id="foxieInput"
+                id="messageInput"
+                type="text"
                 placeholder="Talk to Foxie..."
-                onkeydown="if(event.key==='Enter') sendFoxie()"
+                autocomplete="off"
             >
 
-            <button class="primary" onclick="sendFoxie()">
-                Send
+            <button
+                class="send"
+                onclick="sendMessage()"
+            >
+                SEND
             </button>
+
+        </div>
+
+    </div>
+
+    <div
+        id="chatStatus"
+        class="status"
+    ></div>
+
+</section>
+
+
+<!-- WEB -->
+
+<section
+    id="webPanel"
+    class="panel"
+>
+
+    <div class="search-box">
+
+        <input
+            id="webInput"
+            type="text"
+            placeholder="Search the web..."
+            onkeydown="if(event.key === 'Enter') searchWeb()"
+        >
+
+        <button
+            class="search-button"
+            onclick="searchWeb()"
+        >
+            🔎 SEARCH
+        </button>
+
+    </div>
+
+    <div
+        id="webStatus"
+        class="status"
+    ></div>
+
+    <div id="webResults"></div>
+
+</section>
+
+
+<!-- IMAGES -->
+
+<section
+    id="imagesPanel"
+    class="panel"
+>
+
+    <div class="search-box">
+
+        <input
+            id="imageInput"
+            type="text"
+            placeholder="Search for images..."
+            onkeydown="if(event.key === 'Enter') searchImages()"
+        >
+
+        <button
+            class="search-button"
+            onclick="searchImages()"
+        >
+            🖼️ FIND
+        </button>
+
+    </div>
+
+    <div
+        id="imageStatus"
+        class="status"
+    ></div>
+
+    <div
+        id="imageResults"
+        class="image-grid"
+    ></div>
+
+</section>
+
+
+<!-- PROFILE -->
+
+<section
+    id="profilePanel"
+    class="panel"
+>
+
+    <div id="profileContent"></div>
+
+</section>
+
+
+<!-- CONTROL PANEL -->
+
+<section
+    id="controlPanel"
+    class="panel"
+>
+
+    <div class="control-grid">
+
+        <div class="control-card">
+
+            <h3>🦊 Foxie</h3>
+
+            <p>
+                Foxie is a general-purpose AI
+                assistant built for a wide range
+                of users.
+            </p>
+
+            <p>
+                <strong>Name:</strong>
+                Foxie AI
+            </p>
+
+        </div>
+
+        <div class="control-card">
+
+            <h3>🤖 AI</h3>
+
+            <p>
+                Provider:
+                <code>Hugging Face</code>
+            </p>
+
+            <p>
+                Model:
+                <code>openai/gpt-oss-120b:fastest</code>
+            </p>
+
+            <p>
+                Your secret token stays on Render.
+                It is not stored in this website.
+            </p>
+
+        </div>
+
+        <div class="control-card">
+
+            <h3>🌐 Backend</h3>
+
+            <p>
+                <code>
+                https://foxie-ai-backend.onrender.com/
+                </code>
+            </p>
+
+            <p>
+                Foxie's backend handles AI,
+                web search, image search and
+                creator login.
+            </p>
+
+        </div>
+
+        <div class="control-card">
+
+            <h3>🔎 Search</h3>
+
+            <p>
+                Web search:
+                <strong>DuckDuckGo</strong>
+            </p>
+
+            <p>
+                Image search:
+                <strong>DuckDuckGo Images</strong>
+            </p>
+
+            <p>
+                Google has been removed from Foxie.
+            </p>
+
+        </div>
+
+        <div class="control-card">
+
+            <h3>🔐 Creator Mode</h3>
+
+            <p>
+                Creator access is protected by
+                the server-side
+                <code>CREATOR_CODE</code>.
+            </p>
+
+            <p>
+                Never put your creator code
+                directly inside this file.
+            </p>
+
+        </div>
+
+        <div class="control-card">
+
+            <h3>💻 Website</h3>
+
+            <p>
+                Foxie website:
+            </p>
+
+            <p>
+                <code>
+                jmacdonald-st1872-maker.github.io/foxie-ai/
+                </code>
+            </p>
+
+        </div>
+
+        <div class="control-card">
+
+            <h3>📦 Website GitHub</h3>
+
+            <p>
+                <code>
+                github.com/jmacdonald-st1872-maker/foxie-ai
+                </code>
+            </p>
+
+        </div>
+
+        <div class="control-card">
+
+            <h3>⚙️ Backend GitHub</h3>
+
+            <p>
+                <code>
+                github.com/jmacdonald-st1872-maker/foxie-ai-backend
+                </code>
+            </p>
 
         </div>
 
@@ -648,70 +1447,42 @@ button {
 </section>
 
 
-<!-- =========================
-     SOCIAL
-========================= -->
+<!-- CREATOR MODE -->
 
-<section id="social" class="panel">
+<section
+    id="creatorMode"
+    class="creator-mode"
+>
 
-    <div class="card">
+    <div class="creator-banner">
 
-        <h1>💬 Foxie Social</h1>
+        <span>
+            🔐 CREATOR MODE ACTIVE
+        </span>
 
-        <p class="small">
-            Chat privately with other Foxie users.
-        </p>
+        <button onclick="closeCreatorMode()">
+            CLOSE
+        </button>
 
-        <div id="socialLoginNotice" class="result">
-            Please create an account or log in to use Foxie Social.
-        </div>
+    </div>
 
-        <div id="socialContent" style="display:none">
+    <div class="chat-container">
 
-            <div class="social-grid">
+        <div
+            id="creatorMessages"
+            class="messages"
+        >
 
-                <div class="card">
+            <div class="message foxie">
 
-                    <h3>👥 Users</h3>
+                <div class="bubble">
 
-                    <input
-                        id="userSearch"
-                        placeholder="Search usernames..."
-                        oninput="filterUsers()"
-                    >
+                    🦊 Welcome back, Creator.
 
-                    <div id="usersList" class="users-list" style="margin-top:12px">
-                    </div>
+                    <br><br>
 
-                </div>
-
-                <div class="card social-chat">
-
-                    <h3 id="privateChatTitle">
-                        Select a user
-                    </h3>
-
-                    <div id="privateMessages" class="private-messages">
-
-                        <div class="small">
-                            Choose a user to start chatting.
-                        </div>
-
-                    </div>
-
-                    <div class="chat-input">
-
-                        <input
-                            id="privateInput"
-                            placeholder="Write a message..."
-                            onkeydown="if(event.key==='Enter') sendPrivateMessage()"
-                        >
-
-                        <button class="primary" onclick="sendPrivateMessage()">
-                            Send
-                        </button>
-
-                    </div>
+                    This is your private Foxie
+                    creator chat.
 
                 </div>
 
@@ -719,418 +1490,30 @@ button {
 
         </div>
 
-    </div>
-
-</section>
-
-
-<!-- =========================
-     WEB SEARCH
-========================= -->
-
-<section id="web" class="panel">
-
-    <div class="card">
-
-        <h1>🌐 Web Search</h1>
-
-        <div class="search-row">
+        <div class="chat-input">
 
             <input
-                id="webInput"
-                placeholder="Search the web..."
-                onkeydown="if(event.key==='Enter') searchWeb()"
+                id="creatorInput"
+                type="text"
+                placeholder="Creator chat..."
+                autocomplete="off"
             >
 
-            <button class="primary" onclick="searchWeb()">
-                Search
+            <button
+                class="send"
+                onclick="sendCreatorMessage()"
+            >
+                SEND
             </button>
 
         </div>
 
-        <div id="webResults"></div>
-
     </div>
 
-</section>
-
-
-<!-- =========================
-     IMAGE SEARCH
-========================= -->
-
-<section id="images" class="panel">
-
-    <div class="card">
-
-        <h1>🖼️ Image Search</h1>
-
-        <p class="small">
-            Foxie image search supports normal and mature,
-            non-explicit content. Explicit sexual content is disabled.
-        </p>
-
-        <div class="search-row">
-
-            <input
-                id="imageInput"
-                placeholder="Search for images..."
-                onkeydown="if(event.key==='Enter') searchImages()"
-            >
-
-            <button class="primary" onclick="searchImages()">
-                Search
-            </button>
-
-        </div>
-
-        <div id="imageResults" class="image-grid"></div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     ACCOUNT
-========================= -->
-
-<section id="account" class="panel">
-
-    <div class="auth-wrap">
-
-        <div class="card">
-
-            <h1>👤 Foxie Account</h1>
-
-            <div id="loggedOut">
-
-                <div class="auth-tabs">
-
-                    <button
-                        class="secondary"
-                        onclick="showAuth('login')"
-                    >
-                        Login
-                    </button>
-
-                    <button
-                        class="secondary"
-                        onclick="showAuth('signup')"
-                    >
-                        Sign Up
-                    </button>
-
-                </div>
-
-                <div id="authForm"></div>
-
-            </div>
-
-            <div id="loggedIn" style="display:none">
-
-                <h2 id="accountUsername"></h2>
-
-                <p class="small">
-                    Your Foxie account is active.
-                </p>
-
-                <button class="secondary" onclick="logout()">
-                    Log out
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     CREATOR MODE
-========================= -->
-
-<section id="creator" class="panel">
-
-    <div class="card">
-
-        <h1>🔐 Creator Mode</h1>
-
-        <div class="creator-grid">
-
-            <div class="creator-menu">
-
-                <button class="secondary" onclick="creatorSection('dashboard',this)">
-                    📊 Dashboard
-                </button>
-
-                <button class="secondary" onclick="creatorSection('creatorChat',this)">
-                    💬 Creator Chat
-                </button>
-
-                <button class="secondary" onclick="creatorSection('project',this)">
-                    🧩 Project Info
-                </button>
-
-                <button class="secondary" onclick="creatorSection('links',this)">
-                    🔗 Links
-                </button>
-
-                <button class="secondary" onclick="creatorSection('setup',this)">
-                    ⚙️ Setup
-                </button>
-
-                <button class="secondary" onclick="creatorSection('imageSettings',this)">
-                    🖼️ Image Settings
-                </button>
-
-                <button class="secondary" onclick="closeCreator()">
-                    ✖ Close Creator Mode
-                </button>
-
-            </div>
-
-
-            <div>
-
-                <!-- DASHBOARD -->
-
-                <div id="creatorDashboard" class="creator-section active">
-
-                    <h2>📊 Creator Dashboard</h2>
-
-                    <div class="result">
-                        <strong>Foxie status:</strong>
-                        🟢 Online
-                    </div>
-
-                    <div class="result">
-                        <strong>AI:</strong>
-                        Hugging Face
-                    </div>
-
-                    <div class="result">
-                        <strong>Search:</strong>
-                        DuckDuckGo
-                    </div>
-
-                    <div class="result">
-                        <strong>Social:</strong>
-                        Supabase
-                    </div>
-
-                </div>
-
-
-                <!-- CREATOR CHAT -->
-
-                <div id="creatorChat" class="creator-section">
-
-                    <h2>💬 Private Creator Chat</h2>
-
-                    <div id="creatorMessages" class="chat-box">
-
-                        <div class="message foxie">
-                            🦊 Creator Mode online.
-                        </div>
-
-                    </div>
-
-                    <div class="chat-input">
-
-                        <input
-                            id="creatorInput"
-                            placeholder="Talk privately with Foxie..."
-                            onkeydown="if(event.key==='Enter') sendCreatorMessage()"
-                        >
-
-                        <button class="primary" onclick="sendCreatorMessage()">
-                            Send
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <!-- PROJECT -->
-
-                <div id="project" class="creator-section">
-
-                    <h2>🧩 Foxie Project</h2>
-
-                    <div class="info-row">
-                        <strong>Website:</strong>
-                        <br>
-                        https://jmacdonald-st1872-maker.github.io/foxie-ai/
-                    </div>
-
-                    <div class="info-row">
-                        <strong>Backend:</strong>
-                        <br>
-                        https://foxie-ai-backend.onrender.com/
-                    </div>
-
-                    <div class="info-row">
-                        <strong>AI model:</strong>
-                        <br>
-                        openai/gpt-oss-120b:fastest
-                    </div>
-
-                    <div class="info-row">
-                        <strong>AI provider:</strong>
-                        <br>
-                        Hugging Face
-                    </div>
-
-                    <div class="info-row">
-                        <strong>Database:</strong>
-                        <br>
-                        Supabase
-                    </div>
-
-                    <div class="info-row">
-                        <strong>Web search:</strong>
-                        <br>
-                        DuckDuckGo
-                    </div>
-
-                </div>
-
-
-                <!-- LINKS -->
-
-                <div id="links" class="creator-section">
-
-                    <h2>🔗 Foxie Links</h2>
-
-                    <div class="result">
-                        <a href="https://jmacdonald-st1872-maker.github.io/foxie-ai/" target="_blank">
-                            Foxie Website
-                        </a>
-                    </div>
-
-                    <div class="result">
-                        <a href="https://github.com/jmacdonald-st1872-maker/foxie-ai" target="_blank">
-                            Website GitHub
-                        </a>
-                    </div>
-
-                    <div class="result">
-                        <a href="https://github.com/jmacdonald-st1872-maker/foxie-ai-backend" target="_blank">
-                            Backend GitHub
-                        </a>
-                    </div>
-
-                    <div class="result">
-                        <a href="https://dashboard.render.com/" target="_blank">
-                            Render Dashboard
-                        </a>
-                    </div>
-
-                    <div class="result">
-                        <a href="https://huggingface.co/" target="_blank">
-                            Hugging Face
-                        </a>
-                    </div>
-
-                </div>
-
-
-                <!-- SETUP -->
-
-                <div id="setup" class="creator-section">
-
-                    <h2>⚙️ Setup</h2>
-
-                    <div class="result">
-                        <strong>requirements.txt</strong>
-
-<pre>
-flask
-flask-cors
-openai
-gunicorn
-ddgs
-</pre>
-
-                    </div>
-
-                    <div class="result">
-                        <strong>Render start command</strong>
-
-<pre>
-gunicorn server:app
-</pre>
-
-                    </div>
-
-                    <div class="result">
-                        <strong>Backend environment variables</strong>
-
-                        <br><br>
-
-                        HF_TOKEN:
-                        Configured — value hidden
-
-                        <br><br>
-
-                        CREATOR_CODE:
-                        Configured — value hidden
-                    </div>
-
-                </div>
-
-
-                <!-- IMAGE SETTINGS -->
-
-                <div id="imageSettings" class="creator-section">
-
-                    <h2>🖼️ Image Settings</h2>
-
-                    <div class="result">
-
-                        <strong>General content</strong>
-
-                        <br><br>
-
-                        🟢 Enabled
-
-                    </div>
-
-                    <div class="result">
-
-                        <strong>Mature / non-explicit content</strong>
-
-                        <br><br>
-
-                        🟢 Supported
-
-                    </div>
-
-                    <div class="result">
-
-                        <strong>Explicit sexual content</strong>
-
-                        <br><br>
-
-                        🔴 Disabled
-
-                    </div>
-
-                    <p class="small">
-                        These settings are visible only inside Creator Mode.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
+    <div
+        id="creatorStatus"
+        class="status"
+    ></div>
 
 </section>
 
@@ -1139,32 +1522,34 @@ gunicorn server:app
 </div>
 
 
-<!-- =========================
-     CREATOR LOGIN MODAL
-========================= -->
+<!-- CREATOR LOGIN -->
 
-<div id="creatorModal" class="modal">
+<div
+    id="creatorModal"
+    class="modal"
+>
 
     <div class="modal-box">
 
         <h2>🔐 Creator Access</h2>
 
-        <p class="small">
-            Enter the creator code to access private tools.
+        <p>
+            Enter the creator code to open
+            Creator Mode.
         </p>
 
         <div class="password-row">
 
             <input
-                id="creatorCode"
+                id="creatorCodeInput"
                 type="password"
                 placeholder="••••••••••••"
-                onkeydown="if(event.key==='Enter') creatorLogin()"
+                autocomplete="off"
             >
 
             <button
-                class="secondary"
-                onclick="toggleCreatorPassword()"
+                class="eye"
+                onclick="togglePassword()"
                 id="eyeButton"
             >
                 👁️
@@ -1172,39 +1557,48 @@ gunicorn server:app
 
         </div>
 
-        <div style="display:flex;gap:10px;margin-top:12px">
+        <div
+            id="loginStatus"
+            class="status"
+        ></div>
 
-            <button class="primary" onclick="creatorLogin()">
-                Enter
+        <div class="modal-buttons">
+
+            <button
+                class="login-button"
+                onclick="creatorLogin()"
+            >
+                ENTER
             </button>
 
-            <button class="secondary" onclick="closeCreatorModal()">
-                Cancel
+            <button
+                class="close-button"
+                onclick="closeCreatorLogin()"
+            >
+                CANCEL
             </button>
 
         </div>
-
-        <p id="creatorError" class="small"></p>
 
     </div>
 
 </div>
 
 
-<div id="toast"></div>
-
-
 <script>
 
-/* =========================================================
-   SUPABASE
-========================================================= */
+/* ==========================================
+   CONFIG
+========================================== */
+
+const BACKEND =
+    "https://foxie-ai-backend.onrender.com";
 
 const SUPABASE_URL =
     "https://hsojgfgtlzaqyzhlcgtv.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable_MIY9cTZKQQDcp-DB6QGz3Q_cASkMaDN";
+    "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE";
 
 const supabaseClient =
     window.supabase.createClient(
@@ -1212,151 +1606,135 @@ const supabaseClient =
         SUPABASE_KEY
     );
 
-
-/* =========================================================
-   FOXIE BACKEND
-========================================================= */
-
-const BACKEND =
-    "https://foxie-ai-backend.onrender.com";
-
-
-/* =========================================================
-   STATE
-========================================================= */
-
 let currentUser = null;
-let currentProfile = null;
-let selectedUser = null;
-let allUsers = [];
-let privateChannel = null;
 
 
-/* =========================================================
+/* ==========================================
    PARTICLES
-========================================================= */
+========================================== */
 
 function createParticles() {
 
-    const container =
-        document.getElementById("particles");
+    const background =
+        document.querySelector(".background");
 
-    for(let i = 0; i < 70; i++) {
+    for (
+        let i = 0;
+        i < 65;
+        i++
+    ) {
 
-        const p =
+        const particle =
             document.createElement("div");
 
-        p.className = "particle";
+        particle.className =
+            "particle";
 
-        p.style.left =
+        particle.style.left =
             Math.random() * 100 + "%";
 
-        p.style.animationDuration =
-            (5 + Math.random() * 9) + "s";
+        particle.style.animationDuration =
+            (5 + Math.random() * 10) + "s";
 
-        p.style.animationDelay =
-            Math.random() * 8 + "s";
+        particle.style.animationDelay =
+            (Math.random() * 8) + "s";
 
-        p.style.opacity =
-            .2 + Math.random() * .7;
+        particle.style.opacity =
+            0.2 + Math.random() * 0.7;
 
-        container.appendChild(p);
+        background.appendChild(
+            particle
+        );
+
     }
+
 }
 
 createParticles();
 
 
-/* =========================================================
-   NAVIGATION
-========================================================= */
+/* ==========================================
+   PANELS
+========================================== */
 
-function showPanel(id, button) {
+function showPanel(
+    panelId,
+    button
+) {
 
-    document.querySelectorAll(".panel")
-        .forEach(p => p.classList.remove("active"));
+    document
+        .querySelectorAll(".panel")
+        .forEach(panel => {
 
-    const panel =
-        document.getElementById(id);
+            panel.classList.remove(
+                "active"
+            );
 
-    if(panel) {
-        panel.classList.add("active");
-    }
+        });
 
-    document.querySelectorAll(".nav-btn")
-        .forEach(b => b.classList.remove("active"));
+    document
+        .querySelectorAll(".tab")
+        .forEach(tab => {
 
-    if(button) {
+            tab.classList.remove(
+                "active"
+            );
+
+        });
+
+    document
+        .getElementById(panelId)
+        .classList.add("active");
+
+    if (button) {
         button.classList.add("active");
     }
 
-    if(id === "social") {
-        loadSocial();
+    if (panelId === "profilePanel") {
+        loadProfile();
     }
+
 }
 
 
-/* =========================================================
-   TOAST
-========================================================= */
+/* ==========================================
+   CHAT
+========================================== */
 
-function toast(message) {
-
-    const t =
-        document.getElementById("toast");
-
-    t.textContent = message;
-    t.style.display = "block";
-
-    setTimeout(() => {
-        t.style.display = "none";
-    }, 3000);
-}
-
-
-/* =========================================================
-   FOXIE AI
-========================================================= */
-
-function addFoxieMessage(text, type="foxie") {
-
-    const box =
-        document.getElementById("foxieChat");
-
-    const div =
-        document.createElement("div");
-
-    div.className =
-        "message " + type;
-
-    div.textContent = text;
-
-    box.appendChild(div);
-
-    box.scrollTop =
-        box.scrollHeight;
-}
-
-
-async function sendFoxie() {
+async function sendMessage() {
 
     const input =
-        document.getElementById("foxieInput");
+        document.getElementById(
+            "messageInput"
+        );
+
+    const messages =
+        document.getElementById(
+            "messages"
+        );
+
+    const status =
+        document.getElementById(
+            "chatStatus"
+        );
 
     const message =
         input.value.trim();
 
-    if(!message) return;
+    if (!message) {
+        return;
+    }
+
+    addMessage(
+        messages,
+        message,
+        "user"
+    );
 
     input.value = "";
 
-    addFoxieMessage(message, "user");
-
-    addFoxieMessage("🦊 Thinking...", "foxie");
-
-    const thinking =
-        document.getElementById("foxieChat")
-        .lastElementChild;
+    status.textContent =
+        "🦊 Foxie is thinking...";
 
     try {
 
@@ -1380,49 +1758,112 @@ async function sendFoxie() {
         const data =
             await response.json();
 
-        thinking.remove();
+        if (!response.ok) {
 
-        if(data.reply) {
-            addFoxieMessage(
-                data.reply,
-                "foxie"
+            throw new Error(
+                data.error ||
+                "Request failed"
             );
-        } else {
-            addFoxieMessage(
-                "Foxie couldn't respond right now.",
-                "foxie"
-            );
+
         }
 
-    } catch(error) {
+        addMessage(
+            messages,
+            data.reply,
+            "foxie"
+        );
+
+        status.textContent = "";
+
+    } catch (error) {
 
         console.error(error);
 
-        thinking.textContent =
-            "🦊 I couldn't connect to my backend right now.";
+        addMessage(
+            messages,
+            "⚠️ I couldn't connect to my backend. Give it a moment and try again.",
+            "foxie"
+        );
+
+        status.textContent =
+            "Backend connection error.";
+
     }
+
 }
 
 
-/* =========================================================
+/* ==========================================
+   ADD MESSAGE
+========================================== */
+
+function addMessage(
+    container,
+    text,
+    type
+) {
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        "message " + type;
+
+    const bubble =
+        document.createElement("div");
+
+    bubble.className =
+        "bubble";
+
+    bubble.textContent =
+        text;
+
+    message.appendChild(
+        bubble
+    );
+
+    container.appendChild(
+        message
+    );
+
+    container.scrollTop =
+        container.scrollHeight;
+
+}
+
+
+/* ==========================================
    WEB SEARCH
-========================================================= */
+========================================== */
 
 async function searchWeb() {
 
     const input =
-        document.getElementById("webInput");
+        document.getElementById(
+            "webInput"
+        );
+
+    const results =
+        document.getElementById(
+            "webResults"
+        );
+
+    const status =
+        document.getElementById(
+            "webStatus"
+        );
 
     const query =
         input.value.trim();
 
-    if(!query) return;
+    if (!query) {
+        return;
+    }
 
-    const results =
-        document.getElementById("webResults");
+    results.innerHTML = "";
 
-    results.innerHTML =
-        "<p class='small'>🔎 Searching...</p>";
+    status.textContent =
+        "🔎 Searching DuckDuckGo...";
 
     try {
 
@@ -1436,64 +1877,133 @@ async function searchWeb() {
         const data =
             await response.json();
 
-        results.innerHTML = "";
+        if (!response.ok) {
 
-        if(!data.results ||
-           data.results.length === 0) {
+            throw new Error(
+                data.error ||
+                "Search failed"
+            );
+
+        }
+
+        if (
+            !data.results ||
+            data.results.length === 0
+        ) {
 
             results.innerHTML =
-                "<p class='small'>No results found.</p>";
+                "<p>No results found.</p>";
+
+            status.textContent = "";
 
             return;
         }
 
-        data.results.forEach(result => {
+        data.results.forEach(
+            result => {
 
-            const div =
-                document.createElement("div");
+                const card =
+                    document.createElement(
+                        "div"
+                    );
 
-            div.className = "result";
+                card.className =
+                    "search-result";
 
-            div.innerHTML = `
-                <strong>${escapeHTML(result.title)}</strong>
-                <p>${escapeHTML(result.body)}</p>
-                <a href="${escapeAttribute(result.href)}"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                    Open result →
-                </a>
-            `;
+                const title =
+                    document.createElement(
+                        "h3"
+                    );
 
-            results.appendChild(div);
-        });
+                title.textContent =
+                    result.title;
 
-    } catch(error) {
+                const body =
+                    document.createElement(
+                        "p"
+                    );
+
+                body.textContent =
+                    result.body;
+
+                const link =
+                    document.createElement(
+                        "a"
+                    );
+
+                link.href =
+                    result.href;
+
+                link.target =
+                    "_blank";
+
+                link.rel =
+                    "noopener noreferrer";
+
+                link.textContent =
+                    result.href;
+
+                card.appendChild(title);
+
+                card.appendChild(body);
+
+                card.appendChild(link);
+
+                results.appendChild(card);
+
+            }
+        );
+
+        status.textContent =
+            "✅ Search complete.";
+
+    } catch (error) {
+
+        console.error(error);
+
+        status.textContent =
+            "⚠️ Search failed.";
 
         results.innerHTML =
-            "<p class='small'>Search failed.</p>";
+            "<p>Foxie couldn't complete the search.</p>";
+
     }
+
 }
 
 
-/* =========================================================
+/* ==========================================
    IMAGE SEARCH
-========================================================= */
+========================================== */
 
 async function searchImages() {
 
     const input =
-        document.getElementById("imageInput");
+        document.getElementById(
+            "imageInput"
+        );
+
+    const results =
+        document.getElementById(
+            "imageResults"
+        );
+
+    const status =
+        document.getElementById(
+            "imageStatus"
+        );
 
     const query =
         input.value.trim();
 
-    if(!query) return;
+    if (!query) {
+        return;
+    }
 
-    const results =
-        document.getElementById("imageResults");
+    results.innerHTML = "";
 
-    results.innerHTML =
-        "<p class='small'>🖼️ Searching...</p>";
+    status.textContent =
+        "🖼️ Finding images...";
 
     try {
 
@@ -1507,296 +2017,153 @@ async function searchImages() {
         const data =
             await response.json();
 
-        results.innerHTML = "";
+        if (!response.ok) {
 
-        if(!data.results ||
-           data.results.length === 0) {
-
-            results.innerHTML =
-                "<p class='small'>No images found.</p>";
-
-            return;
-        }
-
-        data.results.forEach(result => {
-
-            if(!result.image) return;
-
-            const card =
-                document.createElement("div");
-
-            card.className =
-                "image-card";
-
-            const img =
-                document.createElement("img");
-
-            img.src =
-                result.thumbnail ||
-                result.image;
-
-            img.alt =
-                result.title || query;
-
-            img.loading = "lazy";
-
-            img.onerror = function() {
-                this.style.display = "none";
-            };
-
-            const text =
-                document.createElement("div");
-
-            text.textContent =
-                result.title || "Image";
-
-            card.appendChild(img);
-            card.appendChild(text);
-
-            results.appendChild(card);
-        });
-
-    } catch(error) {
-
-        results.innerHTML =
-            "<p class='small'>Image search failed.</p>";
-    }
-}
-
-
-/* =========================================================
-   AUTH
-========================================================= */
-
-function showAuth(type) {
-
-    const form =
-        document.getElementById("authForm");
-
-    if(type === "login") {
-
-        form.innerHTML = `
-
-            <div class="form-group">
-                <label>Email</label>
-                <input id="loginEmail" type="email"
-                       placeholder="you@example.com">
-            </div>
-
-            <div class="form-group">
-                <label>Password</label>
-                <input id="loginPassword" type="password"
-                       placeholder="Password">
-            </div>
-
-            <button class="primary"
-                    onclick="login()">
-                Login
-            </button>
-
-        `;
-
-    } else {
-
-        form.innerHTML = `
-
-            <div class="form-group">
-                <label>Username</label>
-                <input id="signupUsername"
-                       placeholder="Choose a username">
-            </div>
-
-            <div class="form-group">
-                <label>Email</label>
-                <input id="signupEmail"
-                       type="email"
-                       placeholder="you@example.com">
-            </div>
-
-            <div class="form-group">
-                <label>Password</label>
-                <input id="signupPassword"
-                       type="password"
-                       placeholder="At least 6 characters">
-            </div>
-
-            <button class="primary"
-                    onclick="signup()">
-                Create Account
-            </button>
-
-        `;
-    }
-}
-
-showAuth("login");
-
-
-async function signup() {
-
-    const username =
-        document.getElementById("signupUsername")
-        .value.trim();
-
-    const email =
-        document.getElementById("signupEmail")
-        .value.trim();
-
-    const password =
-        document.getElementById("signupPassword")
-        .value;
-
-    if(!username || !email || !password) {
-
-        toast("Please fill everything in.");
-
-        return;
-    }
-
-    if(username.length < 3) {
-
-        toast("Username needs at least 3 characters.");
-
-        return;
-    }
-
-    if(password.length < 6) {
-
-        toast("Password needs at least 6 characters.");
-
-        return;
-    }
-
-    try {
-
-        const { data, error } =
-            await supabaseClient.auth.signUp({
-                email,
-                password
-            });
-
-        if(error) {
-
-            toast(error.message);
-
-            return;
-        }
-
-        if(!data.user) {
-
-            toast("Account created. Check your email.");
-
-            return;
-        }
-
-        const { error: profileError } =
-            await supabaseClient
-                .from("profiles")
-                .insert({
-                    id: data.user.id,
-                    username: username,
-                    online: true
-                });
-
-        if(profileError) {
-
-            console.error(profileError);
-
-            toast(
-                "Account created, but profile setup failed."
+            throw new Error(
+                data.error ||
+                "Image search failed"
             );
 
+        }
+
+        if (
+            !data.results ||
+            data.results.length === 0
+        ) {
+
+            status.textContent =
+                "No images found.";
+
             return;
         }
 
-        toast("Foxie account created! 🦊");
+        data.results.forEach(
+            result => {
 
-        await loadCurrentUser();
+                const card =
+                    document.createElement(
+                        "div"
+                    );
 
-    } catch(error) {
+                card.className =
+                    "image-card";
+
+                const image =
+                    document.createElement(
+                        "img"
+                    );
+
+                image.src =
+                    result.thumbnail ||
+                    result.image;
+
+                image.alt =
+                    result.title ||
+                    query;
+
+                image.loading =
+                    "lazy";
+
+                image.onerror =
+                    function() {
+
+                        if (
+                            this.src !==
+                            result.image
+                        ) {
+
+                            this.src =
+                                result.image;
+
+                        }
+
+                    };
+
+                const info =
+                    document.createElement(
+                        "div"
+                    );
+
+                info.className =
+                    "image-info";
+
+                const title =
+                    document.createElement(
+                        "div"
+                    );
+
+                title.className =
+                    "image-title";
+
+                title.textContent =
+                    result.title ||
+                    "Image";
+
+                const link =
+                    document.createElement(
+                        "a"
+                    );
+
+                link.className =
+                    "image-link";
+
+                link.href =
+                    result.url ||
+                    result.image;
+
+                link.target =
+                    "_blank";
+
+                link.rel =
+                    "noopener noreferrer";
+
+                link.textContent =
+                    "Open image/source ↗";
+
+                info.appendChild(title);
+
+                info.appendChild(link);
+
+                card.appendChild(image);
+
+                card.appendChild(info);
+
+                results.appendChild(card);
+
+            }
+        );
+
+        status.textContent =
+            "✅ Images found!";
+
+    } catch (error) {
 
         console.error(error);
 
-        toast("Signup failed.");
+        status.textContent =
+            "⚠️ Image search failed.";
+
+        results.innerHTML =
+            "<p>Foxie couldn't find the images.</p>";
+
     }
+
 }
 
 
-async function login() {
+/* ==========================================
+   PROFILE SYSTEM
+========================================== */
 
-    const email =
-        document.getElementById("loginEmail")
-        .value.trim();
+async function loadProfile() {
 
-    const password =
-        document.getElementById("loginPassword")
-        .value;
+    const container =
+        document.getElementById(
+            "profileContent"
+        );
 
-    if(!email || !password) {
-
-        toast("Enter your email and password.");
-
-        return;
-    }
-
-    const { error } =
-        await supabaseClient.auth.signInWithPassword({
-            email,
-            password
-        });
-
-    if(error) {
-
-        toast(error.message);
-
-        return;
-    }
-
-    toast("Welcome back! 🦊");
-
-    await loadCurrentUser();
-}
-
-
-async function logout() {
-
-    if(currentUser) {
-
-        await supabaseClient
-            .from("profiles")
-            .update({
-                online: false
-            })
-            .eq("id", currentUser.id);
-    }
-
-    await supabaseClient.auth.signOut();
-
-    currentUser = null;
-    currentProfile = null;
-
-    document.getElementById("loggedOut")
-        .style.display = "block";
-
-    document.getElementById("loggedIn")
-        .style.display = "none";
-
-    document.getElementById("socialContent")
-        .style.display = "none";
-
-    document.getElementById("socialLoginNotice")
-        .style.display = "block";
-
-    toast("Logged out.");
-
-    showPanel(
-        "account",
-        document.getElementById("authNav")
-    );
-}
-
-
-async function loadCurrentUser() {
+    container.innerHTML =
+        "<div class='profile-card'><h2>🦊 Loading profile...</h2></div>";
 
     const {
         data: {
@@ -1807,417 +2174,740 @@ async function loadCurrentUser() {
 
     currentUser = user;
 
-    if(!user) {
+    if (!user) {
 
-        document.getElementById("loggedOut")
-            .style.display = "block";
-
-        document.getElementById("loggedIn")
-            .style.display = "none";
+        showAuthScreen();
 
         return;
+
     }
 
-    const { data: profile } =
+    await ensureProfile(user);
+
+    const {
+        data: profile,
+        error
+    } =
         await supabaseClient
             .from("profiles")
             .select("*")
             .eq("id", user.id)
             .single();
 
-    currentProfile = profile;
+    if (error) {
+
+        console.error(error);
+
+        container.innerHTML =
+            `
+            <div class="profile-card">
+                <h2>⚠️ Profile error</h2>
+                <p>Foxie couldn't load your profile.</p>
+            </div>
+            `;
+
+        return;
+
+    }
+
+    showProfile(profile, user);
+
+}
+
+
+async function ensureProfile(user) {
+
+    const {
+        data: existing
+    } =
+        await supabaseClient
+            .from("profiles")
+            .select("id")
+            .eq("id", user.id)
+            .maybeSingle();
+
+    if (existing) {
+        return;
+    }
+
+    const username =
+        (
+            user.email ||
+            "foxie_user"
+        )
+        .split("@")[0]
+        .replace(
+            /[^a-zA-Z0-9_]/g,
+            "_"
+        )
+        .slice(0, 25) ||
+        "foxie_user";
 
     await supabaseClient
         .from("profiles")
-        .update({
+        .insert({
+            id: user.id,
+            username: username,
+            bio: "",
             online: true
-        })
-        .eq("id", user.id);
+        });
 
-    document.getElementById("loggedOut")
-        .style.display = "none";
-
-    document.getElementById("loggedIn")
-        .style.display = "block";
-
-    document.getElementById("accountUsername")
-        .textContent =
-            "👤 @" +
-            (profile?.username || "User");
-
-    document.getElementById("socialLoginNotice")
-        .style.display = "none";
-
-    document.getElementById("socialContent")
-        .style.display = "block";
-
-    await loadUsers();
 }
 
 
-/* =========================================================
-   SOCIAL USERS
-========================================================= */
+function showAuthScreen() {
 
-async function loadSocial() {
+    const container =
+        document.getElementById(
+            "profileContent"
+        );
 
-    if(!currentUser) {
+    container.innerHTML =
+        `
+        <div class="auth-box">
 
-        document.getElementById("socialLoginNotice")
-            .style.display = "block";
+            <h2>👤 Foxie Account</h2>
 
-        document.getElementById("socialContent")
-            .style.display = "none";
+            <p>
+                Create an account or log in to
+                use your Foxie profile.
+            </p>
 
+            <input
+                id="authEmail"
+                type="email"
+                placeholder="Email"
+            >
+
+            <input
+                id="authPassword"
+                type="password"
+                placeholder="Password"
+            >
+
+            <button
+                class="auth-button"
+                onclick="signUp()"
+            >
+                CREATE ACCOUNT
+            </button>
+
+            <button
+                class="secondary-button"
+                onclick="signIn()"
+            >
+                LOG IN
+            </button>
+
+            <div
+                id="authStatus"
+                class="status"
+            ></div>
+
+        </div>
+        `;
+
+}
+
+
+async function signUp() {
+
+    const email =
+        document.getElementById(
+            "authEmail"
+        ).value.trim();
+
+    const password =
+        document.getElementById(
+            "authPassword"
+        ).value;
+
+    const status =
+        document.getElementById(
+            "authStatus"
+        );
+
+    if (!email || !password) {
+
+        status.textContent =
+            "Enter an email and password.";
+
+        return;
+
+    }
+
+    status.textContent =
+        "🦊 Creating your account...";
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient.auth.signUp({
+            email: email,
+            password: password
+        });
+
+    if (error) {
+
+        status.textContent =
+            "⚠️ " + error.message;
+
+        return;
+
+    }
+
+    if (data.session) {
+
+        currentUser =
+            data.user;
+
+        await ensureProfile(
+            data.user
+        );
+
+        loadProfile();
+
+    } else {
+
+        status.textContent =
+            "✅ Account created! Check your email if verification is required, then log in.";
+
+    }
+
+}
+
+
+async function signIn() {
+
+    const email =
+        document.getElementById(
+            "authEmail"
+        ).value.trim();
+
+    const password =
+        document.getElementById(
+            "authPassword"
+        ).value;
+
+    const status =
+        document.getElementById(
+            "authStatus"
+        );
+
+    if (!email || !password) {
+
+        status.textContent =
+            "Enter an email and password.";
+
+        return;
+
+    }
+
+    status.textContent =
+        "🦊 Logging in...";
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
+
+    if (error) {
+
+        status.textContent =
+            "⚠️ " + error.message;
+
+        return;
+
+    }
+
+    currentUser =
+        data.user;
+
+    await ensureProfile(
+        data.user
+    );
+
+    loadProfile();
+
+}
+
+
+function showProfile(
+    profile,
+    user
+) {
+
+    const container =
+        document.getElementById(
+            "profileContent"
+        );
+
+    const avatar =
+        profile.avatar_url;
+
+    const avatarHTML =
+        avatar
+        ?
+        `
+        <img
+            id="profileAvatar"
+            class="avatar"
+            src="${escapeHTML(avatar)}"
+            alt="Profile picture"
+        >
+        `
+        :
+        `
+        <div
+            id="profileAvatar"
+            class="avatar default-avatar"
+        >
+            🦊
+        </div>
+        `;
+
+    container.innerHTML =
+        `
+        <div class="profile-card">
+
+            ${avatarHTML}
+
+            <div class="profile-name">
+                @${escapeHTML(
+                    profile.username ||
+                    "foxie_user"
+                )}
+            </div>
+
+            <div class="profile-email">
+                ${escapeHTML(user.email || "")}
+            </div>
+
+            <div class="online-status">
+                🟢 Online
+            </div>
+
+            <div
+                class="profile-bio"
+                id="profileBio"
+            >
+                ${
+                    profile.bio
+                    ?
+                    escapeHTML(profile.bio)
+                    :
+                    "No bio yet."
+                }
+            </div>
+
+            <button
+                class="profile-button"
+                onclick="toggleEditProfile()"
+            >
+                ✏️ EDIT PROFILE
+            </button>
+
+            <button
+                class="secondary-button"
+                onclick="logout()"
+            >
+                LOG OUT
+            </button>
+
+
+            <div
+                id="profileForm"
+                class="profile-form"
+            >
+
+                <label>
+                    Username
+                </label>
+
+                <input
+                    id="editUsername"
+                    type="text"
+                    maxlength="25"
+                    value="${escapeHTML(
+                        profile.username || ""
+                    )}"
+                >
+
+                <label>
+                    Bio
+                </label>
+
+                <textarea
+                    id="editBio"
+                    maxlength="250"
+                    placeholder="Tell people about yourself..."
+                >${escapeHTML(
+                    profile.bio || ""
+                )}</textarea>
+
+                <label>
+                    Profile picture
+                </label>
+
+                <input
+                    id="avatarFile"
+                    type="file"
+                    accept="image/png,image/jpeg,image/webp"
+                >
+
+                <button
+                    class="profile-button"
+                    onclick="saveProfile()"
+                >
+                    💾 SAVE PROFILE
+                </button>
+
+                <div
+                    id="profileStatus"
+                    class="status"
+                ></div>
+
+            </div>
+
+        </div>
+        `;
+
+}
+
+
+function toggleEditProfile() {
+
+    const form =
+        document.getElementById(
+            "profileForm"
+        );
+
+    form.classList.toggle("show");
+
+}
+
+
+async function saveProfile() {
+
+    if (!currentUser) {
         return;
     }
 
-    document.getElementById("socialLoginNotice")
-        .style.display = "none";
+    const username =
+        document.getElementById(
+            "editUsername"
+        ).value.trim();
 
-    document.getElementById("socialContent")
-        .style.display = "block";
+    const bio =
+        document.getElementById(
+            "editBio"
+        ).value.trim();
 
-    await loadUsers();
-}
+    const fileInput =
+        document.getElementById(
+            "avatarFile"
+        );
 
+    const status =
+        document.getElementById(
+            "profileStatus"
+        );
 
-async function loadUsers() {
+    if (!username) {
 
-    const { data, error } =
+        status.textContent =
+            "⚠️ Username cannot be empty.";
+
+        return;
+
+    }
+
+    status.textContent =
+        "🦊 Saving profile...";
+
+    let avatarURL = null;
+
+    const file =
+        fileInput.files[0];
+
+    if (file) {
+
+        if (file.size > 5 * 1024 * 1024) {
+
+            status.textContent =
+                "⚠️ Profile picture must be under 5MB.";
+
+            return;
+
+        }
+
+        const extension =
+            file.name
+                .split(".")
+                .pop()
+                .toLowerCase();
+
+        const filePath =
+            currentUser.id +
+            "/avatar." +
+            extension;
+
+        const {
+            error: uploadError
+        } =
+            await supabaseClient
+                .storage
+                .from("avatars")
+                .upload(
+                    filePath,
+                    file,
+                    {
+                        upsert: true
+                    }
+                );
+
+        if (uploadError) {
+
+            console.error(uploadError);
+
+            status.textContent =
+                "⚠️ Picture upload failed: " +
+                uploadError.message;
+
+            return;
+
+        }
+
+        const {
+            data
+        } =
+            supabaseClient
+                .storage
+                .from("avatars")
+                .getPublicUrl(filePath);
+
+        avatarURL =
+            data.publicUrl;
+
+    }
+
+    const updateData = {
+        username: username,
+        bio: bio,
+        online: true
+    };
+
+    if (avatarURL) {
+        updateData.avatar_url =
+            avatarURL;
+    }
+
+    const {
+        error
+    } =
         await supabaseClient
             .from("profiles")
-            .select("*")
-            .order("username");
+            .update(updateData)
+            .eq("id", currentUser.id);
 
-    if(error) {
+    if (error) {
 
         console.error(error);
 
-        return;
-    }
-
-    allUsers =
-        (data || [])
-        .filter(user =>
-            user.id !== currentUser?.id
-        );
-
-    renderUsers(allUsers);
-}
-
-
-function renderUsers(users) {
-
-    const list =
-        document.getElementById("usersList");
-
-    list.innerHTML = "";
-
-    if(users.length === 0) {
-
-        list.innerHTML =
-            "<p class='small'>No other users yet.</p>";
+        status.textContent =
+            "⚠️ " + error.message;
 
         return;
+
     }
 
-    users.forEach(user => {
+    status.textContent =
+        "✅ Profile saved!";
 
-        const div =
-            document.createElement("div");
+    setTimeout(
+        () => loadProfile(),
+        600
+    );
 
-        div.className =
-            "user-item";
-
-        const dot =
-            user.online
-            ? "<span class='online-dot'></span>"
-            : "<span class='offline-dot'></span>";
-
-        div.innerHTML =
-            dot +
-            "@" +
-            escapeHTML(user.username);
-
-        div.onclick =
-            () => selectUser(user);
-
-        list.appendChild(div);
-    });
 }
 
 
-function filterUsers() {
+async function logout() {
 
-    const query =
-        document.getElementById("userSearch")
-        .value
-        .toLowerCase()
-        .trim();
+    if (currentUser) {
 
-    const filtered =
-        allUsers.filter(user =>
-            user.username
-                .toLowerCase()
-                .includes(query)
-        );
-
-    renderUsers(filtered);
-}
-
-
-/* =========================================================
-   PRIVATE CHAT
-========================================================= */
-
-async function selectUser(user) {
-
-    selectedUser = user;
-
-    document.getElementById("privateChatTitle")
-        .textContent =
-            "💬 @" + user.username;
-
-    await loadPrivateMessages();
-
-    subscribeToPrivateMessages();
-}
-
-
-async function loadPrivateMessages() {
-
-    if(!selectedUser || !currentUser) return;
-
-    const { data, error } =
         await supabaseClient
-            .from("messages")
-            .select("*")
-            .or(
-                `and(sender_id.eq.${currentUser.id},receiver_id.eq.${selectedUser.id}),and(sender_id.eq.${selectedUser.id},receiver_id.eq.${currentUser.id})`
-            )
-            .order("created_at", {
-                ascending: true
-            });
-
-    if(error) {
-
-        console.error(error);
-
-        return;
-    }
-
-    renderPrivateMessages(data || []);
-}
-
-
-function renderPrivateMessages(messages) {
-
-    const box =
-        document.getElementById("privateMessages");
-
-    box.innerHTML = "";
-
-    if(messages.length === 0) {
-
-        box.innerHTML =
-            "<div class='small'>No messages yet. Say hello! 👋</div>";
-
-        return;
-    }
-
-    messages.forEach(message => {
-
-        const div =
-            document.createElement("div");
-
-        div.className =
-            "message " +
-            (
-                message.sender_id === currentUser.id
-                ? "user"
-                : "foxie"
+            .from("profiles")
+            .update({
+                online: false
+            })
+            .eq(
+                "id",
+                currentUser.id
             );
 
-        div.textContent =
-            message.message || "";
+    }
 
-        box.appendChild(div);
-    });
+    await supabaseClient.auth.signOut();
 
-    box.scrollTop =
-        box.scrollHeight;
+    currentUser = null;
+
+    loadProfile();
+
 }
 
 
-async function sendPrivateMessage() {
+function escapeHTML(value) {
 
-    if(!currentUser) {
-
-        toast("Log in first.");
-
-        return;
-    }
-
-    if(!selectedUser) {
-
-        toast("Select a user first.");
-
-        return;
-    }
-
-    const input =
-        document.getElementById("privateInput");
-
-    const message =
-        input.value.trim();
-
-    if(!message) return;
-
-    input.value = "";
-
-    const { error } =
-        await supabaseClient
-            .from("messages")
-            .insert({
-                sender_id: currentUser.id,
-                receiver_id: selectedUser.id,
-                message: message
-            });
-
-    if(error) {
-
-        console.error(error);
-
-        toast("Message failed to send.");
-
-        input.value = message;
-
-        return;
-    }
-
-    await loadPrivateMessages();
-}
-
-
-function subscribeToPrivateMessages() {
-
-    if(privateChannel) {
-
-        supabaseClient
-            .removeChannel(privateChannel);
-    }
-
-    if(!currentUser) return;
-
-    privateChannel =
-        supabaseClient
-        .channel(
-            "foxie-private-" +
-            currentUser.id
+    return String(value || "")
+        .replace(
+            /&/g,
+            "&amp;"
         )
-        .on(
-            "postgres_changes",
-            {
-                event: "INSERT",
-                schema: "public",
-                table: "messages"
-            },
-            payload => {
-
-                const msg =
-                    payload.new;
-
-                if(
-                    selectedUser &&
-                    (
-                        (
-                            msg.sender_id === currentUser.id &&
-                            msg.receiver_id === selectedUser.id
-                        )
-                        ||
-                        (
-                            msg.sender_id === selectedUser.id &&
-                            msg.receiver_id === currentUser.id
-                        )
-                    )
-                ) {
-
-                    loadPrivateMessages();
-                }
-            }
+        .replace(
+            /</g,
+            "&lt;"
         )
-        .subscribe();
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
 }
 
 
-/* =========================================================
+/* ==========================================
+   AUTH STATE
+========================================== */
+
+supabaseClient.auth.onAuthStateChange(
+    async (
+        event,
+        session
+    ) => {
+
+        currentUser =
+            session
+            ?
+            session.user
+            :
+            null;
+
+    }
+);
+
+
+/* ==========================================
    CREATOR LOGIN
-========================================================= */
+========================================== */
 
 function openCreatorLogin() {
 
-    document.getElementById("creatorModal")
+    document
+        .getElementById(
+            "creatorModal"
+        )
         .classList.add("show");
 
-    document.getElementById("creatorCode")
+    document
+        .getElementById(
+            "creatorCodeInput"
+        )
         .focus();
+
 }
 
 
-function closeCreatorModal() {
+function closeCreatorLogin() {
 
-    document.getElementById("creatorModal")
+    document
+        .getElementById(
+            "creatorModal"
+        )
         .classList.remove("show");
 
-    document.getElementById("creatorError")
-        .textContent = "";
-
-    document.getElementById("creatorCode")
-        .value = "";
 }
 
 
-function toggleCreatorPassword() {
+function togglePassword() {
 
     const input =
-        document.getElementById("creatorCode");
+        document.getElementById(
+            "creatorCodeInput"
+        );
 
     const button =
-        document.getElementById("eyeButton");
+        document.getElementById(
+            "eyeButton"
+        );
 
-    if(input.type === "password") {
+    if (
+        input.type === "password"
+    ) {
 
         input.type = "text";
-        button.textContent = "🙈";
+
+        button.textContent =
+            "🙈";
 
     } else {
 
         input.type = "password";
-        button.textContent = "👁️";
+
+        button.textContent =
+            "👁️";
+
     }
+
 }
 
 
 async function creatorLogin() {
 
+    const input =
+        document.getElementById(
+            "creatorCodeInput"
+        );
+
+    const status =
+        document.getElementById(
+            "loginStatus"
+        );
+
     const code =
-        document.getElementById("creatorCode")
-        .value;
+        input.value;
 
-    if(!code) return;
+    if (!code) {
 
-    const errorBox =
-        document.getElementById("creatorError");
+        status.textContent =
+            "Enter your creator code.";
 
-    errorBox.textContent =
+        return;
+
+    }
+
+    status.textContent =
         "Checking...";
 
     try {
 
         const response =
             await fetch(
-                BACKEND + "/creator-login",
+                BACKEND +
+                "/creator-login",
                 {
                     method: "POST",
 
@@ -2235,141 +2925,132 @@ async function creatorLogin() {
         const data =
             await response.json();
 
-        if(data.success) {
+        if (
+            response.ok &&
+            data.success
+        ) {
 
-            closeCreatorModal();
+            closeCreatorLogin();
 
-            showCreatorMode();
+            openCreatorMode();
 
-            toast("Creator Mode unlocked 🔐");
+            input.value = "";
+
+            status.textContent = "";
 
         } else {
 
-            errorBox.textContent =
-                "❌ Incorrect creator code.";
+            status.textContent =
+                "❌ Wrong creator code.";
+
         }
 
-    } catch(error) {
+    } catch (error) {
 
         console.error(error);
 
-        errorBox.textContent =
-            "❌ Could not connect to Foxie.";
-    }
-}
+        status.textContent =
+            "⚠️ Could not connect to Foxie.";
 
-
-function showCreatorMode() {
-
-    document.querySelectorAll(".panel")
-        .forEach(p =>
-            p.classList.remove("active")
-        );
-
-    document.getElementById("creator")
-        .classList.add("active");
-
-    document.querySelectorAll(".nav-btn")
-        .forEach(b =>
-            b.classList.remove("active")
-        );
-
-    creatorSection(
-        "dashboard",
-        document.querySelector(".creator-menu button")
-    );
-}
-
-
-function closeCreator() {
-
-    showPanel(
-        "foxie",
-        document.querySelector(".nav-btn")
-    );
-}
-
-
-function creatorSection(id, button) {
-
-    document.querySelectorAll(".creator-section")
-        .forEach(section =>
-            section.classList.remove("active")
-        );
-
-    const target =
-        document.getElementById(
-            "creator" +
-            id.charAt(0).toUpperCase() +
-            id.slice(1)
-        );
-
-    if(target) {
-        target.classList.add("active");
     }
 
-    if(button) {
+}
 
-        document.querySelectorAll(".creator-menu button")
-            .forEach(b =>
-                b.classList.remove("active")
+
+/* ==========================================
+   CREATOR MODE
+========================================== */
+
+function openCreatorMode() {
+
+    document
+        .querySelectorAll(".panel")
+        .forEach(panel => {
+
+            panel.classList.remove(
+                "active"
             );
 
-        button.classList.add("active");
-    }
+        });
+
+    document
+        .getElementById(
+            "creatorMode"
+        )
+        .classList.add("show");
+
 }
 
 
-/* =========================================================
+function closeCreatorMode() {
+
+    document
+        .getElementById(
+            "creatorMode"
+        )
+        .classList.remove("show");
+
+    document
+        .getElementById(
+            "chatPanel"
+        )
+        .classList.add("active");
+
+    document
+        .querySelectorAll(".tab")
+        .forEach(tab => {
+
+            tab.classList.remove(
+                "active"
+            );
+
+        });
+
+    document
+        .querySelector(".tab")
+        .classList.add("active");
+
+}
+
+
+/* ==========================================
    CREATOR CHAT
-========================================================= */
-
-function addCreatorMessage(text, type="foxie") {
-
-    const box =
-        document.getElementById("creatorMessages");
-
-    const div =
-        document.createElement("div");
-
-    div.className =
-        "message " + type;
-
-    div.textContent =
-        text;
-
-    box.appendChild(div);
-
-    box.scrollTop =
-        box.scrollHeight;
-}
-
+========================================== */
 
 async function sendCreatorMessage() {
 
     const input =
-        document.getElementById("creatorInput");
+        document.getElementById(
+            "creatorInput"
+        );
+
+    const messages =
+        document.getElementById(
+            "creatorMessages"
+        );
+
+    const status =
+        document.getElementById(
+            "creatorStatus"
+        );
 
     const message =
         input.value.trim();
 
-    if(!message) return;
+    if (!message) {
+        return;
+    }
 
-    input.value = "";
-
-    addCreatorMessage(
+    addMessage(
+        messages,
         message,
         "user"
     );
 
-    addCreatorMessage(
-        "🦊 Thinking...",
-        "foxie"
-    );
+    input.value = "";
 
-    const thinking =
-        document.getElementById("creatorMessages")
-        .lastElementChild;
+    status.textContent =
+        "🦊 Foxie is thinking...";
 
     try {
 
@@ -2385,9 +3066,7 @@ async function sendCreatorMessage() {
                     },
 
                     body: JSON.stringify({
-                        message:
-                            "Creator is speaking privately. " +
-                            message
+                        message: message
                     })
                 }
             );
@@ -2395,79 +3074,133 @@ async function sendCreatorMessage() {
         const data =
             await response.json();
 
-        thinking.remove();
+        if (!response.ok) {
 
-        addCreatorMessage(
-            data.reply ||
-            "Foxie couldn't respond.",
+            throw new Error(
+                data.error ||
+                "Request failed"
+            );
+
+        }
+
+        addMessage(
+            messages,
+            data.reply,
             "foxie"
         );
 
-    } catch(error) {
+        status.textContent = "";
 
-        thinking.textContent =
-            "🦊 Backend connection failed.";
+    } catch (error) {
+
+        console.error(error);
+
+        addMessage(
+            messages,
+            "⚠️ Foxie couldn't connect.",
+            "foxie"
+        );
+
+        status.textContent =
+            "Connection error.";
+
     }
+
 }
 
 
-/* =========================================================
-   SECURITY HELPERS
-========================================================= */
+/* ==========================================
+   ENTER KEYS
+========================================== */
 
-function escapeHTML(value) {
+document
+    .getElementById(
+        "messageInput"
+    )
+    .addEventListener(
+        "keydown",
+        function(event) {
 
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-}
+            if (
+                event.key === "Enter"
+            ) {
 
+                event.preventDefault();
 
-function escapeAttribute(value) {
+                sendMessage();
 
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;");
-}
+            }
 
-
-/* =========================================================
-   AUTH STATE
-========================================================= */
-
-supabaseClient.auth.onAuthStateChange(
-    async (event, session) => {
-
-        currentUser =
-            session?.user || null;
-
-        if(currentUser) {
-
-            setTimeout(
-                loadCurrentUser,
-                0
-            );
-
-        } else {
-
-            currentProfile = null;
         }
-    }
-);
+    );
 
 
-/* =========================================================
-   STARTUP
-========================================================= */
+document
+    .getElementById(
+        "creatorInput"
+    )
+    .addEventListener(
+        "keydown",
+        function(event) {
 
-loadCurrentUser();
+            if (
+                event.key === "Enter"
+            ) {
+
+                event.preventDefault();
+
+                sendCreatorMessage();
+
+            }
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "creatorCodeInput"
+    )
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                event.preventDefault();
+
+                creatorLogin();
+
+            }
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "creatorModal"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target === this
+            ) {
+
+                closeCreatorLogin();
+
+            }
+
+        }
+    );
+
 
 </script>
 
 </body>
+
 </html>
