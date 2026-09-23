@@ -14,7 +14,7 @@
   <p id="reply"></p>
 
   <script>
-    function talkToFoxie() {
+    async function talkToFoxie() {
       const message = document.getElementById("message").value;
       const reply = document.getElementById("reply");
 
@@ -23,7 +23,34 @@
         return;
       }
 
-      reply.textContent = "🦊 Hi! You said: " + message;
+      reply.textContent = "🦊 Foxie is thinking...";
+
+      try {
+        const response = await fetch(
+          "https://foxie-ai-backend.onrender.com/chat",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              message: message
+            })
+          }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Something went wrong");
+        }
+
+        reply.textContent = "🦊 " + data.reply;
+
+      } catch (error) {
+        reply.textContent =
+          "🦊 Sorry, Foxie couldn't connect right now.";
+      }
     }
   </script>
 
