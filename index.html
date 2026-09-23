@@ -16,7 +16,6 @@
 html, body {
     margin: 0;
     padding: 0;
-    width: 100%;
     min-height: 100%;
     font-family: Arial, sans-serif;
     background: #020402;
@@ -26,8 +25,6 @@ html, body {
 body {
     overflow-x: hidden;
 }
-
-/* BACKGROUND */
 
 .background {
     position: fixed;
@@ -41,7 +38,7 @@ body {
 .grid {
     position: absolute;
     inset: 0;
-    opacity: 0.16;
+    opacity: .16;
     background-image:
         linear-gradient(rgba(0,255,100,.15) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0,255,100,.15) 1px, transparent 1px);
@@ -78,8 +75,6 @@ body {
     }
 }
 
-/* HEADER */
-
 header {
     width: 100%;
     padding: 18px 22px;
@@ -107,8 +102,6 @@ header {
     opacity: .8;
 }
 
-/* NAV */
-
 nav {
     display: flex;
     flex-wrap: wrap;
@@ -126,7 +119,7 @@ nav button {
     border: 1px solid #00ff66;
     background: #001b0b;
     color: #00ff66;
-    padding: 10px 15px;
+    padding: 10px 14px;
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
@@ -139,8 +132,6 @@ nav button.active {
     box-shadow: 0 0 15px #00ff66;
 }
 
-/* MAIN */
-
 main {
     width: min(1100px, 94%);
     margin: 25px auto 60px;
@@ -148,7 +139,7 @@ main {
 
 .panel {
     display: none;
-    background: rgba(0, 10, 4, .88);
+    background: rgba(0,10,4,.88);
     border: 1px solid #00ff6650;
     border-radius: 15px;
     padding: 22px;
@@ -166,8 +157,6 @@ h1, h2, h3 {
 .subtitle {
     color: #91ffb5;
 }
-
-/* INPUTS */
 
 input,
 textarea {
@@ -207,8 +196,6 @@ textarea:focus {
     background: #00ff66;
     color: #001b0b;
 }
-
-/* CHAT */
 
 .chat-box {
     height: 430px;
@@ -257,8 +244,6 @@ textarea:focus {
     margin: 0;
 }
 
-/* RESULTS */
-
 .result {
     padding: 15px;
     margin: 10px 0;
@@ -276,11 +261,9 @@ textarea:focus {
     margin-bottom: 7px;
 }
 
-/* IMAGES */
-
 .image-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fill,minmax(180px,1fr));
     gap: 15px;
     margin-top: 15px;
 }
@@ -316,8 +299,7 @@ textarea:focus {
     border-radius: 16px;
     padding: 25px;
     text-align: center;
-    background:
-        radial-gradient(circle at top, #073b1c, #000b04 55%);
+    background: radial-gradient(circle at top,#073b1c,#000b04 55%);
     box-shadow: 0 0 30px #00ff6615;
 }
 
@@ -332,8 +314,8 @@ textarea:focus {
 }
 
 .avatar-small {
-    width: 55px;
-    height: 55px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid #00ff66;
@@ -351,11 +333,6 @@ textarea:focus {
     font-size: 13px;
 }
 
-.offline {
-    color: #777;
-    font-size: 13px;
-}
-
 .bio {
     color: #baffce;
     margin: 15px auto;
@@ -363,16 +340,131 @@ textarea:focus {
     max-width: 500px;
 }
 
-.profile-login {
-    text-align: center;
-    padding: 40px 15px;
+/* USER CARDS */
+
+.user-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+    gap: 15px;
+    margin-top: 20px;
 }
 
-.profile-info {
-    margin: 15px 0;
+.user-card {
+    border: 1px solid #00ff6645;
+    background: #000b04;
+    border-radius: 13px;
+    padding: 16px;
+    display: flex;
+    gap: 13px;
+    align-items: center;
 }
 
-/* MODAL */
+.user-card-info {
+    min-width: 0;
+    flex: 1;
+}
+
+.user-card-name {
+    font-weight: bold;
+    font-size: 17px;
+    word-break: break-word;
+}
+
+.user-card-bio {
+    color: #8cffad;
+    font-size: 12px;
+    margin-top: 5px;
+    word-break: break-word;
+}
+
+.user-card-actions {
+    margin-top: 8px;
+}
+
+/* FRIENDS */
+
+.friend-section {
+    margin-bottom: 25px;
+}
+
+.friend-card {
+    border: 1px solid #00ff6645;
+    background: #000b04;
+    border-radius: 12px;
+    padding: 13px;
+    margin: 9px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.friend-card-info {
+    flex: 1;
+}
+
+.friend-card-name {
+    font-weight: bold;
+}
+
+.friend-card-status {
+    font-size: 12px;
+    color: #00ff66;
+}
+
+/* VIDEOS */
+
+.video-upload {
+    border: 1px dashed #00ff6655;
+    padding: 18px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    background: #000b04;
+}
+
+.video-feed {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+    gap: 18px;
+}
+
+.video-card {
+    border: 1px solid #00ff6645;
+    border-radius: 13px;
+    overflow: hidden;
+    background: #000b04;
+}
+
+.video-card video {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    background: #000;
+    display: block;
+}
+
+.video-info {
+    padding: 13px;
+}
+
+.video-title {
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.video-creator {
+    color: #75ff9d;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.video-description {
+    color: #baffce;
+    font-size: 13px;
+    margin-top: 8px;
+    white-space: pre-wrap;
+}
+
+/* MODALS */
 
 .modal {
     position: fixed;
@@ -390,7 +482,7 @@ textarea:focus {
 }
 
 .modal-box {
-    width: min(500px, 100%);
+    width: min(500px,100%);
     max-height: 90vh;
     overflow-y: auto;
     background: #020b05;
@@ -400,7 +492,10 @@ textarea:focus {
     box-shadow: 0 0 35px #00ff6640;
 }
 
-/* CREATOR */
+.profile-login {
+    text-align: center;
+    padding: 40px 15px;
+}
 
 .creator-status {
     padding: 15px;
@@ -418,9 +513,16 @@ textarea:focus {
     opacity: .7;
 }
 
-/* MOBILE */
+.notice {
+    padding: 14px;
+    border: 1px solid #00ff6635;
+    border-radius: 10px;
+    background: #000b04;
+    margin: 12px 0;
+}
 
-@media (max-width: 700px) {
+@media(max-width:700px) {
+
     header {
         flex-direction: column;
         text-align: center;
@@ -437,6 +539,10 @@ textarea:focus {
     .message {
         max-width: 95%;
     }
+
+    .user-card {
+        align-items: flex-start;
+    }
 }
 </style>
 </head>
@@ -444,6 +550,7 @@ textarea:focus {
 <body>
 
 <div class="background">
+
     <div class="grid"></div>
 
     <div class="particle" style="left:5%;animation-duration:8s;"></div>
@@ -458,225 +565,430 @@ textarea:focus {
     <div class="particle" style="left:75%;animation-duration:12s;animation-delay:4s;"></div>
     <div class="particle" style="left:83%;animation-duration:10s;animation-delay:2s;"></div>
     <div class="particle" style="left:91%;animation-duration:13s;"></div>
+
 </div>
 
 <header>
-    <div class="logo">🦊 FOXIE AI</div>
-    <div class="creator-credit">Jayden Wayne MacDonald created this</div>
+
+    <div class="logo">
+        🦊 FOXIE AI
+    </div>
+
+    <div class="creator-credit">
+        Jayden Wayne MacDonald created this
+    </div>
+
 </header>
 
 <nav>
-    <button class="tab active" data-panel="chatPanel">💬 Chat</button>
-    <button class="tab" data-panel="webPanel">🌐 Web</button>
-    <button class="tab" data-panel="imagesPanel">🖼️ Images</button>
-    <button class="tab" data-panel="profilePanel">👤 Profile</button>
-    <button class="tab" data-panel="controlPanel">⚙️ Control Panel</button>
-    <button class="tab" data-panel="creatorPanel">🦊 Creator</button>
+
+    <button class="tab active" data-panel="chatPanel">
+        💬 Chat
+    </button>
+
+    <button class="tab" data-panel="webPanel">
+        🌐 Web
+    </button>
+
+    <button class="tab" data-panel="imagesPanel">
+        🖼️ Images
+    </button>
+
+    <button class="tab" data-panel="profilePanel">
+        👤 Profile
+    </button>
+
+    <button class="tab" data-panel="usersPanel">
+        👥 Users
+    </button>
+
+    <button class="tab" data-panel="friendsPanel">
+        🤝 Friends
+    </button>
+
+    <button class="tab" data-panel="videosPanel">
+        🎬 Foxie Vids
+    </button>
+
+    <button class="tab" data-panel="controlPanel">
+        ⚙️ Control
+    </button>
+
+    <button class="tab" data-panel="creatorPanel">
+        🦊 Creator
+    </button>
+
 </nav>
 
 <main>
 
-    <!-- CHAT -->
+<!-- CHAT -->
 
-    <section id="chatPanel" class="panel active">
+<section id="chatPanel" class="panel active">
 
-        <h1>🦊 Foxie</h1>
+    <h1>🦊 Foxie</h1>
+
+    <p class="subtitle">
+        Your own AI assistant.
+    </p>
+
+    <div id="chatBox" class="chat-box">
+
+        <div class="message foxie-message">
+
+            <div class="message-name">
+                🦊 FOXIE
+            </div>
+
+            Hey! I'm Foxie. Ask me anything!
+
+        </div>
+
+    </div>
+
+    <div class="chat-input-row">
+
+        <input
+            id="chatInput"
+            type="text"
+            placeholder="Talk to Foxie..."
+            autocomplete="off"
+        >
+
+        <button id="sendChat" class="action">
+            Send 🦊
+        </button>
+
+    </div>
+
+</section>
+
+<!-- WEB -->
+
+<section id="webPanel" class="panel">
+
+    <h2>🌐 Web Search</h2>
+
+    <input
+        id="webInput"
+        type="text"
+        placeholder="Search the web..."
+    >
+
+    <button id="webButton" class="action">
+        Search 🌐
+    </button>
+
+    <div id="webResults"></div>
+
+</section>
+
+<!-- IMAGES -->
+
+<section id="imagesPanel" class="panel">
+
+    <h2>🖼️ Image Search</h2>
+
+    <input
+        id="imageInput"
+        type="text"
+        placeholder="Search for images..."
+    >
+
+    <button id="imageButton" class="action">
+        Search Images 🖼️
+    </button>
+
+    <div id="imageResults" class="image-grid"></div>
+
+</section>
+
+<!-- PROFILE -->
+
+<section id="profilePanel" class="panel">
+
+    <div id="profileLoggedOut" class="profile-login">
+
+        <h2>👤 Foxie Profile</h2>
+
         <p class="subtitle">
-            Your own AI assistant.
+            Create a Foxie profile.
         </p>
 
-        <div id="chatBox" class="chat-box">
-            <div class="message foxie-message">
-                <div class="message-name">🦊 FOXIE</div>
-                Hey! I'm Foxie. Ask me anything!
+        <button id="showLoginButton" class="action">
+            🔐 Login
+        </button>
+
+        <button id="showSignupButton" class="action">
+            ✨ Create Account
+        </button>
+
+        <p id="authMessage"></p>
+
+    </div>
+
+    <div id="profileLoggedIn" class="profile-container hidden">
+
+        <div class="profile-card">
+
+            <img
+                id="profileAvatar"
+                class="avatar"
+                src="https://placehold.co/300x300/001b0b/00ff66?text=🦊"
+                alt="Profile picture"
+            >
+
+            <div
+                id="profileUsername"
+                class="profile-name"
+            >
+                Foxie User
             </div>
+
+            <div class="online">
+                🟢 Online
+            </div>
+
+            <div
+                id="profileBio"
+                class="bio"
+            >
+                No bio yet.
+            </div>
+
+            <button
+                id="editProfileButton"
+                class="action"
+            >
+                ✏️ Edit Profile
+            </button>
+
+            <button
+                id="logoutButton"
+                class="action"
+            >
+                🚪 Log Out
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- USERS -->
+
+<section id="usersPanel" class="panel">
+
+    <h2>👥 Other Users</h2>
+
+    <p class="subtitle">
+        Find other people on Foxie.
+    </p>
+
+    <input
+        id="userSearchInput"
+        type="text"
+        placeholder="Search usernames..."
+    >
+
+    <button
+        id="userSearchButton"
+        class="action"
+    >
+        🔎 Search Users
+    </button>
+
+    <div id="usersMessage"></div>
+
+    <div
+        id="usersList"
+        class="user-list"
+    ></div>
+
+</section>
+
+<!-- FRIENDS -->
+
+<section id="friendsPanel" class="panel">
+
+    <h2>🤝 Friends</h2>
+
+    <div class="friend-section">
+
+        <h3>📨 Friend Requests</h3>
+
+        <div id="friendRequests">
+            <div class="notice">
+                Log in to see friend requests.
+            </div>
+        </div>
+
+    </div>
+
+    <div class="friend-section">
+
+        <h3>👥 My Friends</h3>
+
+        <div id="friendsList">
+            <div class="notice">
+                Log in to see your friends.
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- FOXIE VIDS -->
+
+<section id="videosPanel" class="panel">
+
+    <h2>🎬 Foxie Vids</h2>
+
+    <p class="subtitle">
+        Watch and share videos on Foxie.
+    </p>
+
+    <div class="video-upload">
+
+        <h3>⬆️ Upload a video</h3>
+
+        <input
+            id="videoTitle"
+            type="text"
+            maxlength="100"
+            placeholder="Video title..."
+        >
+
+        <textarea
+            id="videoDescription"
+            maxlength="500"
+            placeholder="Video description..."
+        ></textarea>
+
+        <input
+            id="videoFile"
+            type="file"
+            accept="video/mp4,video/webm,video/ogg"
+        >
+
+        <button
+            id="uploadVideoButton"
+            class="action"
+        >
+            ⬆️ Upload to Foxie Vids
+        </button>
+
+        <p id="videoUploadMessage"></p>
+
+    </div>
+
+    <input
+        id="videoSearch"
+        type="text"
+        placeholder="Search Foxie Vids..."
+    >
+
+    <button
+        id="videoSearchButton"
+        class="action"
+    >
+        🔎 Search Videos
+    </button>
+
+    <div
+        id="videoFeed"
+        class="video-feed"
+    ></div>
+
+</section>
+
+<!-- CONTROL -->
+
+<section id="controlPanel" class="panel">
+
+    <h2>⚙️ Control Panel</h2>
+
+    <div class="creator-status">
+
+        <strong>AI:</strong> Foxie<br>
+        <strong>Web Search:</strong> DuckDuckGo<br>
+        <strong>Backend:</strong> Render<br>
+        <strong>Social:</strong> Supabase<br>
+        <strong>Video Platform:</strong> Foxie Vids
+
+    </div>
+
+</section>
+
+<!-- CREATOR -->
+
+<section id="creatorPanel" class="panel">
+
+    <h2>🦊 Creator Mode</h2>
+
+    <div id="creatorLocked">
+
+        <p>
+            Creator Mode is locked.
+        </p>
+
+        <button
+            id="openCreatorLogin"
+            class="action"
+        >
+            🔐 Creator Login
+        </button>
+
+    </div>
+
+    <div
+        id="creatorUnlocked"
+        class="hidden"
+    >
+
+        <div class="creator-status">
+            🟢 Creator Mode unlocked
+        </div>
+
+        <div
+            id="creatorChatBox"
+            class="chat-box"
+        >
+
+            <div class="message foxie-message">
+
+                <div class="message-name">
+                    🦊 FOXIE
+                </div>
+
+                Creator Mode activated.
+
+            </div>
+
         </div>
 
         <div class="chat-input-row">
+
             <input
-                id="chatInput"
+                id="creatorInput"
                 type="text"
-                placeholder="Talk to Foxie..."
-                autocomplete="off"
+                placeholder="Creator message..."
             >
-            <button id="sendChat" class="action">Send 🦊</button>
-        </div>
 
-    </section>
-
-    <!-- WEB -->
-
-    <section id="webPanel" class="panel">
-
-        <h2>🌐 Web Search</h2>
-
-        <input
-            id="webInput"
-            type="text"
-            placeholder="Search the web..."
-        >
-
-        <button id="webButton" class="action">
-            Search 🌐
-        </button>
-
-        <div id="webResults"></div>
-
-    </section>
-
-    <!-- IMAGES -->
-
-    <section id="imagesPanel" class="panel">
-
-        <h2>🖼️ Image Search</h2>
-
-        <input
-            id="imageInput"
-            type="text"
-            placeholder="Search for images..."
-        >
-
-        <button id="imageButton" class="action">
-            Search Images 🖼️
-        </button>
-
-        <div id="imageResults" class="image-grid"></div>
-
-    </section>
-
-    <!-- PROFILE -->
-
-    <section id="profilePanel" class="panel">
-
-        <div id="profileLoggedOut" class="profile-login">
-
-            <h2>👤 Foxie Profile</h2>
-
-            <p class="subtitle">
-                Create your Foxie profile and customize it.
-            </p>
-
-            <button id="showLoginButton" class="action">
-                🔐 Login
-            </button>
-
-            <button id="showSignupButton" class="action">
-                ✨ Create Account
-            </button>
-
-            <p id="authMessage"></p>
-
-        </div>
-
-        <div id="profileLoggedIn" class="profile-container hidden">
-
-            <div class="profile-card">
-
-                <img
-                    id="profileAvatar"
-                    class="avatar"
-                    src="https://placehold.co/300x300/001b0b/00ff66?text=🦊"
-                    alt="Profile picture"
-                >
-
-                <div id="profileUsername" class="profile-name">
-                    Foxie User
-                </div>
-
-                <div class="online">
-                    🟢 Online
-                </div>
-
-                <div id="profileBio" class="bio">
-                    No bio yet.
-                </div>
-
-                <div class="profile-info">
-                    <button id="editProfileButton" class="action">
-                        ✏️ Edit Profile
-                    </button>
-
-                    <button id="logoutButton" class="action">
-                        🚪 Log Out
-                    </button>
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- CONTROL PANEL -->
-
-    <section id="controlPanel" class="panel">
-
-        <h2>⚙️ Control Panel</h2>
-
-        <p class="subtitle">
-            Foxie settings.
-        </p>
-
-        <div class="creator-status">
-            <strong>AI:</strong> Foxie<br>
-            <strong>Web Search:</strong> DuckDuckGo<br>
-            <strong>Backend:</strong> Connected through Render
-        </div>
-
-    </section>
-
-    <!-- CREATOR -->
-
-    <section id="creatorPanel" class="panel">
-
-        <h2>🦊 Creator Mode</h2>
-
-        <div id="creatorLocked">
-
-            <p>
-                Creator Mode is locked.
-            </p>
-
-            <button id="openCreatorLogin" class="action">
-                🔐 Creator Login
+            <button
+                id="creatorSend"
+                class="action"
+            >
+                Send 🦊
             </button>
 
         </div>
 
-        <div id="creatorUnlocked" class="hidden">
+    </div>
 
-            <div class="creator-status">
-                🟢 Creator Mode unlocked
-            </div>
-
-            <h3>Talk to Foxie as the creator</h3>
-
-            <div id="creatorChatBox" class="chat-box">
-
-                <div class="message foxie-message">
-                    <div class="message-name">🦊 FOXIE</div>
-                    Creator Mode activated.
-                </div>
-
-            </div>
-
-            <div class="chat-input-row">
-
-                <input
-                    id="creatorInput"
-                    type="text"
-                    placeholder="Creator message..."
-                >
-
-                <button id="creatorSend" class="action">
-                    Send 🦊
-                </button>
-
-            </div>
-
-        </div>
-
-    </section>
+</section>
 
 </main>
 
@@ -686,7 +998,9 @@ textarea:focus {
 
     <div class="modal-box">
 
-        <h2 id="authTitle">🔐 Login</h2>
+        <h2 id="authTitle">
+            🔐 Login
+        </h2>
 
         <input
             id="authEmail"
@@ -700,15 +1014,24 @@ textarea:focus {
             placeholder="Password"
         >
 
-        <button id="authSubmit" class="action">
+        <button
+            id="authSubmit"
+            class="action"
+        >
             Login
         </button>
 
-        <button id="authSwitch" class="action">
+        <button
+            id="authSwitch"
+            class="action"
+        >
             Create account instead
         </button>
 
-        <button id="authClose" class="action">
+        <button
+            id="authClose"
+            class="action"
+        >
             Close
         </button>
 
@@ -718,7 +1041,7 @@ textarea:focus {
 
 </div>
 
-<!-- EDIT PROFILE MODAL -->
+<!-- EDIT PROFILE -->
 
 <div id="profileModal" class="modal">
 
@@ -726,24 +1049,18 @@ textarea:focus {
 
         <h2>✏️ Edit Profile</h2>
 
-        <label>Username</label>
-
         <input
             id="editUsername"
             type="text"
             maxlength="30"
-            placeholder="Your username"
+            placeholder="Username"
         >
-
-        <label>Bio</label>
 
         <textarea
             id="editBio"
             maxlength="300"
-            placeholder="Tell people about yourself..."
+            placeholder="Your bio..."
         ></textarea>
-
-        <label>Profile picture</label>
 
         <input
             id="avatarFile"
@@ -751,11 +1068,17 @@ textarea:focus {
             accept="image/png,image/jpeg,image/webp"
         >
 
-        <button id="saveProfile" class="action">
+        <button
+            id="saveProfile"
+            class="action"
+        >
             💾 Save Profile
         </button>
 
-        <button id="closeProfileModal" class="action">
+        <button
+            id="closeProfileModal"
+            class="action"
+        >
             Close
         </button>
 
@@ -765,7 +1088,7 @@ textarea:focus {
 
 </div>
 
-<!-- CREATOR LOGIN MODAL -->
+<!-- CREATOR LOGIN -->
 
 <div id="creatorModal" class="modal">
 
@@ -779,11 +1102,17 @@ textarea:focus {
             placeholder="Creator code"
         >
 
-        <button id="creatorLoginButton" class="action">
+        <button
+            id="creatorLoginButton"
+            class="action"
+        >
             Unlock
         </button>
 
-        <button id="creatorCloseButton" class="action">
+        <button
+            id="creatorCloseButton"
+            class="action"
+        >
             Close
         </button>
 
@@ -795,15 +1124,12 @@ textarea:focus {
 
 <script>
 
-/* =========================
-   FOXIE BACKEND
-========================= */
+/* ================================
+   FOXIE SETTINGS
+================================ */
 
-const BACKEND = "https://foxie-ai-backend.onrender.com";
-
-/* =========================
-   SUPABASE
-========================= */
+const BACKEND =
+    "https://foxie-ai-backend.onrender.com";
 
 const SUPABASE_URL =
     "https://hsojgfgtlzaqyzhlcgtv.supabase.co";
@@ -817,40 +1143,81 @@ const supabaseClient =
         SUPABASE_KEY
     );
 
-/* =========================
-   TAB SYSTEM
-========================= */
+let currentUser = null;
+let currentProfile = null;
 
-const tabs = document.querySelectorAll(".tab");
-const panels = document.querySelectorAll(".panel");
+/* ================================
+   HELPERS
+================================ */
 
-tabs.forEach(button => {
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+function escapeAttribute(value) {
+    return escapeHtml(value);
+}
+
+function defaultAvatar() {
+
+    return "https://placehold.co/300x300/001b0b/00ff66?text=🦊";
+
+}
+
+/* ================================
+   TABS
+================================ */
+
+document
+.querySelectorAll(".tab")
+.forEach(button => {
 
     button.addEventListener("click", () => {
 
-        const panelId = button.dataset.panel;
-
-        tabs.forEach(tab => {
+        document
+        .querySelectorAll(".tab")
+        .forEach(tab => {
             tab.classList.remove("active");
         });
 
-        panels.forEach(panel => {
+        document
+        .querySelectorAll(".panel")
+        .forEach(panel => {
             panel.classList.remove("active");
         });
 
         button.classList.add("active");
 
         document
-            .getElementById(panelId)
-            .classList.add("active");
+        .getElementById(button.dataset.panel)
+        .classList.add("active");
+
+        if (button.dataset.panel === "usersPanel") {
+            loadUsers();
+        }
+
+        if (button.dataset.panel === "friendsPanel") {
+            loadFriends();
+        }
+
+        if (button.dataset.panel === "videosPanel") {
+            loadVideos();
+        }
 
     });
 
 });
 
-/* =========================
+/* ================================
    CHAT
-========================= */
+================================ */
 
 const chatInput =
     document.getElementById("chatInput");
@@ -858,31 +1225,29 @@ const chatInput =
 const chatBox =
     document.getElementById("chatBox");
 
-const sendChat =
-    document.getElementById("sendChat");
+function addChatMessage(text,type) {
 
-function addChatMessage(text, type) {
-
-    const message =
+    const div =
         document.createElement("div");
 
-    message.className =
+    div.className =
         "message " +
         (type === "user"
             ? "user-message"
             : "foxie-message");
 
-    message.innerHTML = `
+    div.innerHTML = `
         <div class="message-name">
             ${type === "user" ? "YOU" : "🦊 FOXIE"}
         </div>
         ${escapeHtml(text)}
     `;
 
-    chatBox.appendChild(message);
+    chatBox.appendChild(div);
 
     chatBox.scrollTop =
         chatBox.scrollHeight;
+
 }
 
 async function sendMessage() {
@@ -894,7 +1259,7 @@ async function sendMessage() {
 
     chatInput.value = "";
 
-    addChatMessage(message, "user");
+    addChatMessage(message,"user");
 
     const loading =
         document.createElement("div");
@@ -903,55 +1268,48 @@ async function sendMessage() {
         "message foxie-message loading";
 
     loading.innerHTML = `
-        <div class="message-name">🦊 FOXIE</div>
+        <div class="message-name">
+            🦊 FOXIE
+        </div>
         Thinking...
     `;
 
     chatBox.appendChild(loading);
 
-    chatBox.scrollTop =
-        chatBox.scrollHeight;
-
     try {
 
         const response =
-            await fetch(BACKEND + "/chat", {
-
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-                    message: message
-                })
-
-            });
+            await fetch(
+                BACKEND + "/chat",
+                {
+                    method:"POST",
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+                    body:JSON.stringify({
+                        message
+                    })
+                }
+            );
 
         const data =
             await response.json();
 
         loading.remove();
 
-        if (data.reply) {
-            addChatMessage(
-                data.reply,
-                "foxie"
-            );
-        } else {
-            addChatMessage(
-                "Something went wrong 😭",
-                "foxie"
-            );
-        }
+        addChatMessage(
+            data.reply ||
+            "Foxie couldn't respond.",
+            "foxie"
+        );
 
-    } catch (error) {
+    } catch(error) {
 
         loading.remove();
 
         addChatMessage(
-            "I couldn't connect to the Foxie server. The server may be waking up — try again in a moment! 🦊",
+            "I couldn't connect to Foxie right now. 🦊",
             "foxie"
         );
 
@@ -959,7 +1317,9 @@ async function sendMessage() {
 
 }
 
-sendChat.addEventListener(
+document
+.getElementById("sendChat")
+.addEventListener(
     "click",
     sendMessage
 );
@@ -975,27 +1335,25 @@ chatInput.addEventListener(
     }
 );
 
-/* =========================
+/* ================================
    WEB SEARCH
-========================= */
-
-const webInput =
-    document.getElementById("webInput");
-
-const webButton =
-    document.getElementById("webButton");
-
-const webResults =
-    document.getElementById("webResults");
+================================ */
 
 async function searchWeb() {
 
     const query =
-        webInput.value.trim();
+        document
+        .getElementById("webInput")
+        .value
+        .trim();
+
+    const resultsBox =
+        document
+        .getElementById("webResults");
 
     if (!query) return;
 
-    webResults.innerHTML =
+    resultsBox.innerHTML =
         "<p>Searching... 🌐</p>";
 
     try {
@@ -1010,20 +1368,10 @@ async function searchWeb() {
         const data =
             await response.json();
 
-        webResults.innerHTML = "";
+        resultsBox.innerHTML = "";
 
-        if (
-            !data.results ||
-            data.results.length === 0
-        ) {
-
-            webResults.innerHTML =
-                "<p>No results found.</p>";
-
-            return;
-        }
-
-        data.results.forEach(result => {
+        (data.results || [])
+        .forEach(result => {
 
             const div =
                 document.createElement("div");
@@ -1050,25 +1398,34 @@ async function searchWeb() {
                 </a>
             `;
 
-            webResults.appendChild(div);
+            resultsBox.appendChild(div);
 
         });
 
-    } catch (error) {
+        if (!data.results?.length) {
+            resultsBox.innerHTML =
+                "<p>No results found.</p>";
+        }
 
-        webResults.innerHTML =
-            "<p>Web search failed. Try again.</p>";
+    } catch(error) {
+
+        resultsBox.innerHTML =
+            "<p>Search failed.</p>";
 
     }
 
 }
 
-webButton.addEventListener(
+document
+.getElementById("webButton")
+.addEventListener(
     "click",
     searchWeb
 );
 
-webInput.addEventListener(
+document
+.getElementById("webInput")
+.addEventListener(
     "keydown",
     event => {
 
@@ -1079,27 +1436,25 @@ webInput.addEventListener(
     }
 );
 
-/* =========================
+/* ================================
    IMAGE SEARCH
-========================= */
-
-const imageInput =
-    document.getElementById("imageInput");
-
-const imageButton =
-    document.getElementById("imageButton");
-
-const imageResults =
-    document.getElementById("imageResults");
+================================ */
 
 async function searchImages() {
 
     const query =
-        imageInput.value.trim();
+        document
+        .getElementById("imageInput")
+        .value
+        .trim();
+
+    const box =
+        document
+        .getElementById("imageResults");
 
     if (!query) return;
 
-    imageResults.innerHTML =
+    box.innerHTML =
         "<p>Searching images... 🖼️</p>";
 
     try {
@@ -1114,20 +1469,10 @@ async function searchImages() {
         const data =
             await response.json();
 
-        imageResults.innerHTML = "";
+        box.innerHTML = "";
 
-        if (
-            !data.results ||
-            data.results.length === 0
-        ) {
-
-            imageResults.innerHTML =
-                "<p>No images found.</p>";
-
-            return;
-        }
-
-        data.results.forEach(result => {
+        (data.results || [])
+        .forEach(result => {
 
             if (!result.image) return;
 
@@ -1155,134 +1500,99 @@ async function searchImages() {
                 </div>
             `;
 
-            imageResults.appendChild(card);
+            box.appendChild(card);
 
         });
 
-    } catch (error) {
+    } catch(error) {
 
-        imageResults.innerHTML =
-            "<p>Image search failed. Try again.</p>";
+        box.innerHTML =
+            "<p>Image search failed.</p>";
 
     }
 
 }
 
-imageButton.addEventListener(
+document
+.getElementById("imageButton")
+.addEventListener(
     "click",
     searchImages
 );
 
-imageInput.addEventListener(
-    "keydown",
-    event => {
-
-        if (event.key === "Enter") {
-            searchImages();
-        }
-
-    }
-);
-
-/* =========================
+/* ================================
    AUTH
-========================= */
+================================ */
 
 let authMode = "login";
-
-const authModal =
-    document.getElementById("authModal");
-
-const authTitle =
-    document.getElementById("authTitle");
-
-const authEmail =
-    document.getElementById("authEmail");
-
-const authPassword =
-    document.getElementById("authPassword");
-
-const authSubmit =
-    document.getElementById("authSubmit");
-
-const authSwitch =
-    document.getElementById("authSwitch");
-
-const authClose =
-    document.getElementById("authClose");
-
-const authMessage =
-    document.getElementById("authModalMessage");
 
 function openAuth(mode) {
 
     authMode = mode;
 
-    authModal.classList.add("show");
+    document
+    .getElementById("authModal")
+    .classList.add("show");
 
-    authMessage.textContent = "";
+    document
+    .getElementById("authTitle")
+    .textContent =
+        mode === "login"
+        ? "🔐 Login"
+        : "✨ Create Foxie Account";
 
-    if (mode === "login") {
-
-        authTitle.textContent =
-            "🔐 Login";
-
-        authSubmit.textContent =
-            "Login";
-
-        authSwitch.textContent =
-            "Create account instead";
-
-    } else {
-
-        authTitle.textContent =
-            "✨ Create Foxie Account";
-
-        authSubmit.textContent =
-            "Create Account";
-
-        authSwitch.textContent =
-            "Login instead";
-
-    }
+    document
+    .getElementById("authSubmit")
+    .textContent =
+        mode === "login"
+        ? "Login"
+        : "Create Account";
 
 }
 
 document
-    .getElementById("showLoginButton")
-    .addEventListener(
-        "click",
-        () => openAuth("login")
-    );
+.getElementById("showLoginButton")
+.addEventListener(
+    "click",
+    () => openAuth("login")
+);
 
 document
-    .getElementById("showSignupButton")
-    .addEventListener(
-        "click",
-        () => openAuth("signup")
-    );
+.getElementById("showSignupButton")
+.addEventListener(
+    "click",
+    () => openAuth("signup")
+);
 
-authClose.addEventListener(
+document
+.getElementById("authClose")
+.addEventListener(
     "click",
     () => {
-        authModal.classList.remove("show");
+        document
+        .getElementById("authModal")
+        .classList.remove("show");
     }
 );
 
-authSwitch.addEventListener(
+document
+.getElementById("authSwitch")
+.addEventListener(
     "click",
     () => {
 
         openAuth(
             authMode === "login"
-                ? "signup"
-                : "login"
+            ? "signup"
+            : "login"
         );
 
     }
 );
 
-authSubmit.addEventListener(
+document
+.getElementById("authSubmit")
+.addEventListener(
     "click",
     handleAuth
 );
@@ -1290,30 +1600,37 @@ authSubmit.addEventListener(
 async function handleAuth() {
 
     const email =
-        authEmail.value.trim();
+        document
+        .getElementById("authEmail")
+        .value
+        .trim();
 
     const password =
-        authPassword.value;
+        document
+        .getElementById("authPassword")
+        .value;
+
+    const message =
+        document
+        .getElementById("authModalMessage");
 
     if (!email || !password) {
 
-        authMessage.textContent =
+        message.textContent =
             "Enter your email and password.";
 
         return;
+
     }
 
-    authMessage.textContent =
+    message.textContent =
         "Please wait...";
 
     try {
 
         if (authMode === "signup") {
 
-            const {
-                data,
-                error
-            } =
+            const {data,error} =
                 await supabaseClient.auth.signUp({
                     email,
                     password
@@ -1323,26 +1640,22 @@ async function handleAuth() {
 
             if (data.session) {
 
-                authMessage.textContent =
-                    "Account created! 🦊";
-
-                authModal.classList.remove("show");
+                document
+                .getElementById("authModal")
+                .classList.remove("show");
 
                 await loadProfile();
 
             } else {
 
-                authMessage.textContent =
-                    "Account created! Check your email to verify your account, then log in. 📧";
+                message.textContent =
+                    "Account created! You may need to log in.";
 
             }
 
         } else {
 
-            const {
-                data,
-                error
-            } =
+            const {error} =
                 await supabaseClient.auth.signInWithPassword({
                     email,
                     password
@@ -1350,15 +1663,17 @@ async function handleAuth() {
 
             if (error) throw error;
 
-            authModal.classList.remove("show");
+            document
+            .getElementById("authModal")
+            .classList.remove("show");
 
             await loadProfile();
 
         }
 
-    } catch (error) {
+    } catch(error) {
 
-        authMessage.textContent =
+        message.textContent =
             error.message ||
             "Authentication failed.";
 
@@ -1366,126 +1681,78 @@ async function handleAuth() {
 
 }
 
-/* =========================
+/* ================================
    PROFILE
-========================= */
-
-let currentUser = null;
-let currentProfile = null;
-
-const profileLoggedOut =
-    document.getElementById("profileLoggedOut");
-
-const profileLoggedIn =
-    document.getElementById("profileLoggedIn");
-
-const profileAvatar =
-    document.getElementById("profileAvatar");
-
-const profileUsername =
-    document.getElementById("profileUsername");
-
-const profileBio =
-    document.getElementById("profileBio");
+================================ */
 
 async function loadProfile() {
 
-    const {
-        data: {
-            user
-        }
-    } =
+    const {data:{user}} =
         await supabaseClient.auth.getUser();
 
     currentUser = user;
 
     if (!user) {
 
-        profileLoggedOut.classList.remove(
-            "hidden"
-        );
+        document
+        .getElementById("profileLoggedOut")
+        .classList.remove("hidden");
 
-        profileLoggedIn.classList.add(
-            "hidden"
-        );
+        document
+        .getElementById("profileLoggedIn")
+        .classList.add("hidden");
 
         return;
 
     }
 
-    profileLoggedOut.classList.add(
-        "hidden"
-    );
+    document
+    .getElementById("profileLoggedOut")
+    .classList.add("hidden");
 
-    profileLoggedIn.classList.remove(
-        "hidden"
-    );
+    document
+    .getElementById("profileLoggedIn")
+    .classList.remove("hidden");
 
-    let {
-        data: profile,
-        error
-    } =
+    let {data:profile,error} =
         await supabaseClient
-            .from("profiles")
-            .select("*")
-            .eq("id", user.id)
-            .maybeSingle();
+        .from("profiles")
+        .select("*")
+        .eq("id",user.id)
+        .maybeSingle();
 
     if (error) {
-
-        console.error(
-            "Profile load error:",
-            error
-        );
-
+        console.error(error);
         return;
-
     }
 
     if (!profile) {
 
         const username =
             user.email
-                ? user.email.split("@")[0]
-                : "FoxieUser";
+            ? user.email.split("@")[0]
+            : "FoxieUser";
 
-        const {
-            data: newProfile,
-            error: createError
-        } =
+        const result =
             await supabaseClient
-                .from("profiles")
-                .insert({
-                    id: user.id,
-                    username: username
-                })
-                .select()
-                .single();
+            .from("profiles")
+            .insert({
+                id:user.id,
+                username
+            })
+            .select()
+            .single();
 
-        if (createError) {
-
-            console.error(
-                "Profile creation error:",
-                createError
-            );
-
-            profileUsername.textContent =
-                username;
-
-            profileBio.textContent =
-                "Finish setting up your profile.";
-
+        if (result.error) {
+            console.error(result.error);
             return;
-
         }
 
-        profile =
-            newProfile;
+        profile = result.data;
 
     }
 
-    currentProfile =
-        profile;
+    currentProfile = profile;
 
     displayProfile(profile);
 
@@ -1493,96 +1760,95 @@ async function loadProfile() {
 
 function displayProfile(profile) {
 
-    profileUsername.textContent =
+    document
+    .getElementById("profileUsername")
+    .textContent =
         "@" + profile.username;
 
-    profileBio.textContent =
+    document
+    .getElementById("profileBio")
+    .textContent =
         profile.bio || "No bio yet.";
 
-    if (profile.avatar_url) {
-
-        profileAvatar.src =
-            profile.avatar_url;
-
-    } else {
-
-        profileAvatar.src =
-            "https://placehold.co/300x300/001b0b/00ff66?text=🦊";
-
-    }
+    document
+    .getElementById("profileAvatar")
+    .src =
+        profile.avatar_url ||
+        defaultAvatar();
 
 }
 
+/* EDIT PROFILE */
+
 document
-    .getElementById("editProfileButton")
-    .addEventListener(
-        "click",
-        openProfileEditor
-    );
+.getElementById("editProfileButton")
+.addEventListener(
+    "click",
+    () => {
 
-function openProfileEditor() {
+        if (!currentProfile) return;
 
-    if (!currentProfile) return;
-
-    document
+        document
         .getElementById("editUsername")
         .value =
             currentProfile.username || "";
 
-    document
+        document
         .getElementById("editBio")
         .value =
             currentProfile.bio || "";
 
-    document
-        .getElementById("profileMessage")
-        .textContent = "";
-
-    document
+        document
         .getElementById("profileModal")
         .classList.add("show");
 
-}
-
-/* =========================
-   SAVE PROFILE
-========================= */
+    }
+);
 
 document
-    .getElementById("saveProfile")
-    .addEventListener(
-        "click",
-        saveProfile
-    );
+.getElementById("closeProfileModal")
+.addEventListener(
+    "click",
+    () => {
+
+        document
+        .getElementById("profileModal")
+        .classList.remove("show");
+
+    }
+);
+
+document
+.getElementById("saveProfile")
+.addEventListener(
+    "click",
+    saveProfile
+);
 
 async function saveProfile() {
 
-    if (!currentUser) {
-
-        return;
-
-    }
+    if (!currentUser) return;
 
     const username =
         document
-            .getElementById("editUsername")
-            .value
-            .trim();
+        .getElementById("editUsername")
+        .value
+        .trim();
 
     const bio =
         document
-            .getElementById("editBio")
-            .value
-            .trim();
+        .getElementById("editBio")
+        .value
+        .trim();
 
     const file =
         document
-            .getElementById("avatarFile")
-            .files[0];
+        .getElementById("avatarFile")
+        .files[0];
 
     const message =
         document
-            .getElementById("profileMessage");
+        .getElementById("profileMessage");
 
     if (!username) {
 
@@ -1594,21 +1860,19 @@ async function saveProfile() {
     }
 
     message.textContent =
-        "Saving profile...";
+        "Saving...";
 
     try {
 
         let avatarUrl =
             currentProfile.avatar_url || null;
 
-        /* UPLOAD AVATAR */
-
         if (file) {
 
             if (file.size > 5 * 1024 * 1024) {
 
                 message.textContent =
-                    "Profile picture must be under 5MB.";
+                    "Image must be under 5MB.";
 
                 return;
 
@@ -1616,43 +1880,35 @@ async function saveProfile() {
 
             const extension =
                 file.name
-                    .split(".")
-                    .pop()
-                    .toLowerCase();
+                .split(".")
+                .pop()
+                .toLowerCase();
 
-            const filePath =
+            const path =
                 currentUser.id +
                 "/avatar." +
                 extension;
 
-            const {
-                error: uploadError
-            } =
+            const {error} =
                 await supabaseClient
-                    .storage
-                    .from("avatars")
-                    .upload(
-                        filePath,
-                        file,
-                        {
-                            upsert: true,
-                            contentType: file.type
-                        }
-                    );
+                .storage
+                .from("avatars")
+                .upload(
+                    path,
+                    file,
+                    {
+                        upsert:true,
+                        contentType:file.type
+                    }
+                );
 
-            if (uploadError) {
+            if (error) throw error;
 
-                throw uploadError;
-
-            }
-
-            const {
-                data
-            } =
+            const {data} =
                 supabaseClient
-                    .storage
-                    .from("avatars")
-                    .getPublicUrl(filePath);
+                .storage
+                .from("avatars")
+                .getPublicUrl(path);
 
             avatarUrl =
                 data.publicUrl +
@@ -1661,31 +1917,23 @@ async function saveProfile() {
 
         }
 
-        /* UPDATE PROFILE */
-
-        const {
-            data: updatedProfile,
-            error
-        } =
+        const {data,error} =
             await supabaseClient
-                .from("profiles")
-                .update({
-                    username: username,
-                    bio: bio,
-                    avatar_url: avatarUrl
-                })
-                .eq("id", currentUser.id)
-                .select()
-                .single();
+            .from("profiles")
+            .update({
+                username,
+                bio,
+                avatar_url:avatarUrl
+            })
+            .eq("id",currentUser.id)
+            .select()
+            .single();
 
         if (error) throw error;
 
-        currentProfile =
-            updatedProfile;
+        currentProfile = data;
 
-        displayProfile(
-            updatedProfile
-        );
+        displayProfile(data);
 
         message.textContent =
             "Profile saved! 🦊💚";
@@ -1693,17 +1941,12 @@ async function saveProfile() {
         setTimeout(() => {
 
             document
-                .getElementById("profileModal")
-                .classList.remove("show");
+            .getElementById("profileModal")
+            .classList.remove("show");
 
-        }, 800);
+        },700);
 
-    } catch (error) {
-
-        console.error(
-            "Save profile error:",
-            error
-        );
+    } catch(error) {
 
         message.textContent =
             error.message ||
@@ -1713,125 +1956,855 @@ async function saveProfile() {
 
 }
 
-document
-    .getElementById("closeProfileModal")
-    .addEventListener(
-        "click",
-        () => {
-
-            document
-                .getElementById("profileModal")
-                .classList.remove("show");
-
-        }
-    );
-
-/* =========================
-   LOGOUT
-========================= */
+/* LOGOUT */
 
 document
-    .getElementById("logoutButton")
-    .addEventListener(
-        "click",
-        async () => {
+.getElementById("logoutButton")
+.addEventListener(
+    "click",
+    async () => {
 
-            await supabaseClient.auth.signOut();
+        await supabaseClient.auth.signOut();
 
-            currentUser = null;
-            currentProfile = null;
-
-            profileLoggedIn.classList.add(
-                "hidden"
-            );
-
-            profileLoggedOut.classList.remove(
-                "hidden"
-            );
-
-        }
-    );
-
-/* =========================
-   AUTH STATE
-========================= */
-
-supabaseClient.auth.onAuthStateChange(
-    async (event, session) => {
-
-        currentUser =
-            session
-                ? session.user
-                : null;
+        currentUser = null;
+        currentProfile = null;
 
         await loadProfile();
 
     }
 );
 
-/* =========================
+/* ================================
+   OTHER USERS
+================================ */
+
+async function loadUsers(search = "") {
+
+    const list =
+        document.getElementById("usersList");
+
+    const message =
+        document.getElementById("usersMessage");
+
+    list.innerHTML =
+        "<p>Loading users... 👥</p>";
+
+    let query =
+        supabaseClient
+        .from("profiles")
+        .select("*")
+        .order("created_at",{ascending:false})
+        .limit(50);
+
+    if (search) {
+
+        query =
+            query.ilike(
+                "username",
+                "%" + search + "%"
+            );
+
+    }
+
+    const {data,error} =
+        await query;
+
+    if (error) {
+
+        list.innerHTML =
+            "<div class='notice'>Could not load users.</div>";
+
+        console.error(error);
+
+        return;
+
+    }
+
+    list.innerHTML = "";
+
+    const users =
+        (data || [])
+        .filter(user =>
+            !currentUser ||
+            user.id !== currentUser.id
+        );
+
+    if (!users.length) {
+
+        list.innerHTML =
+            "<div class='notice'>No other users found.</div>";
+
+        return;
+
+    }
+
+    users.forEach(user => {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "user-card";
+
+        card.innerHTML = `
+
+            <img
+                class="avatar-small"
+                src="${escapeAttribute(
+                    user.avatar_url ||
+                    defaultAvatar()
+                )}"
+                alt="Avatar"
+            >
+
+            <div class="user-card-info">
+
+                <div class="user-card-name">
+                    @${escapeHtml(user.username)}
+                </div>
+
+                <div class="user-card-bio">
+                    ${escapeHtml(
+                        user.bio ||
+                        "No bio yet."
+                    )}
+                </div>
+
+                <div class="user-card-actions">
+
+                    <button
+                        class="action add-friend-button"
+                    >
+                        ➕ Add Friend
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+
+        const button =
+            card.querySelector(
+                ".add-friend-button"
+            );
+
+        button.addEventListener(
+            "click",
+            () => sendFriendRequest(user.id,button)
+        );
+
+        list.appendChild(card);
+
+    });
+
+}
+
+document
+.getElementById("userSearchButton")
+.addEventListener(
+    "click",
+    () => {
+
+        const value =
+            document
+            .getElementById("userSearchInput")
+            .value
+            .trim();
+
+        loadUsers(value);
+
+    }
+);
+
+document
+.getElementById("userSearchInput")
+.addEventListener(
+    "keydown",
+    event => {
+
+        if (event.key === "Enter") {
+
+            loadUsers(
+                event.target.value.trim()
+            );
+
+        }
+
+    }
+);
+
+/* ================================
+   FRIEND REQUESTS
+================================ */
+
+async function sendFriendRequest(
+    friendId,
+    button
+) {
+
+    if (!currentUser) {
+
+        alert(
+            "You need to log in first."
+        );
+
+        return;
+
+    }
+
+    if (currentUser.id === friendId) {
+        return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Sending...";
+
+    const {error} =
+        await supabaseClient
+        .from("friends")
+        .insert({
+            user_id:currentUser.id,
+            friend_id:friendId,
+            status:"pending"
+        });
+
+    if (error) {
+
+        if (
+            error.code === "23505"
+        ) {
+
+            button.textContent =
+                "Already sent";
+
+        } else {
+
+            console.error(error);
+
+            button.textContent =
+                "Try again";
+
+            button.disabled = false;
+
+        }
+
+        return;
+
+    }
+
+    button.textContent =
+        "✓ Request Sent";
+
+}
+
+async function loadFriends() {
+
+    const requests =
+        document
+        .getElementById("friendRequests");
+
+    const friends =
+        document
+        .getElementById("friendsList");
+
+    if (!currentUser) {
+
+        requests.innerHTML =
+            "<div class='notice'>Log in first.</div>";
+
+        friends.innerHTML =
+            "<div class='notice'>Log in first.</div>";
+
+        return;
+
+    }
+
+    requests.innerHTML =
+        "<p>Loading...</p>";
+
+    friends.innerHTML =
+        "<p>Loading...</p>";
+
+    const {data,error} =
+        await supabaseClient
+        .from("friends")
+        .select("*")
+        .or(
+            "user_id.eq." +
+            currentUser.id +
+            ",friend_id.eq." +
+            currentUser.id
+        );
+
+    if (error) {
+
+        console.error(error);
+
+        requests.innerHTML =
+            "<div class='notice'>Could not load friend requests.</div>";
+
+        friends.innerHTML =
+            "<div class='notice'>Could not load friends.</div>";
+
+        return;
+
+    }
+
+    const incoming =
+        (data || [])
+        .filter(row =>
+            row.friend_id === currentUser.id &&
+            row.status === "pending"
+        );
+
+    const accepted =
+        (data || [])
+        .filter(row =>
+            row.status === "accepted"
+        );
+
+    requests.innerHTML = "";
+
+    if (!incoming.length) {
+
+        requests.innerHTML =
+            "<div class='notice'>No new friend requests.</div>";
+
+    } else {
+
+        for (const request of incoming) {
+
+            const otherId =
+                request.user_id;
+
+            const {data:user} =
+                await supabaseClient
+                .from("profiles")
+                .select("*")
+                .eq("id",otherId)
+                .maybeSingle();
+
+            if (!user) continue;
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "friend-card";
+
+            card.innerHTML = `
+
+                <img
+                    class="avatar-small"
+                    src="${escapeAttribute(
+                        user.avatar_url ||
+                        defaultAvatar()
+                    )}"
+                >
+
+                <div class="friend-card-info">
+
+                    <div class="friend-card-name">
+                        @${escapeHtml(user.username)}
+                    </div>
+
+                    <div class="friend-card-status">
+                        Wants to be your friend
+                    </div>
+
+                    <button
+                        class="action accept-button"
+                    >
+                        ✅ Accept
+                    </button>
+
+                    <button
+                        class="action decline-button"
+                    >
+                        ❌ Decline
+                    </button>
+
+                </div>
+            `;
+
+            card
+            .querySelector(".accept-button")
+            .addEventListener(
+                "click",
+                () => updateFriendRequest(
+                    request.id,
+                    "accepted"
+                )
+            );
+
+            card
+            .querySelector(".decline-button")
+            .addEventListener(
+                "click",
+                () => deleteFriendRequest(
+                    request.id
+                )
+            );
+
+            requests.appendChild(card);
+
+        }
+
+    }
+
+    friends.innerHTML = "";
+
+    if (!accepted.length) {
+
+        friends.innerHTML =
+            "<div class='notice'>You don't have any friends yet.</div>";
+
+        return;
+
+    }
+
+    for (const friendship of accepted) {
+
+        const otherId =
+            friendship.user_id === currentUser.id
+            ? friendship.friend_id
+            : friendship.user_id;
+
+        const {data:user} =
+            await supabaseClient
+            .from("profiles")
+            .select("*")
+            .eq("id",otherId)
+            .maybeSingle();
+
+        if (!user) continue;
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "friend-card";
+
+        card.innerHTML = `
+
+            <img
+                class="avatar-small"
+                src="${escapeAttribute(
+                    user.avatar_url ||
+                    defaultAvatar()
+                )}"
+            >
+
+            <div class="friend-card-info">
+
+                <div class="friend-card-name">
+                    @${escapeHtml(user.username)}
+                </div>
+
+                <div class="friend-card-status">
+                    ${user.online
+                        ? "🟢 Online"
+                        : "⚫ Offline"}
+                </div>
+
+            </div>
+
+        `;
+
+        friends.appendChild(card);
+
+    }
+
+}
+
+async function updateFriendRequest(
+    id,
+    status
+) {
+
+    const {error} =
+        await supabaseClient
+        .from("friends")
+        .update({status})
+        .eq("id",id);
+
+    if (error) {
+
+        console.error(error);
+
+        alert(
+            "Could not update request."
+        );
+
+        return;
+
+    }
+
+    loadFriends();
+
+}
+
+async function deleteFriendRequest(id) {
+
+    const {error} =
+        await supabaseClient
+        .from("friends")
+        .delete()
+        .eq("id",id);
+
+    if (error) {
+
+        console.error(error);
+
+        return;
+
+    }
+
+    loadFriends();
+
+}
+
+/* ================================
+   FOXIE VIDS
+================================ */
+
+async function loadVideos(search = "") {
+
+    const feed =
+        document.getElementById("videoFeed");
+
+    feed.innerHTML =
+        "<div class='notice'>Loading Foxie Vids... 🎬</div>";
+
+    let query =
+        supabaseClient
+        .from("videos")
+        .select(`
+            id,
+            title,
+            description,
+            video_url,
+            created_at,
+            profiles (
+                username,
+                avatar_url
+            )
+        `)
+        .order("created_at",{ascending:false})
+        .limit(50);
+
+    if (search) {
+
+        query =
+            query.ilike(
+                "title",
+                "%" + search + "%"
+            );
+
+    }
+
+    const {data,error} =
+        await query;
+
+    if (error) {
+
+        console.error(error);
+
+        feed.innerHTML = `
+            <div class="notice">
+                Foxie Vids needs its video database setup first. 🦊🎬
+            </div>
+        `;
+
+        return;
+
+    }
+
+    feed.innerHTML = "";
+
+    if (!data?.length) {
+
+        feed.innerHTML =
+            "<div class='notice'>No videos yet. Be the first to upload one! 🎬</div>";
+
+        return;
+
+    }
+
+    data.forEach(video => {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "video-card";
+
+        const creator =
+            video.profiles?.username ||
+            "Foxie User";
+
+        card.innerHTML = `
+
+            <video
+                controls
+                preload="metadata"
+                src="${escapeAttribute(video.video_url)}"
+            ></video>
+
+            <div class="video-info">
+
+                <div class="video-title">
+                    ${escapeHtml(video.title)}
+                </div>
+
+                <div class="video-creator">
+                    🦊 @${escapeHtml(creator)}
+                </div>
+
+                <div class="video-description">
+                    ${escapeHtml(
+                        video.description || ""
+                    )}
+                </div>
+
+            </div>
+
+        `;
+
+        feed.appendChild(card);
+
+    });
+
+}
+
+document
+.getElementById("videoSearchButton")
+.addEventListener(
+    "click",
+    () => {
+
+        const search =
+            document
+            .getElementById("videoSearch")
+            .value
+            .trim();
+
+        loadVideos(search);
+
+    }
+);
+
+document
+.getElementById("uploadVideoButton")
+.addEventListener(
+    "click",
+    uploadVideo
+);
+
+async function uploadVideo() {
+
+    const message =
+        document
+        .getElementById("videoUploadMessage");
+
+    if (!currentUser) {
+
+        message.textContent =
+            "You need to log in before uploading videos.";
+
+        return;
+
+    }
+
+    const title =
+        document
+        .getElementById("videoTitle")
+        .value
+        .trim();
+
+    const description =
+        document
+        .getElementById("videoDescription")
+        .value
+        .trim();
+
+    const file =
+        document
+        .getElementById("videoFile")
+        .files[0];
+
+    if (!title) {
+
+        message.textContent =
+            "Give your video a title.";
+
+        return;
+
+    }
+
+    if (!file) {
+
+        message.textContent =
+            "Choose a video first.";
+
+        return;
+
+    }
+
+    if (file.size > 100 * 1024 * 1024) {
+
+        message.textContent =
+            "Video must be under 100MB.";
+
+        return;
+
+    }
+
+    message.textContent =
+        "Uploading video... 🎬";
+
+    try {
+
+        const extension =
+            file.name
+            .split(".")
+            .pop()
+            .toLowerCase();
+
+        const path =
+            currentUser.id +
+            "/" +
+            Date.now() +
+            "." +
+            extension;
+
+        const {error:uploadError} =
+            await supabaseClient
+            .storage
+            .from("videos")
+            .upload(
+                path,
+                file,
+                {
+                    upsert:false,
+                    contentType:file.type
+                }
+            );
+
+        if (uploadError) {
+            throw uploadError;
+        }
+
+        const {data:urlData} =
+            supabaseClient
+            .storage
+            .from("videos")
+            .getPublicUrl(path);
+
+        const videoUrl =
+            urlData.publicUrl;
+
+        const {error:dbError} =
+            await supabaseClient
+            .from("videos")
+            .insert({
+                user_id:currentUser.id,
+                title,
+                description,
+                video_url:videoUrl
+            });
+
+        if (dbError) {
+            throw dbError;
+        }
+
+        message.textContent =
+            "Video uploaded! 🦊🎬";
+
+        document
+        .getElementById("videoTitle")
+        .value = "";
+
+        document
+        .getElementById("videoDescription")
+        .value = "";
+
+        document
+        .getElementById("videoFile")
+        .value = "";
+
+        loadVideos();
+
+    } catch(error) {
+
+        console.error(error);
+
+        message.textContent =
+            error.message ||
+            "Video upload failed.";
+
+    }
+
+}
+
+/* ================================
    CREATOR MODE
-========================= */
-
-const creatorModal =
-    document.getElementById("creatorModal");
-
-const creatorMessage =
-    document.getElementById("creatorMessage");
+================================ */
 
 document
-    .getElementById("openCreatorLogin")
-    .addEventListener(
-        "click",
-        () => {
+.getElementById("openCreatorLogin")
+.addEventListener(
+    "click",
+    () => {
 
-            creatorModal.classList.add(
-                "show"
-            );
+        document
+        .getElementById("creatorModal")
+        .classList.add("show");
 
-            creatorMessage.textContent =
-                "";
-
-        }
-    );
+    }
+);
 
 document
-    .getElementById("creatorCloseButton")
-    .addEventListener(
-        "click",
-        () => {
+.getElementById("creatorCloseButton")
+.addEventListener(
+    "click",
+    () => {
 
-            creatorModal.classList.remove(
-                "show"
-            );
+        document
+        .getElementById("creatorModal")
+        .classList.remove("show");
 
-        }
-    );
+    }
+);
 
 document
-    .getElementById("creatorLoginButton")
-    .addEventListener(
-        "click",
-        creatorLogin
-    );
+.getElementById("creatorLoginButton")
+.addEventListener(
+    "click",
+    creatorLogin
+);
 
 async function creatorLogin() {
 
     const code =
         document
-            .getElementById("creatorCode")
-            .value;
+        .getElementById("creatorCode")
+        .value;
+
+    const message =
+        document
+        .getElementById("creatorMessage");
 
     if (!code) {
 
-        creatorMessage.textContent =
+        message.textContent =
             "Enter your creator code.";
 
         return;
 
     }
 
-    creatorMessage.textContent =
+    message.textContent =
         "Checking...";
 
     try {
@@ -1841,13 +2814,13 @@ async function creatorLogin() {
                 BACKEND +
                 "/creator-login",
                 {
-                    method: "POST",
-                    headers: {
+                    method:"POST",
+                    headers:{
                         "Content-Type":
                             "application/json"
                     },
-                    body: JSON.stringify({
-                        code: code
+                    body:JSON.stringify({
+                        code
                     })
                 }
             );
@@ -1857,83 +2830,67 @@ async function creatorLogin() {
 
         if (data.success) {
 
-            creatorModal.classList.remove(
-                "show"
-            );
+            document
+            .getElementById("creatorModal")
+            .classList.remove("show");
 
             document
-                .getElementById("creatorLocked")
-                .classList.add("hidden");
+            .getElementById("creatorLocked")
+            .classList.add("hidden");
 
             document
-                .getElementById("creatorUnlocked")
-                .classList.remove("hidden");
+            .getElementById("creatorUnlocked")
+            .classList.remove("hidden");
 
         } else {
 
-            creatorMessage.textContent =
+            message.textContent =
                 "Wrong creator code.";
 
         }
 
-    } catch (error) {
+    } catch(error) {
 
-        creatorMessage.textContent =
+        message.textContent =
             "Could not connect to Foxie.";
 
     }
 
 }
 
-/* =========================
-   CREATOR CHAT
-========================= */
-
-const creatorInput =
-    document.getElementById("creatorInput");
-
-const creatorChatBox =
-    document.getElementById("creatorChatBox");
-
-document
-    .getElementById("creatorSend")
-    .addEventListener(
-        "click",
-        sendCreatorMessage
-    );
-
-creatorInput.addEventListener(
-    "keydown",
-    event => {
-
-        if (event.key === "Enter") {
-            sendCreatorMessage();
-        }
-
-    }
-);
+/* CREATOR CHAT */
 
 async function sendCreatorMessage() {
 
+    const input =
+        document
+        .getElementById("creatorInput");
+
+    const box =
+        document
+        .getElementById("creatorChatBox");
+
     const message =
-        creatorInput.value.trim();
+        input.value.trim();
 
     if (!message) return;
 
-    creatorInput.value = "";
+    input.value = "";
 
-    const userDiv =
+    const user =
         document.createElement("div");
 
-    userDiv.className =
+    user.className =
         "message user-message";
 
-    userDiv.innerHTML = `
-        <div class="message-name">YOU</div>
+    user.innerHTML = `
+        <div class="message-name">
+            YOU
+        </div>
         ${escapeHtml(message)}
     `;
 
-    creatorChatBox.appendChild(userDiv);
+    box.appendChild(user);
 
     const loading =
         document.createElement("div");
@@ -1942,14 +2899,13 @@ async function sendCreatorMessage() {
         "message foxie-message loading";
 
     loading.innerHTML = `
-        <div class="message-name">🦊 FOXIE</div>
+        <div class="message-name">
+            🦊 FOXIE
+        </div>
         Thinking...
     `;
 
-    creatorChatBox.appendChild(loading);
-
-    creatorChatBox.scrollTop =
-        creatorChatBox.scrollHeight;
+    box.appendChild(loading);
 
     try {
 
@@ -1957,12 +2913,12 @@ async function sendCreatorMessage() {
             await fetch(
                 BACKEND + "/chat",
                 {
-                    method: "POST",
-                    headers: {
+                    method:"POST",
+                    headers:{
                         "Content-Type":
                             "application/json"
                     },
-                    body: JSON.stringify({
+                    body:JSON.stringify({
                         message:
                             "[CREATOR MODE] " +
                             message
@@ -1975,13 +2931,13 @@ async function sendCreatorMessage() {
 
         loading.remove();
 
-        const foxieDiv =
+        const reply =
             document.createElement("div");
 
-        foxieDiv.className =
+        reply.className =
             "message foxie-message";
 
-        foxieDiv.innerHTML = `
+        reply.innerHTML = `
             <div class="message-name">
                 🦊 FOXIE
             </div>
@@ -1991,62 +2947,72 @@ async function sendCreatorMessage() {
             )}
         `;
 
-        creatorChatBox.appendChild(
-            foxieDiv
-        );
+        box.appendChild(reply);
 
-        creatorChatBox.scrollTop =
-            creatorChatBox.scrollHeight;
+        box.scrollTop =
+            box.scrollHeight;
 
-    } catch (error) {
+    } catch(error) {
 
         loading.remove();
 
-        const errorDiv =
+        const reply =
             document.createElement("div");
 
-        errorDiv.className =
+        reply.className =
             "message foxie-message";
 
-        errorDiv.innerHTML = `
+        reply.innerHTML = `
             <div class="message-name">
                 🦊 FOXIE
             </div>
-            Couldn't connect to the server.
+            Couldn't connect to Foxie.
         `;
 
-        creatorChatBox.appendChild(
-            errorDiv
-        );
+        box.appendChild(reply);
 
     }
 
 }
 
-/* =========================
-   SECURITY HELPERS
-========================= */
+document
+.getElementById("creatorSend")
+.addEventListener(
+    "click",
+    sendCreatorMessage
+);
 
-function escapeHtml(value) {
+document
+.getElementById("creatorInput")
+.addEventListener(
+    "keydown",
+    event => {
 
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+        if (event.key === "Enter") {
+            sendCreatorMessage();
+        }
 
-}
+    }
+);
 
-function escapeAttribute(value) {
+/* ================================
+   AUTH STATE
+================================ */
 
-    return escapeHtml(value);
+supabaseClient.auth.onAuthStateChange(
+    async (event,session) => {
 
-}
+        currentUser =
+            session?.user || null;
 
-/* =========================
-   START FOXIE
-========================= */
+        await loadProfile();
+
+    }
+);
+
+/* ================================
+   START
+================================ */
 
 loadProfile();
 
