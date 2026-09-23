@@ -1,29 +1,236 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
 <head>
-  <title>Foxie AI 🦊</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FOXIE AI 🦊</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #020403;
+      color: #39ff14;
+      font-family: "Courier New", monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    /* Green glow in the background */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(rgba(57,255,20,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(57,255,20,0.04) 1px, transparent 1px);
+      background-size: 30px 30px;
+      pointer-events: none;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 800px;
+      border: 1px solid #39ff14;
+      box-shadow: 0 0 25px rgba(57,255,20,0.25);
+      background: rgba(0, 8, 2, 0.94);
+      padding: 30px;
+      position: relative;
+    }
+
+    .glitch {
+      font-size: 42px;
+      text-align: center;
+      margin: 0 0 8px;
+      text-shadow:
+        2px 0 #00ff88,
+        -2px 0 #0aff00,
+        0 0 15px #39ff14;
+      animation: glitch 1.5s infinite;
+    }
+
+    @keyframes glitch {
+      0%, 90%, 100% {
+        transform: translate(0);
+      }
+      92% {
+        transform: translate(-2px, 1px);
+      }
+      94% {
+        transform: translate(2px, -1px);
+      }
+      96% {
+        transform: translate(-1px, 0);
+      }
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #72ff5b;
+      margin-bottom: 25px;
+    }
+
+    .status {
+      font-size: 13px;
+      margin-bottom: 15px;
+      opacity: 0.8;
+    }
+
+    .chat {
+      min-height: 180px;
+      max-height: 350px;
+      overflow-y: auto;
+      border: 1px solid #174d17;
+      padding: 15px;
+      margin-bottom: 18px;
+      background: #000500;
+    }
+
+    .message {
+      margin: 12px 0;
+      line-height: 1.5;
+    }
+
+    .user {
+      color: #ffffff;
+    }
+
+    .foxie {
+      color: #39ff14;
+      text-shadow: 0 0 6px #39ff14;
+    }
+
+    .input-area {
+      display: flex;
+      gap: 10px;
+    }
+
+    input {
+      flex: 1;
+      background: #000;
+      border: 1px solid #39ff14;
+      color: #39ff14;
+      padding: 14px;
+      font-family: inherit;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      box-shadow: 0 0 12px rgba(57,255,20,0.4);
+    }
+
+    button {
+      background: #39ff14;
+      color: #000;
+      border: none;
+      padding: 14px 22px;
+      font-family: inherit;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #8cff72;
+      box-shadow: 0 0 15px #39ff14;
+    }
+
+    .footer {
+      margin-top: 18px;
+      font-size: 11px;
+      text-align: center;
+      opacity: 0.5;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+
+      .glitch {
+        font-size: 30px;
+      }
+
+      .input-area {
+        flex-direction: column;
+      }
+    }
+  </style>
+
 </head>
 
 <body>
-  <h1>🦊 Hello! I'm Foxie</h1>
-  <p>Your friendly AI assistant.</p>
 
-  <input id="message" type="text" placeholder="Talk to Foxie...">
-  <button onclick="talkToFoxie()">Send</button>
+  <div class="container">
 
-  <p id="reply"></p>
+```
+<h1 class="glitch">🦊 FOXIE AI</h1>
+
+<div class="subtitle">
+  // your friendly AI assistant //
+</div>
+
+<div class="status">
+  ● SYSTEM ONLINE
+</div>
+
+<div class="chat" id="chat">
+  <div class="message foxie">
+    🦊 Hey there! I'm Foxie. How can I help you today?
+  </div>
+</div>
+
+<div class="input-area">
+  <input
+    id="message"
+    type="text"
+    placeholder="Type a message..."
+    onkeydown="if(event.key === 'Enter') talkToFoxie()"
+  >
+
+  <button onclick="talkToFoxie()">SEND</button>
+</div>
+
+<div class="footer">
+  FOXIE AI // CONNECTION ESTABLISHED
+</div>
+```
+
+  </div>
 
   <script>
     async function talkToFoxie() {
-      const message = document.getElementById("message").value;
-      const reply = document.getElementById("reply");
+      const input = document.getElementById("message");
+      const chat = document.getElementById("chat");
 
-      if (message.trim() === "") {
-        reply.textContent = "🦊 Type something first!";
+      const message = input.value.trim();
+
+      if (message === "") {
         return;
       }
 
-      reply.textContent = "🦊 Foxie is thinking...";
+      chat.innerHTML += `
+        <div class="message user">
+          &gt; YOU: ${message}
+        </div>
+      `;
+
+      input.value = "";
+
+      chat.innerHTML += `
+        <div class="message foxie" id="thinking">
+          🦊 Foxie is thinking...
+        </div>
+      `;
+
+      chat.scrollTop = chat.scrollHeight;
 
       try {
         const response = await fetch(
@@ -41,16 +248,35 @@
 
         const data = await response.json();
 
+        document.getElementById("thinking").remove();
+
         if (data.reply) {
-          reply.textContent = "🦊 " + data.reply;
+          chat.innerHTML += `
+            <div class="message foxie">
+              🦊 FOXIE: ${data.reply}
+            </div>
+          `;
         } else {
-          reply.textContent = "🦊 Something went wrong.";
+          chat.innerHTML += `
+            <div class="message foxie">
+              🦊 Something went wrong.
+            </div>
+          `;
         }
 
       } catch (error) {
-        reply.textContent = "🦊 Sorry, Foxie couldn't connect.";
+        document.getElementById("thinking").remove();
+
+        chat.innerHTML += `
+          <div class="message foxie">
+            🦊 ERROR: Foxie couldn't connect.
+          </div>
+        `;
       }
+
+      chat.scrollTop = chat.scrollHeight;
     }
   </script>
+
 </body>
 </html>
