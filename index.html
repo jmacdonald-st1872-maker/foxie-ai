@@ -4,10 +4,28 @@
   <title>Foxie AI</title>
 </head>
 <body>
+
   <h1>🦊 Hello! I'm Foxie</h1>
   <p>Your friendly AI assistant.</p>
 
-  <input type="text" placeholder="Talk to Foxie...">
-  <button>Send</button>
+  <input id="message" type="text" placeholder="Talk to Foxie...">
+  <button onclick="talkToFoxie()">Send</button>
+
+  <p id="reply"></p>
+
+  <script>
+    function talkToFoxie() {
+      const message = document.getElementById("message").value;
+      const reply = document.getElementById("reply");
+
+      if (message.trim() === "") {
+        reply.textContent = "🦊 Type something first!";
+        return;
+      }
+
+      reply.textContent = "🦊 Hi! You said: " + message;
+    }
+  </script>
+
 </body>
 </html>
