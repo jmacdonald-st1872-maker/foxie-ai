@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
 <head>
   <title>Foxie AI 🦊</title>
@@ -26,10 +25,32 @@
 
       reply.textContent = "🦊 Foxie is thinking...";
 
-      // Free Foxie AI connection will go here.
-      reply.textContent = "🦊 I received: " + message;
+      try {
+        const response = await fetch(
+          "https://foxie-ai-backend.onrender.com/chat",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              message: message
+            })
+          }
+        );
+
+        const data = await response.json();
+
+        if (data.reply) {
+          reply.textContent = "🦊 " + data.reply;
+        } else {
+          reply.textContent = "🦊 Something went wrong.";
+        }
+
+      } catch (error) {
+        reply.textContent = "🦊 Sorry, Foxie couldn't connect.";
+      }
     }
   </script>
-
 </body>
 </html>
