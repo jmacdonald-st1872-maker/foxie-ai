@@ -27,6 +27,18 @@ body {
   overflow: hidden;
 }
 
+/* BACKGROUND */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(rgba(57,255,20,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(57,255,20,0.025) 1px, transparent 1px);
+  background-size: 35px 35px;
+  pointer-events: none;
+}
+
 /* GREEN PARTICLES */
 .particles {
   position: fixed;
@@ -65,13 +77,13 @@ body {
 /* CREATOR CREDIT */
 .creator {
   position: fixed;
-  top: 10px;
-  right: 15px;
+  top: 12px;
+  right: 16px;
   color: #39ff14;
   font-size: 11px;
-  opacity: 0.7;
+  opacity: 0.65;
   z-index: 20;
-  text-shadow: 0 0 6px #39ff14;
+  text-shadow: 0 0 7px #39ff14;
 }
 
 /* FOXIE WINDOW */
@@ -82,11 +94,11 @@ body {
   max-height: 700px;
 
   border: 1px solid #39ff14;
-  background: rgba(0, 10, 3, 0.96);
+  background: rgba(0, 8, 2, 0.96);
 
   box-shadow:
-    0 0 20px rgba(57,255,20,0.3),
-    0 0 60px rgba(57,255,20,0.1);
+    0 0 20px rgba(57,255,20,0.25),
+    0 0 70px rgba(57,255,20,0.08);
 
   padding: 25px;
 
@@ -102,13 +114,14 @@ body {
   text-align: center;
   margin: 0;
   font-size: 42px;
+  letter-spacing: 3px;
 
   text-shadow:
     2px 0 #00ff88,
     -2px 0 #00aa00,
     0 0 15px #39ff14;
 
-  animation: glitch 1.5s infinite;
+  animation: glitch 1.8s infinite;
 }
 
 @keyframes glitch {
@@ -117,23 +130,25 @@ body {
   }
 
   92% {
-    transform: translate(-4px, 2px);
+    transform: translate(-3px, 2px);
   }
 
   94% {
-    transform: translate(4px, -2px);
+    transform: translate(3px, -2px);
   }
 }
 
 .subtitle {
   text-align: center;
   margin: 5px 0 15px;
+  opacity: 0.7;
 }
 
 /* STATUS */
 .status {
-  font-size: 13px;
+  font-size: 12px;
   margin-bottom: 10px;
+  opacity: 0.8;
 }
 
 /* CHAT */
@@ -192,7 +207,7 @@ input::placeholder {
 }
 
 input:focus {
-  box-shadow: 0 0 10px rgba(57,255,20,0.4);
+  box-shadow: 0 0 12px rgba(57,255,20,0.35);
 }
 
 button {
@@ -220,11 +235,83 @@ button:disabled {
   cursor: not-allowed;
 }
 
+/* FOOTER */
 .footer {
   text-align: center;
   font-size: 10px;
-  opacity: 0.5;
+  opacity: 0.45;
   margin-top: 10px;
+}
+
+/* CREATOR MODE */
+.creator-panel {
+  display: none;
+
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.96);
+
+  z-index: 100;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.creator-box {
+  width: 90%;
+  max-width: 600px;
+
+  border: 1px solid #39ff14;
+
+  padding: 40px;
+
+  background: #000800;
+
+  box-shadow:
+    0 0 25px rgba(57,255,20,0.4),
+    0 0 80px rgba(57,255,20,0.15);
+
+  text-align: center;
+}
+
+.creator-box h2 {
+  font-size: 28px;
+  margin-top: 0;
+
+  text-shadow:
+    0 0 10px #39ff14;
+}
+
+.creator-message {
+  font-size: 18px;
+  margin: 25px 0;
+
+  color: white;
+}
+
+.creator-label {
+  font-size: 11px;
+  opacity: 0.6;
+  margin-bottom: 25px;
+}
+
+.close-creator {
+  background: transparent;
+  color: #39ff14;
+
+  border: 1px solid #39ff14;
+
+  padding: 10px 20px;
+
+  cursor: pointer;
+
+  font-family: "Courier New", monospace;
+}
+
+.close-creator:hover {
+  background: #39ff14;
+  color: #000;
 }
 
 /* MOBILE */
@@ -252,13 +339,17 @@ button:disabled {
   button {
     width: 100%;
   }
+
+  .creator-box {
+    padding: 25px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- GREEN PARTICLES -->
+<!-- PARTICLES -->
 <div class="particles">
 
   <div class="particle" style="left:5%; animation-delay:0s;"></div>
@@ -274,12 +365,12 @@ button:disabled {
 
 </div>
 
-<!-- CREATOR -->
+<!-- CREATOR CREDIT -->
 <div class="creator">
   Jayden Wayne MacDonald created this
 </div>
 
-<!-- FOXIE WINDOW -->
+<!-- MAIN FOXIE -->
 <div class="container">
 
   <h1 class="glitch">
@@ -294,7 +385,6 @@ button:disabled {
     ● SYSTEM ONLINE
   </div>
 
-  <!-- CHAT -->
   <div class="chat" id="chat">
 
     <div class="message foxie">
@@ -303,7 +393,6 @@ button:disabled {
 
   </div>
 
-  <!-- INPUT -->
   <div class="input-area">
 
     <input
@@ -325,11 +414,41 @@ button:disabled {
 
 </div>
 
+<!-- SECRET CREATOR PANEL -->
+<div class="creator-panel" id="creatorPanel">
+
+  <div class="creator-box">
+
+    <h2>🦊 CREATOR MODE</h2>
+
+    <div class="creator-label">
+      ACCESS GRANTED // CREATOR
+    </div>
+
+    <div class="creator-message">
+      Hello Creator. How are you? 👋
+    </div>
+
+    <button class="close-creator" id="closeCreator">
+      CLOSE
+    </button>
+
+  </div>
+
+</div>
+
 <script>
 
 const input = document.getElementById("message");
 const chat = document.getElementById("chat");
 const sendButton = document.getElementById("sendButton");
+
+const creatorPanel = document.getElementById("creatorPanel");
+const closeCreator = document.getElementById("closeCreator");
+
+
+/* SECRET CREATOR CODE */
+const creatorCode = "jayden2010!";
 
 
 /* ADD MESSAGE SAFELY */
@@ -358,19 +477,29 @@ async function talkToFoxie() {
     return;
   }
 
+  /* SECRET CREATOR ACCESS */
+  if (message.toLowerCase() === creatorCode) {
+
+    input.value = "";
+
+    creatorPanel.style.display = "flex";
+
+    return;
+  }
+
   /* SHOW USER MESSAGE */
   addMessage("> YOU: " + message, "user");
 
   input.value = "";
 
-  /* DISABLE BUTTON */
   sendButton.disabled = true;
 
-  /* THINKING MESSAGE */
   const thinking = addMessage(
     "🦊 Foxie is thinking...",
     "foxie"
   );
+
+  chat.scrollTop = chat.scrollHeight;
 
   try {
 
@@ -391,7 +520,6 @@ async function talkToFoxie() {
 
     const data = await response.json();
 
-    /* REMOVE THINKING */
     thinking.remove();
 
     if (data.reply) {
@@ -421,11 +549,11 @@ async function talkToFoxie() {
 
   }
 
-  /* ENABLE BUTTON */
   sendButton.disabled = false;
 
   input.focus();
 
+  chat.scrollTop = chat.scrollHeight;
 }
 
 
@@ -444,6 +572,19 @@ input.addEventListener(
     if (event.key === "Enter") {
       talkToFoxie();
     }
+
+  }
+);
+
+
+/* CLOSE CREATOR MODE */
+closeCreator.addEventListener(
+  "click",
+  function() {
+
+    creatorPanel.style.display = "none";
+
+    input.focus();
 
   }
 );
