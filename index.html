@@ -1,26 +1,36 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>FOXIE AI 🦊</title>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
 
-    html, body {
+    html,
+    body {
       margin: 0;
       width: 100%;
-      min-height: 100%;
+      height: 100%;
     }
 
     body {
+
       min-height: 100vh;
-      background: #020403;
+
+      background:
+        radial-gradient(circle at center, #061006 0%, #010201 55%, #000000 100%);
+
       color: #39ff14;
+
       font-family: "Courier New", monospace;
 
       display: flex;
@@ -28,224 +38,178 @@
       align-items: center;
 
       padding: 20px;
+
       overflow: hidden;
-    }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-
-      background:
-        linear-gradient(rgba(57,255,20,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(57,255,20,0.04) 1px, transparent 1px);
-
-      background-size: 30px 30px;
-      pointer-events: none;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 850px;
-      min-height: 600px;
-
-      display: flex;
-      flex-direction: column;
-
-      border: 1px solid #39ff14;
-      background: rgba(0, 8, 2, 0.96);
-
-      box-shadow:
-        0 0 20px rgba(57,255,20,0.25),
-        0 0 60px rgba(57,255,20,0.08);
-
-      padding: 30px;
       position: relative;
     }
 
-    .glitch {
-      margin: 0;
-      text-align: center;
-      font-size: 46px;
 
-      color: #39ff14;
+    /* =========================
+       HACKER GRID
+       ========================= */
 
-      text-shadow:
-        2px 0 #00ff88,
-        -2px 0 #00aa00,
-        0 0 15px #39ff14;
+    body::before {
 
-      animation: glitch 1.5s infinite;
+      content: "";
+
+      position: fixed;
+
+      inset: 0;
+
+      background:
+        linear-gradient(
+          rgba(57,255,20,0.035) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(57,255,20,0.035) 1px,
+          transparent 1px
+        );
+
+      background-size: 35px 35px;
+
+      pointer-events: none;
+
+      z-index: 0;
     }
 
-    @keyframes glitch {
-      0%, 90%, 100% {
-        transform: translate(0);
-      }
 
-      92% {
-        transform: translate(-3px, 1px);
-      }
+    /* =========================
+       FLOATING PARTICLES
+       ========================= */
 
-      94% {
-        transform: translate(3px, -1px);
-      }
+    .particles {
 
-      96% {
-        transform: translate(-2px, 0);
-      }
+      position: fixed;
+
+      inset: 0;
+
+      overflow: hidden;
+
+      pointer-events: none;
+
+      z-index: 1;
     }
 
-    .subtitle {
-      text-align: center;
-      margin-top: 8px;
-      margin-bottom: 20px;
-      color: #72ff5b;
-    }
 
-    .status {
-      font-size: 13px;
-      margin-bottom: 12px;
-      opacity: 0.8;
-    }
+    .particle {
 
-    .chat {
-      flex: 1;
+      position: absolute;
 
-      min-height: 300px;
-      max-height: 390px;
+      bottom: -20px;
 
-      overflow-y: auto;
+      width: 3px;
 
-      border: 1px solid #174d17;
-      background: #000500;
+      height: 3px;
 
-      padding: 20px;
-      margin-bottom: 15px;
-
-      scrollbar-color: #39ff14 #000500;
-    }
-
-    .message {
-      margin: 15px 0;
-      line-height: 1.6;
-      word-wrap: break-word;
-    }
-
-    .user {
-      color: white;
-    }
-
-    .foxie {
-      color: #39ff14;
-      text-shadow: 0 0 6px #39ff14;
-    }
-
-    .input-area {
-      display: flex;
-      gap: 10px;
-    }
-
-    input {
-      flex: 1;
-
-      background: #000;
-      border: 1px solid #39ff14;
-
-      color: #39ff14;
-
-      padding: 15px;
-
-      font-family: "Courier New", monospace;
-      font-size: 16px;
-
-      outline: none;
-    }
-
-    input::placeholder {
-      color: #397a39;
-    }
-
-    input:focus {
-      box-shadow: 0 0 15px rgba(57,255,20,0.35);
-    }
-
-    button {
       background: #39ff14;
-      color: #000;
 
-      border: none;
-
-      padding: 15px 25px;
-
-      font-family: "Courier New", monospace;
-      font-weight: bold;
-
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #8cff72;
+      border-radius: 50%;
 
       box-shadow:
-        0 0 10px #39ff14,
-        0 0 25px #39ff14;
+        0 0 6px #39ff14,
+        0 0 12px #39ff14;
+
+      animation: floatUp linear infinite;
+
+      opacity: 0;
     }
 
-    .footer {
-      text-align: center;
 
-      margin-top: 15px;
+    @keyframes floatUp {
 
-      font-size: 11px;
+      0% {
+
+        transform:
+          translateY(0)
+          translateX(0);
+
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 0.8;
+      }
+
+      50% {
+
+        transform:
+          translateY(-50vh)
+          translateX(20px);
+
+        opacity: 1;
+      }
+
+      90% {
+        opacity: 0.5;
+      }
+
+      100% {
+
+        transform:
+          translateY(-110vh)
+          translateX(-30px);
+
+        opacity: 0;
+      }
+
+    }
+
+
+    /* =========================
+       RANDOM DIGITAL GLITCH
+       ========================= */
+
+    .code-rain {
+
+      position: fixed;
+
+      inset: 0;
+
+      pointer-events: none;
+
+      z-index: 2;
+
+      opacity: 0.25;
 
       color: #39ff14;
-      opacity: 0.5;
+
+      font-size: 12px;
+
+      text-shadow: 0 0 5px #39ff14;
     }
 
-    @media (max-width: 600px) {
-      body {
-        padding: 10px;
-      }
 
-      .container {
-        min-height: 95vh;
-        padding: 18px;
-      }
+    .code {
 
-      .glitch {
-        font-size: 32px;
-      }
+      position: absolute;
 
-      .input-area {
-        flex-direction: column;
-      }
+      animation: codeFloat linear infinite;
 
-      button {
-        width: 100%;
-      }
     }
-  </style>
 
-</head>
 
-<body>
+    @keyframes codeFloat {
 
-  <div class="container">
+      from {
 
-```
-<h1 class="glitch">🦊 FOXIE AI</h1>
+        transform: translateY(100vh);
 
-<div class="subtitle">
-  // your friendly AI assistant //
-</div>
+        opacity: 0;
+      }
 
-<div class="status">
-  ● SYSTEM ONLINE
-</div>
+      15% {
+        opacity: 0.8;
+      }
 
-<div class="chat" id="chat">
+      85% {
+        opacity: 0.6;
+      }
 
-  <div class="message foxie">
-    🦊 Hey there! I'm Foxie. How can I help you to
-```
+      to {
+
+        transform: translateY(-20vh);
+
+        opacity: 0
